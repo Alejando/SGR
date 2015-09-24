@@ -18,3 +18,9 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('admin/m_admin');
 });
+
+Route::get('clientes', function () {
+    $clientes = Cliente::all();
+
+    return ($clientes);
+});
