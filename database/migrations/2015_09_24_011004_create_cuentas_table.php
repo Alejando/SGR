@@ -16,7 +16,7 @@ class CreateCuentasTable extends Migration
             $table->increments('id_cuenta');
             $table->string('nombre');
             $table->string('telefono');
-            $table->string('fecha_entrada');
+            $table->string('contrasena');
             $table->timestamps();
         });
     }
