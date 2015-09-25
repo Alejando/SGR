@@ -17,8 +17,7 @@ class CreatePagosTable extends Migration
             $table->integer('id_distribuidor');
             $table->integer('cantidad');
             $table->date('fecha_creacion');
-            $table->string('estado');
-            $table->timestamps();
+            $table->integer('estado');
         });
     }
 
