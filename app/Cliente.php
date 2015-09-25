@@ -8,4 +8,9 @@ class Cliente extends Model
 {
     //
     protected $table = 'clientes';
+
+     public function vales()
+    {
+        return $this->hasMany('App\Vale');
+    }
 }

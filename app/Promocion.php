@@ -8,4 +8,9 @@ class Promocion extends Model
 {
     //
     protected $table = 'promocions';
+
+     public function vales()
+    {
+        return $this->hasMany('App\Vale');
+    }
 }

@@ -31,8 +31,7 @@ Route::get('vendedor', function () {
 Route::get('login', function () {
     return view('c_sesion');
 });
-<<<<<<< HEAD
-=======
+
 
 
 
@@ -40,7 +39,7 @@ Route::get('login', function () {
 //----------------------------------------------------------//
 //---------------------> URL TEST DATA <--------------------//
 //----------------------------------------------------------//
->>>>>>> origin/master
+
 Route::get('clientes', function () {
     $clientes = Cliente::all();
 
