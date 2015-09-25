@@ -8,9 +8,10 @@ class Cliente extends Model
 {
     //
     protected $table = 'clientes';
+    protected $primaryKey = 'id_cliente';
 
      public function vales()
     {
-        return $this->hasMany('App\Vale');
+        return $this->hasMany('App\Vale', 'id_cliente');
     }
 }

@@ -6,6 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddFieldToClientesTable' => $baseDir . '/database/migrations/2015_09_25_222210_add_field_to_clientes_table.php',
+    'AddFieldToDistribuidorsTable' => $baseDir . '/database/migrations/2015_09_25_220659_add_field_to_distribuidors_table.php',
+    'AddFieldToPagosTable' => $baseDir . '/database/migrations/2015_09_25_231859_add_field_to_pagos_table.php',
+    'AddFieldToValesTable' => $baseDir . '/database/migrations/2015_09_25_234947_add_field_to_vales_table.php',
     'CreateClientesTable' => $baseDir . '/database/migrations/2015_09_23_011802_create_clientes_table.php',
     'CreateCuentasTable' => $baseDir . '/database/migrations/2015_09_24_230408_create_cuentas_table.php',
     'CreateDistribuidorsTable' => $baseDir . '/database/migrations/2015_09_23_011722_create_distribuidors_table.php',

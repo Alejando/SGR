@@ -8,14 +8,15 @@ class Cuenta extends Model
 {
     //
     protected $table = 'cuentas';
+    protected $primaryKey = 'id_cuenta';
 
     public function vales()
     {
-        return $this->hasMany('App\Vale');
+        return $this->hasMany('App\Vale', 'id_cuenta');
     }
 
     public function pagos()
     {
-        return $this->hasMany('App\Pago');
+        return $this->hasMany('App\Pago', 'id_cuenta');
     }
 }
