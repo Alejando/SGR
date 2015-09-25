@@ -16,6 +16,9 @@ use App\Distribuidor;
 |
 */
 
+// Rutas de  los administradores  //
+
+Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
 
 
 Route::get('/', function () {
@@ -31,16 +34,10 @@ Route::get('vendedor', function () {
 Route::get('login', function () {
     return view('c_sesion');
 });
-<<<<<<< HEAD
-=======
 
 
 
 
-//----------------------------------------------------------//
-//---------------------> URL TEST DATA <--------------------//
-//----------------------------------------------------------//
->>>>>>> origin/master
 Route::get('clientes', function () {
     $clientes = Cliente::all();
 
