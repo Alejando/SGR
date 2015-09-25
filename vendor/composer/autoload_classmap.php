@@ -7,11 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'CreateClientesTable' => $baseDir . '/database/migrations/2015_09_23_011802_create_clientes_table.php',
-    'CreateCuentasTable' => $baseDir . '/database/migrations/2015_09_24_011004_create_cuentas_table.php',
+    'CreateCuentasTable' => $baseDir . '/database/migrations/2015_09_24_230408_create_cuentas_table.php',
     'CreateDistribuidorsTable' => $baseDir . '/database/migrations/2015_09_23_011722_create_distribuidors_table.php',
-    'CreatePagosTable' => $baseDir . '/database/migrations/2015_09_23_011746_create_pagos_table.php',
+    'CreatePagosTable' => $baseDir . '/database/migrations/2015_09_25_000032_create_pagos_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-    'CreatePromocionsTable' => $baseDir . '/database/migrations/2015_09_23_011820_create_promocions_table.php',
+    'CreatePromocionsTable' => $baseDir . '/database/migrations/2015_09_24_233757_create_promocions_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'CreateValesTable' => $baseDir . '/database/migrations/2015_09_23_011645_create_vales_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
