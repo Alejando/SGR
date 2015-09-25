@@ -15,10 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('admin/m_admin');
+Route::get('admin', function () {
+    return view('m_admin');
 });
-
+Route::get('vendedor', function () {
+    return view('m_vendedor');
+});
+Route::get('login', function () {
+    return view('c_sesion');
+});
 Route::get('clientes', function () {
     $clientes = Cliente::all();
 
