@@ -19,7 +19,7 @@ use App\Distribuidor;
 // Rutas de  los administradores  //
 
 Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
-
+Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
 
 Route::get('/', function () {
     return view('welcome');
