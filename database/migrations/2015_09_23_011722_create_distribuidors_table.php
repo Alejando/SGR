@@ -15,7 +15,13 @@ class CreateDistribuidorsTable extends Migration
         Schema::create('distribuidors', function (Blueprint $table) {
             $table->increments('id_distribuidor');
             $table->string('nombre');
-            $table->text('direccion');
+            $table->string('calle');
+            $table->integer('numero_exterior');
+            $table->integer('numero_interior');
+            $table->string('colonia');
+            $table->string('municipio');
+            $table->string('estado');
+            $table->integer('codigo_postal');
             $table->string('telefono');
             $table->string('celular');
             $table->string('foto'); 
