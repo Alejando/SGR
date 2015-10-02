@@ -21,7 +21,7 @@
 							
 								<div class="form-group">
 									<label>Nombre</label>
-									<input type="text"  name="nombre" class="form-control" required>
+									<input type="text"  name="nombre" class="form-control validate" required>
 								</div>
 								
 								<div class="col-md-6">
@@ -44,7 +44,7 @@
 									</div>
 									<div class="form-group">
 										<label>Celular</label>
-										<input type="text"  name="celular" class="form-control" required>
+										<input type="tel"  name="celular" class="form-control" required>
 									</div>	
 								</div>		
 								<div class="col-md-6">
@@ -69,14 +69,14 @@
 									
 									<div class="form-group">
 										<label>Telefono</label>
-										<input type="text"  name="telefono" class="form-control" >
+										<input type="tel"  name="telefono" class="form-control" >
 									</div>
 								</div>	
 							</div>
 							<div class="col-md-6">
 								<label>Datos de Aval</label>
 								<div class="form-group">
-									<label>Nombre de Aval</label>
+									<label class="control-label">Nombre de Aval</label>
 									<input type="text"  name="nombre_aval" class="form-control" required>
 								</div>
 								<div class="col-md-6">
@@ -97,9 +97,9 @@
 										<label>Código Postal</label>
 										<input type="text"  name="codigo_postal_aval" class="form-control" required>
 									</div>
-									<div class="form-group">
-										<label>Celular</label>
-										<input type="text"  name="celular_aval" class="form-control" required>
+									<div class="form-group ">
+										<label class="control-label">Celular</label>
+										<input type="text"  name="celular_aval" class="form-control" pattern="[0-9]{10}" required>
 									</div>	
 								</div>		
 								<div class="col-md-6">
@@ -124,20 +124,19 @@
 									
 									<div class="form-group">
 										<label>Telefono</label>
-										<input type="text"  name="telefono_aval" class="form-control" >
+										<input type="text"  name="telefono_aval"  class="form-control" >
 									</div>	
 								</div>
-								 
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="form-group">
 										<label>Limite de credito para distribuidor</label>
-										<input type="text"  name="limite_credito" class="form-control" required>
+										<input type="number"  name="limite_credito" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<label>Limite de credito para vales</label>
-										<input type="text"  name="limite_vale" class="form-control" required>
+										<input type="number"  name="limite_vale" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<label>Foto</label>

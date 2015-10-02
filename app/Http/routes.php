@@ -20,6 +20,9 @@ use App\Distribuidor;
 
 Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
 Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
+Route::get('crearVale', 'ValesController@crearVale');
+Route::get('completarCampo', 'ValesController@completarCampo');
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,21 +37,7 @@ Route::get('vendedor', function () {
 Route::get('login', function () {
     return view('c_sesion');
 });
-<<<<<<< HEAD
-=======
 
->>>>>>> 6498a0304767f61823889bd55eb6ea979e8738e7
-
-
-
-
-<<<<<<< HEAD
-=======
-//----------------------------------------------------------//
-//---------------------> URL TEST DATA <--------------------//
-//----------------------------------------------------------//
-
->>>>>>> 6498a0304767f61823889bd55eb6ea979e8738e7
 Route::get('clientes', function () {
     $clientes = Cliente::all();
 

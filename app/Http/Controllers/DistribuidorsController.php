@@ -21,7 +21,8 @@ class DistribuidorsController extends Controller
     public function guardarDistribuidor(Request $request)
     {
         $distribuidor = new Distribuidor;
-        $distribuidor->nombre = $request->input('nombre');
+        $nombre =$request->input('nombre');
+        $distribuidor->nombre = $nombre;
         $distribuidor->calle = $request->input('calle');
         $distribuidor->numero_exterior = $request->input('numero_exterior');
         $distribuidor->municipio = $request->input('municipio');
@@ -44,21 +45,20 @@ class DistribuidorsController extends Controller
         $distribuidor->limite_credito = $request->input('limite_credito');
         $distribuidor->limite_vale = $request->input('limite_vale');
        
-       if ($request->hasFile('foto')) {
-         $file = $request->file('foto');
-         $nombreFoto=$file->getClientOriginalName();
-         $distribuidor->foto=$nombreFoto;
-         $file->move('fotos/', $nombreFoto); 
-        }
-         if ($request->hasFile('firma')) {
-        $file = $request->file('firma');
-         $nombreFirma=$file->getClientOriginalName();
-         $distribuidor->foto=$nombreFirma;
-         $file->move('firma/', $nombreFirma); 
-        }
+        $file = $request->file('foto');
+        $nombreFoto='foto'.$nombre.'.'.$file->getClientOriginalExtension();
+        $distribuidor->foto=$nombreFoto;
+      
+       $file = $request->file('firma');
+        $nombreFirma='firma'.$nombre.'.'.$file->getClientOriginalExtension();
+        $distribuidor->firma=$nombreFirma;
+        ;
+        
        
 
         if($distribuidor->save()){
+            \Storage::disk('local')->put($nombreFoto,  \File::get($file));
+            \Storage::disk('local')->put($nombreFirma,  \File::get($file));
             Session::flash('message','Guardado Correctamente');
             Session::flash('class','success');
         }else{
