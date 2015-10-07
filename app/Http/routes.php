@@ -22,7 +22,7 @@ Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
 Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
 Route::get('crearVale', 'ValesController@crearVale');
 Route::get('completarCampo', 'ValesController@completarCampo');
-
+Route::get('guardarVale', 'ValesController@guardarVale');
 
 Route::get('/', function () {
     return view('welcome');

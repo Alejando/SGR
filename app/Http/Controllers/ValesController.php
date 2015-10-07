@@ -5,7 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Distribuidor;
-
+use App\Vale;
+use Session;
 class ValesController extends Controller
 {
    public function completarCampo(Request $request)
@@ -37,95 +38,41 @@ class ValesController extends Controller
      */
     public function guardarVale(Request $request)
     {
-        $vale = new Vale;
-        $distribuidor->nombre = $request->input('nombre');
-        $distribuidor->calle = $request->input('calle');
-        $distribuidor->numero_exterior = $request->input('numero_exterior');
-        $distribuidor->municipio = $request->input('municipio');
-        $distribuidor->codigo_postal = $request->input('codigo_postal');
-        $distribuidor->celular = $request->input('celular');
-        $distribuidor->colonia = $request->input('colonia');
-        $distribuidor->numero_interior = $request->input('numero_interior');
-        $distribuidor->estado = $request->input('estado');
-        $distribuidor->telefono = $request->input('telefono');
-        $distribuidor->nombre_aval = $request->input('nombre_aval');
-        $distribuidor->calle_aval = $request->input('calle_aval');
-        $distribuidor->numero_exterior_aval = $request->input('numero_exterior_aval');
-        $distribuidor->municipio_aval = $request->input('municipio_aval');
-        $distribuidor->codigo_postal_aval = $request->input('codigo_postal_aval');
-        $distribuidor->celular_aval = $request->input('celular_aval');
-        $distribuidor->colonia_aval = $request->input('colonia_aval');
-        $distribuidor->numero_interior_aval = $request->input('numero_interior_aval');
-        $distribuidor->estado_aval = $request->input('estado_aval');
-        $distribuidor->telefono_aval = $request->input('telefono_aval');
-        $distribuidor->limite_credito = $request->input('limite_credito');
-        $distribuidor->limite_vale = $request->input('limite_vale');
        
-        $file = $request->file('foto');
-        $nombreFoto='foto'.$nombre.'.'.$file->getClientOriginalExtension();
-        $distribuidor->foto=$nombreFoto;
-      
-       $file = $request->file('firma');
-        $nombreFirma='firma'.$nombre.'.'.$file->getClientOriginalExtension();
-        $distribuidor->firma=$nombreFirma;
-        ;
-        
+        $distri = $request->input('id_distribuidor');
+        $serie = $request->input('serie');
+        $folioInicio = $request->input('folio_inicio');
+        $folioFin = $request->input('folio_fin');
+       $auxV= Vale::where('serie',$serie)->get();
        
+        if (count($auxV)==0) {
+            $ultimo=0;
+        }
+        else{
+            $ultimo=$auxV->last()->folio;
+        }
 
-        if($distribuidor->save()){
-            \Storage::disk('local')->put($nombreFoto,  \File::get($file));
-            \Storage::disk('local')->put($nombreFirma,  \File::get($file));
+        if($folioInicio>$ultimo){
+            for($i=$folioInicio;$i<=$folioFin;$i++){
+                $vale = new Vale;
+                $vale->id_distribuidor=$distri;
+                $vale->serie=$serie;
+                $vale->folio=$i;
+                $vale->fecha_creacion=date("Y-m-d");
+                $vale->save();
+            }
             Session::flash('message','Guardado Correctamente');
-            Session::flash('class','success');
-        }else{
-            Session::flash('message','Ha ocurrido un error');
+                Session::flash('class','success');
+        }
+        else{
+             Session::flash('message','Folio repetido el ultimo folio es: '.$auxV->last()->folio);
             Session::flash('class','danger');
         }
-       return view('distribuidor.crearDistribuidor');
+          
+       return view('admin.crearVale'); 
+       
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  
+  
 }

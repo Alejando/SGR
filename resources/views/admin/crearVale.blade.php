@@ -24,26 +24,26 @@
 							
 								<div class="form-group ">
 									<label>Nombre del distribuidor</label>
-									<input type="text"  name="nombre" id="nombreDistribuidor"class="form-control" required >
+									<input type="text"  name="id_distribuidor" id="nombreDistribuidor"class="form-control" required >
 
 								</div>
 								
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Serie</label>
-										<input type="text"  name="calle" class="form-control" required>
+										<input type="text"  name="serie" class="form-control" required>
 									</div>	
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Folio Inicio</label>
-										<input type="number"  name="numero_exterior" class="form-control" >
+										<input type="number"  name="folio_inicio" class="form-control" >
 									</div>		
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">	
 										<label>Folio Fin</label>
-										<input type="number"  name="municipio" class="form-control" required>
+										<input type="number"  name="folio_fin" class="form-control" required>
 									</div>	
 								</div>
 							</div>
