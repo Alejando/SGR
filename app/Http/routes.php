@@ -22,8 +22,9 @@ Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
 Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
 Route::get('crearVale', 'ValesController@crearVale');
 Route::get('completarCampo', 'ValesController@completarCampo');
-Route::get('guardarVale', 'ValesController@guardarVale');
-
+Route::post('guardarVale', 'ValesController@guardarVale');
+Route::get('registrarVale', 'ValesController@registrarVale');
+Route::get('buscarVale', 'ValesController@buscarVale');
 Route::get('/', function () {
     return view('welcome');
 });

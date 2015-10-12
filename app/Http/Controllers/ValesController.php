@@ -30,12 +30,6 @@ class ValesController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function guardarVale(Request $request)
     {
        
@@ -43,7 +37,7 @@ class ValesController extends Controller
         $serie = $request->input('serie');
         $folioInicio = $request->input('folio_inicio');
         $folioFin = $request->input('folio_fin');
-       $auxV= Vale::where('serie',$serie)->get();
+        $auxV= Vale::where('serie',$serie)->get();
        
         if (count($auxV)==0) {
             $ultimo=0;
@@ -58,6 +52,7 @@ class ValesController extends Controller
                 $vale->id_distribuidor=$distri;
                 $vale->serie=$serie;
                 $vale->folio=$i;
+                $vale->cantidad_limite=Distribuidor::find($distri)->limite_vale;
                 $vale->fecha_creacion=date("Y-m-d");
                 $vale->save();
             }
@@ -68,11 +63,22 @@ class ValesController extends Controller
              Session::flash('message','Folio repetido el ultimo folio es: '.$auxV->last()->folio);
             Session::flash('class','danger');
         }
-          
        return view('admin.crearVale'); 
        
     }
 
-  
+    public function registrarVale(){
+         return view('vendedor.registrarVale');
+    }
+
+    public function buscarVale(Request $request){
+         
+         $serie = $request->input('serie');
+         $folio = $request->input('folio');
+         $vale = Vale::where('serie',$serie)->where('folio', $folio)->get();
+
+        return $vale;
+    }
+
   
 }

@@ -100,8 +100,9 @@
 		<!--/.row-->
 		@yield('contenido')
 	</div>	<!--/.main-->
-	
-	<script src="js/jquery-1.11.1.min.js"></script>
+</body>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
 	<script src="js/chart-data.js"></script>
@@ -109,8 +110,7 @@
 	<script src="js/easypiechart-data.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/custom.js"></script>
-	<script>
 	
-</body>
-
+	@yield('js')
 </html>
+
