@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddCamposValesTable' => $baseDir . '/database/migrations/2015_10_12_230949_add_campos_vales_table.php',
     'AddFieldToClientesTable' => $baseDir . '/database/migrations/2015_09_25_222210_add_field_to_clientes_table.php',
     'AddFieldToDistribuidorsTable' => $baseDir . '/database/migrations/2015_09_25_220659_add_field_to_distribuidors_table.php',
     'AddFieldToPagosTable' => $baseDir . '/database/migrations/2015_09_25_231859_add_field_to_pagos_table.php',

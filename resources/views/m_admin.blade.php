@@ -149,6 +149,7 @@
 	<script src="js/easypiechart-data.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/custom.js"></script>
+	<script src="js/tipoPromocion.js"></script>
 	
 	@yield('js')
 </html>

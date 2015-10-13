@@ -11,7 +11,9 @@ use App\Distribuidor;
 //--------------------> RUTAS VENDEDOR <--------------------//
 //----------------------------------------------------------//
 
-
+//******************* CLASE CLIENTE *******************//
+Route::get('crearCliente', 'ClientesController@crearCliente');
+Route::post('guardarCliente', 'ClientesController@guardarCliente');
 
 //----------------------------------------------------------//
 //--------------------> RUTAS ADMINISTRADOR <---------------//
@@ -27,6 +29,10 @@ Route::get('completarCampo', 'ValesController@completarCampo');
 Route::post('guardarVale', 'ValesController@guardarVale');
 Route::get('registrarVale', 'ValesController@registrarVale');
 Route::get('buscarVale', 'ValesController@buscarVale');
+
+//******************* CLASE PROMOCION *******************//
+Route::get('crearPromocion', 'PromocionsController@crearPromocion');
+Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
 
 
 //----------------------------------------------------------//
