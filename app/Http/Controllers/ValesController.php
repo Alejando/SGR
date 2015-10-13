@@ -54,6 +54,7 @@ class ValesController extends Controller
                 $vale->folio=$i;
                 $vale->cantidad_limite=Distribuidor::find($distri)->limite_vale;
                 $vale->fecha_creacion=date("Y-m-d");
+                $vale->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
                 $vale->save();
             }
             Session::flash('message','Guardado Correctamente');
@@ -80,5 +81,12 @@ class ValesController extends Controller
         return $vale;
     }
 
+    public function buscarDistribuidor(Request $request){
+         
+         $id = $request->input('id');
+         $distribuidor = Distribuidor::find($id);
+
+        return $distribuidor->nombre;
+    }
   
 }

@@ -1,4 +1,4 @@
-@extends ('m_ADMIN')
+@extends ('m_vendedor')
 
 @section ('titulo') Registrar vale
 @stop
@@ -37,13 +37,13 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<label>Verificar</label>
-										<p class="btn btn-danger" onclick="datosVale()" >Comprobar</p>
+										<p  id="bVericar"class="btn btn-primary" onclick="datosVale()" >Comprobar</p>
 									</div>		
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Limite de Credito</label>
-										<input type="text"  name="limite_vale" class="form-control" disabled>
+										<input type="text"  id="limite_vale" name="limite_vale" class="form-control" disabled>
 									</div>	
 								</div>
 							</div>

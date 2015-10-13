@@ -29,6 +29,7 @@ Route::get('completarCampo', 'ValesController@completarCampo');
 Route::post('guardarVale', 'ValesController@guardarVale');
 Route::get('registrarVale', 'ValesController@registrarVale');
 Route::get('buscarVale', 'ValesController@buscarVale');
+Route::get('buscarDistribuidor', 'ValesController@buscarDistribuidor');
 
 //******************* CLASE PROMOCION *******************//
 Route::get('crearPromocion', 'PromocionsController@crearPromocion');
