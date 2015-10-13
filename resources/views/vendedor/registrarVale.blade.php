@@ -57,7 +57,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Nombre del distribuidor</label>
-										<input type="text"  name="nombre_distribuidor" class="form-control" disabled>
+										<input type="text" id="nombre_distribuidor"  name="nombre_distribuidor" class="form-control" disabled>
 									</div>	
 								</div>
 							</div>	
