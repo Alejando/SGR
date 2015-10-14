@@ -14,6 +14,8 @@ use App\Distribuidor;
 //******************* CLASE CLIENTE *******************//
 Route::get('crearCliente', 'ClientesController@crearCliente');
 Route::post('guardarCliente', 'ClientesController@guardarCliente');
+Route::get('consultarClientes', 'ClientesController@consultarClientes' );
+Route::get('obtenerClientes', 'ClientesController@obtenerClientes' );
 
 //----------------------------------------------------------//
 //--------------------> RUTAS ADMINISTRADOR <---------------//
@@ -35,6 +37,9 @@ Route::get('buscarCliente', 'ValesController@buscarCliente');
 //******************* CLASE PROMOCION *******************//
 Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
+
+//******************* CLASE CUENTA *******************//
+Route::get('crearCuentaVendedor', 'CuentasController@crearCuentaVendedor');
 
 
 //----------------------------------------------------------//

@@ -46,6 +46,18 @@ class ClientesController extends Controller
         }
        return view('vendedor.crearCliente');
     }
+
+    public function consultarClientes()
+    {
+        $clientes = Cliente::all();
+        return view('vendedor.consultarClientes',compact('clientes'));
+    }
+
+    public function obtenerClientes()
+    {
+        $clientes = Cliente::all();
+        return $clientes;
+    }
     
     /**
      * Display a listing of the resource.
