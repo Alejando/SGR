@@ -51,7 +51,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Nombre del cliente</label>
-										<input type="text"  id="nombre" name="nombre"  class="form-control" required>
+										<input type="text"  id="nombreCliente" name="nombre"  class="form-control" required>
 									</div>	
 								</div>
 								<div class="col-md-6">
@@ -66,7 +66,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Cantidad de venta</label>
-										<input type="text"  name="cantidad" class="form-control" required>
+										<input type="number"  id="cantidad" name="cantidad" class="form-control" required>
 									</div>	
 								</div>
 								<div class="col-md-6">
@@ -85,6 +85,8 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>Fecha pagos</label>
+										<div id="pagos">
+											
 								</div>
 							</div>	
 							<div class="col-md-12">
@@ -105,4 +107,5 @@
 @stop
 
 @section ('js') 
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="js/actualizarVale.js"></script>

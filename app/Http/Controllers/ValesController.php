@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Distribuidor;
 use App\Vale;
+use App\Cliente;
+
 use Session;
 class ValesController extends Controller
 {
@@ -33,7 +35,7 @@ class ValesController extends Controller
     public function guardarVale(Request $request)
     {
        
-        $distri = $request->input('id_distribuidor');
+        $id_distribuidor = $request->input('id_distribuidor');
         $serie = $request->input('serie');
         $folioInicio = $request->input('folio_inicio');
         $folioFin = $request->input('folio_fin');
@@ -49,10 +51,10 @@ class ValesController extends Controller
         if($folioInicio>$ultimo){
             for($i=$folioInicio;$i<=$folioFin;$i++){
                 $vale = new Vale;
-                $vale->id_distribuidor=$distri;
+                $vale->id_distribuidor=$id_distribuidor;
                 $vale->serie=$serie;
                 $vale->folio=$i;
-                $vale->cantidad_limite=Distribuidor::find($distri)->limite_vale;
+                $vale->cantidad_limite=Distribuidor::find($id_distribuidor)->limite_vale;
                 $vale->fecha_creacion=date("Y-m-d");
                 $vale->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
                 $vale->save();
@@ -87,6 +89,17 @@ class ValesController extends Controller
          $distribuidor = Distribuidor::find($id);
 
         return $distribuidor->nombre;
+    }
+    public function buscarCliente(Request $request){
+            $valor = $request->input('nombre'); 
+
+        $clientes = cliente::where('nombre', 'LIKE', '%'.$valor.'%')->take(5)->get();
+        $results = array();
+        foreach ($clientes as $cliente)
+            {
+                $results[] = [ 'id' => $cliente->id_cliente, 'value' => $cliente->nombre ];
+            }
+        return response()->json($results);
     }
   
 }

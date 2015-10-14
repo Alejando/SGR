@@ -30,6 +30,7 @@ Route::post('guardarVale', 'ValesController@guardarVale');
 Route::get('registrarVale', 'ValesController@registrarVale');
 Route::get('buscarVale', 'ValesController@buscarVale');
 Route::get('buscarDistribuidor', 'ValesController@buscarDistribuidor');
+Route::get('buscarCliente', 'ValesController@buscarCliente');
 
 //******************* CLASE PROMOCION *******************//
 Route::get('crearPromocion', 'PromocionsController@crearPromocion');
