@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddCampoToValesTable' => $baseDir . '/database/migrations/2015_10_15_233724_add_campo_to_vales_table.php',
     'AddCamposValesTable' => $baseDir . '/database/migrations/2015_10_12_230949_add_campos_vales_table.php',
     'AddFieldToClientesTable' => $baseDir . '/database/migrations/2015_09_25_222210_add_field_to_clientes_table.php',
     'AddFieldToDistribuidorsTable' => $baseDir . '/database/migrations/2015_09_25_220659_add_field_to_distribuidors_table.php',
@@ -18,6 +19,7 @@ return array(
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePromocionsTable' => $baseDir . '/database/migrations/2015_09_24_233757_create_promocions_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+    'CreateValesHasPromocionesTable' => $baseDir . '/database/migrations/2015_10_14_224515_create_vales_has_promociones_table.php',
     'CreateValesTable' => $baseDir . '/database/migrations/2015_09_23_011645_create_vales_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',

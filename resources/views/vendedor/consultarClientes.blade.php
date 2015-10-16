@@ -15,19 +15,21 @@
 						<table data-toggle="table"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
-						        <th data-field="state" data-checkbox="true" >Item ID</th>
-						        <th data-field="id_cliente" data-sortable="true">Item ID</th>
-						        <th data-field="nombre"  data-sortable="true">Item Name</th>
-						        <th data-field="colonia" data-sortable="true">Item Price</th>
-						        <th>Acciones</th>
+						        <th data-sortable="true">Nombre</th>
+						        <th data-sortable="true">Teléfono</th>
+						        <th data-sortable="true">Celular</th>
+						        <th data-sortable="true">Dirección</th>
+						        <th class="col-lg-1">Acciones</th>
 						    </tr>
 						    </thead>
 						    <tbody>
 						        @foreach($clientes as $cliente)
 					            <tr>
-					                <td>{{ $cliente->id_cliente }} </td>
 					                <td>{{ $cliente->nombre }} </td>
-					                <td>{{ $cliente->colonia }} </td>
+					                <td>{{ $cliente->telefono }} </td>
+					                <td>{{ $cliente->celular }} </td>
+					                <td>{{ $cliente->calle }}, #{{ $cliente->numero_exterior }}, {{ $cliente->colonia }}, {{ $cliente->municipio }}, {{ $cliente->estado }}, {{ $cliente->codigo_postal }} </td>
+					                <td><a type="button" class="btn btn-primary margin" href="{{ URL::to('editarCliente/' . $cliente->id_cliente) }}">Actualizar</a></td>
 					                
 					            </tr>
 						        @endforeach
@@ -36,32 +38,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">Basic Table</div>
-					<div class="panel-body">
-						<table data-toggle="table">
-						    <thead>
-						    <tr>
-						        <th>Item ID</th>
-						        <th>Item Name</th>
-						        <th>Item Price</th>
-						    </tr>
-						    </thead>
-						    <tbody>
-						        @foreach($clientes as $cliente)
-					            <tr>
-					                <td>{{ $cliente->id_cliente }} </td>
-					                <td>{{ $cliente->nombre }} </td>
-					                <td>{{ $cliente->colonia }} </td>
-					                
-					            </tr>
-						        @endforeach
-					        </tbody>
-						</table>
-					</div>
-				</div>
-			</div>
+			
 			
 		
 	</div><!--/.main-->
