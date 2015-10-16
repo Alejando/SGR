@@ -83,7 +83,7 @@ class ValesController extends Controller
         return $vale;
     }
 
-    public function buscarDistribuidor(Request $request){
+    public function buscarIdDistribuidor(Request $request){
          
          $id = $request->input('id');
          $distribuidor = Distribuidor::find($id);
@@ -101,5 +101,12 @@ class ValesController extends Controller
             }
         return response()->json($results);
     }
+    public function buscarIdCliente(Request $request){
+           $id = $request->input('id');
+         $cliente = Cliente::find($id);
+
+        return $cliente->nombre;
+    }
+    
   
 }

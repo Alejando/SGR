@@ -9,15 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Translation\Exception;
-
-/**
- * Exception interface for all exceptions thrown by the component.
- *
- * @author Fabien Potencier <fabien@symfony.com>
- *
- * @api
- */
-interface ExceptionInterface
-{
+// Skipping trait tests for PHP < 5.4
+if (version_compare(PHP_VERSION, '5.4.0-dev', '>=')) {
+    require 'VarDumpTestTraitRequire54.php';
 }
+

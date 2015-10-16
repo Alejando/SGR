@@ -31,12 +31,14 @@ Route::get('completarCampo', 'ValesController@completarCampo');
 Route::post('guardarVale', 'ValesController@guardarVale');
 Route::get('registrarVale', 'ValesController@registrarVale');
 Route::get('buscarVale', 'ValesController@buscarVale');
-Route::get('buscarDistribuidor', 'ValesController@buscarDistribuidor');
+Route::get('buscarIdDistribuidor', 'ValesController@buscarIdDistribuidor');
 Route::get('buscarCliente', 'ValesController@buscarCliente');
+Route::get('buscarIdCliente', 'ValesController@buscarIdCliente');
 
 //******************* CLASE PROMOCION *******************//
 Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
+Route::get('buscarPromocion', 'PromocionsController@buscarPromocion');
 
 //******************* CLASE CUENTA *******************//
 Route::get('crearCuentaVendedor', 'CuentasController@crearCuentaVendedor');

@@ -57,7 +57,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Nombre del distribuidor</label>
-										<input type="text" id="nombre_distribuidor"  name="nombre_distribuidor" class="form-control" disabled>
+										<input type="text" id="nombreDistribuidor"  name="nombre_distribuidor" class="form-control" disabled>
 									</div>	
 								</div>
 							</div>	
@@ -72,7 +72,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Folio venta </label>
-										<input type="number"  name="folio_venta" class="form-control" >
+										<input type="number"  id="folioVenta"name="folio_venta" class="form-control" >
 									</div>		
 								</div>
 								
@@ -80,12 +80,13 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>Promociones Actuales</label>
+										<div id="promociones"></div>
 								</div>
 							</div>	
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>Fecha pagos</label>
-										<div id="pagos">
+										<div id="pagos"></div>
 											
 								</div>
 							</div>	
