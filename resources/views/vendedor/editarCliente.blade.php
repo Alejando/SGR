@@ -16,77 +16,76 @@
 		                @endif
 						<div class="col-md-6">
 							<label>Datos Cliente</label>
-							<form class="form" role="form" method="PUT" action="actualizarCliente" enctype="multipart/form-data">
+							<form class="form" role="form" method="POST" action="{{URL::to('actualizarCliente/').'/'.$cliente->id_cliente}}" enctype="multipart/form-data">
      					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<div class="form-group">
 									<label>Nombre</label>
-									<input type="text"  name="nombre" class="form-control" required>
+									<input type="text" value="{{ $cliente->nombre }}"  name="nombre" class="form-control" required>
 								</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Teléfono</label>
-									<input type="text"  name="telefono" class="form-control" required>
+									<input type="text" value="{{ $cliente->telefono }}" name="telefono" class="form-control" required>
 								</div>
 								<div class="form-group">
 									<label>Número de elector</label>
-									<input type="number"  name="numero_elector" class="form-control" required>
+									<input type="number" value="{{ $cliente->numero_elector }}" name="numero_elector" class="form-control" required>
 								</div>	
 								<div class="form-group">
 									<label>Número exterior</label>
-									<input type="text"  name="numero_exterior" class="form-control" >
+									<input type="text" value="{{ $cliente->numero_exterior }}"  name="numero_exterior" class="form-control" >
 								</div>		
 								<div class="form-group">	
 									<label>Colonia</label>
-									<input type="text"  name="colonia" class="form-control" required>
+									<input type="text"  value="{{ $cliente->colonia }}" name="colonia" class="form-control" required>
 								</div>
 								<div class="form-group">	
 									<label>Estado</label>
-									<input type="text"  name="estado" class="form-control" required>
+									<input type="text" value="{{ $cliente->estado }}" name="estado" class="form-control" required>
 								</div>
 									
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Celular</label>
-									<input type="text"  name="celular" class="form-control" required>
+									<input type="text"  value="{{ $cliente->celular }}" name="celular" class="form-control" required>
 								</div>
 								<div class="form-group">
 									<label>Calle</label>
-									<input type="text"  name="calle" class="form-control" required>
+									<input type="text" value="{{ $cliente->calle }}"  name="calle" class="form-control" required>
 								</div>	
 								<div class="form-group">
 									<label>Número interior</label>
-									<input type="text"  name="numero_interior" class="form-control" >
+									<input type="text"  value="{{ $cliente->numero_interior }}" name="numero_interior" class="form-control" >
 								</div>		
 								<div class="form-group">	
 									<label>Municipio</label>
-									<input type="text"  name="municipio" class="form-control" required>
+									<input type="text" value="{{ $cliente->municipio }}" name="municipio" class="form-control" required>
 								</div>
 								<div class="form-group">	
 									<label>Código Postal</label>
-									<input type="number"  name="codigo_postal" class="form-control" required>
+									<input type="number"  value="{{ $cliente->codigo_postal }}" name="codigo_postal" class="form-control" required>
 								</div>	
 							</div>	
 						</div>
 						<div class="col-md-6">
 							<label>Referencias del cliente</label>
-							<form class="form" role="form" method="POST" action="guardarDistribuidor" enctype="multipart/form-data">
-     					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+							
 								<div class="form-group">
 									<label>Nombre referencia 1</label>
-									<input type="text"  name="nombre_referencia_1" class="form-control" required>
+									<input type="text" value="{{ $cliente->nombre_referencia_1 }}"  name="nombre_referencia_1" class="form-control" required>
 								</div>
 								<div class="form-group">
 									<label>Teléfono referencia 1</label>
-									<input type="text"  name="telefono_referencia_1" class="form-control" required>
+									<input type="text" value="{{ $cliente->telefono_referencia_1 }}" name="telefono_referencia_1" class="form-control" required>
 								</div>
 								<div class="form-group">
 									<label>Nombre referencia 2</label>
-									<input type="text"  name="nombre_referencia_2" class="form-control" required>
+									<input type="text"  value="{{ $cliente->nombre_referencia_2 }}" name="nombre_referencia_2" class="form-control" required>
 								</div>
 								<div class="form-group">
 									<label>Teléfono referencia 2</label>
-									<input type="text"  name="telefono_referencia_2" class="form-control" required>
+									<input type="text" value="{{ $cliente->telefono_referencia_2 }}" name="telefono_referencia_2" class="form-control" required>
 								</div>
 						</div>	
 							

@@ -43,12 +43,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
-						<a class="" href="#">
+						<a class="" href="crearVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Vales
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
+						<a class="" href="registrarVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Emitir Vales
 						</a>
 					</li>
@@ -65,7 +65,7 @@
 				</a>
 				<ul class="children collapse" id="sub-item-2">
 					<li>
-						<a class="" href="#">
+						<a class="" href="crearDistribuidor">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Distribuidor
 						</a>
 					</li>
@@ -82,12 +82,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-3">
 					<li>
-						<a class="" href="#">
+						<a class="" href="crearCliente">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Cliente
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
+						<a class="" href="consultarClientes">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Clientes
 						</a>
 					</li>
@@ -99,7 +99,7 @@
 				</a>
 				<ul class="children collapse" id="sub-item-4">
 					<li>
-						<a class="" href="#">
+						<a class="" href="crearPromocion">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Promoción
 						</a>
 					</li>
@@ -116,7 +116,7 @@
 				</a>
 				<ul class="children collapse" id="sub-item-5">
 					<li>
-						<a class="" href="#">
+						<a class="" href="crearCuentaVendedor">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Cuenta
 						</a>
 					</li>

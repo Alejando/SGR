@@ -47,7 +47,7 @@
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
-						<a class="" href="#">
+						<a class="" href="registrarVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Emitir Vales
 						</a>
 					</li>
@@ -64,12 +64,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-3">
 					<li>
-						<a class="" href="#">
+						<a class="" href="crearCliente">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Cliente
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
+						<a class="" href="consultarClientes">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Clientes
 						</a>
 					</li>

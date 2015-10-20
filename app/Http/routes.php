@@ -17,6 +17,7 @@ Route::post('guardarCliente', 'ClientesController@guardarCliente');
 Route::get('consultarClientes', 'ClientesController@consultarClientes' );
 Route::get('obtenerClientes', 'ClientesController@obtenerClientes' );
 Route::get('editarCliente/{id}', 'ClientesController@editarCliente');
+Route::post('actualizarCliente/{id}', 'ClientesController@actualizarCliente');
 
 //----------------------------------------------------------//
 //--------------------> RUTAS ADMINISTRADOR <---------------//
