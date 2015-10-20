@@ -19,21 +19,63 @@ class PromocionsController extends Controller
 
     public function guardarPromocion(Request $request)
     {   //Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quinsenas" 3="Pague en  8 quinsenas"
-        $promocion = new Promocion;
-        $promocion->tipo_promocion = $request->input('tipo_promocion');
-        $promocion->fecha_creacion = $request->input('fecha_creacion');
-        $promocion->fecha_termino = $request->input('fecha_termino');
+        $promocionNueva = new Promocion;
+        $promocionNueva->tipo_promocion = $request->input('tipo_promocion');
+        $promocionNueva->fecha_creacion = $request->input('fecha_creacion');
+        $promocionNueva->fecha_termino = $request->input('fecha_termino');
         if($request->input('fecha_inicio') != NULL)
         {
-            $promocion->fecha_inicio = $request->input('fecha_inicio');
+            $promocionNueva->fecha_inicio = $request->input('fecha_inicio');
         }
-        if($promocion->save()){
+
+        if($request->input('numero_pagos') != NULL)
+        {
+            $promocionNueva->numero_pagos = $request->input('numero_pagos');
+        }
+
+        $fechaCreacionPromoDB=$promocionNueva->fecha_creacion;
+        $fechaTerminoPromoDB=$promocionNueva->fecha_termino;
+        $fechaInicioNuevaCarbon=Carbon::parse($fechaCreacionPromoDB);
+        $fechaTerminoNuevaCarbon=Carbon::parse($fechaTerminoPromoDB);
+
+        $promocions = Promocion::all();
+        foreach ($promocions as $promocion)//2015-12-27
+            {   
+                
+                $fechaInicioCarbon=Carbon::parse($promocion->fecha_creacion);
+                $fechaTerminoCarbon=Carbon::parse($promocion->fecha_termino);
+               
+                //if(($fechaInicioNuevaCarbon>=$fechaCreacionCarbon && $fechaInicioNuevaCarbon<=$fechaTerminoCarbon) || ($fechaTerminoNuevaCarbon>=$fechaCreacionCarbon && $fechaTerminoNuevaCarbon<=$fechaTerminoCarbon))
+
+                if(($promocionNueva->tipo_promocion == $promocion->tipo_promocion) && (($fechaInicioNuevaCarbon >= $fechaInicioCarbon && $fechaInicioNuevaCarbon <= $fechaTerminoCarbon) ||  ($fechaTerminoNuevaCarbon >= $fechaInicioCarbon && $fechaTerminoNuevaCarbon <= $fechaTerminoCarbon))) 
+                {
+                    $Repetida = true;
+                    break;
+                }else{
+                   $Repetida = false; 
+                } 
+                
+               
+            }
+
+        if($Repetida){
+
+            Session::flash('message','Ya se encuentra una promción vigente del mismo tipo');
+            Session::flash('class','danger');
+        }else{
+            $promocionNueva->save();
+            Session::flash('message','Guardado Correctamente');
+            Session::flash('class','success');
+        }
+        /*
+        if($promocionNueva->save()){
             Session::flash('message','Guardado Correctamente');
             Session::flash('class','success');
         }else{
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
+        */
        return view('admin.crearPromocion');
     }
     

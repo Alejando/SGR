@@ -23,8 +23,7 @@
 									<select name="tipo_promocion" class="form-control" id="tipo_promocion">
 									  <option class="form-control">Selecciona promoción</option>
 									  <option value="1" class="form-control">Empiece a pagar a partir de una fecha</option>
-									  <option value="2" class="form-control">Pague a 6 quincenas</option>
-									  <option value="3" class="form-control">Pague a 8 quincenas</option>
+									  <option value="2" class="form-control">Pague a un número de quincenas</option>
 									</select>
 								</div>
 								
