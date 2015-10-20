@@ -54,9 +54,56 @@ class PromocionsController extends Controller
                
             }
         return response()->json($results);
-
-            
-       
         //return($fecha);
     }
+    public function fechaPago(Request $request){
+       $fecha=$request->input('fecha');
+       $nPago=$request->input('nPago');
+       $cambioFecha=$request->input('cambioFecha');
+       
+       $fechaCarbon=Carbon::parse($fecha);
+       $diasMes=$fechaCarbon->daysInMonth;
+       if($cambioFecha==0){          
+                $fechaCarbon->addDay();
+       }
+       if($cambioFecha==1 && $fechaCarbon->day<=15){
+              $fechaCarbon->subDay();
+       }
+        if($fechaCarbon->day>=15 && $fechaCarbon->day<=$diasMes){
+            $fechaCarbon->day=1;
+            if($nPago%2==0){
+                $fechaCarbon->addMonths($nPago/2);
+                 $fechaCarbon->day(15);
+                return $fechaCarbon->toDateString();
+            }
+            else{
+                $fechaCarbon->addMonths(($nPago+1)/2);
+                 $fechaCarbon->subDay();
+                return $fechaCarbon->toDateString();
+            }
+          
+        }
+        else{
+            if($fechaCarbon->day>15){
+                 $fechaCarbon->day=1;
+                 $fechaCarbon->addMonth();
+            }else{
+                 $fechaCarbon->day=1;
+            }
+           
+            if($nPago%2==0){
+                 $fechaCarbon->addMonths(($nPago)/2);
+                 $fechaCarbon->subDay();
+                return $fechaCarbon->toDateString();
+            }
+            else{
+               $fechaCarbon->addMonths($nPago/2);
+                 $fechaCarbon->day(15);
+                return $fechaCarbon->toDateString();
+            }
+        }
+
+   
+    }
+
 }

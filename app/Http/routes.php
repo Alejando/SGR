@@ -36,10 +36,12 @@ Route::get('buscarIdDistribuidor', 'ValesController@buscarIdDistribuidor');
 Route::get('buscarCliente', 'ValesController@buscarCliente');
 Route::get('buscarIdCliente', 'ValesController@buscarIdCliente');
 
+
 //******************* CLASE PROMOCION *******************//
 Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
 Route::get('buscarPromocion', 'PromocionsController@buscarPromocion');
+Route::get('fechaPago', 'PromocionsController@fechaPago');
 
 //******************* CLASE CUENTA *******************//
 Route::get('crearCuentaVendedor', 'CuentasController@crearCuentaVendedor');
