@@ -89,3 +89,9 @@ Route::get('prueba', function()
 	return ("Holi--->".$colonia_distribuidor);
 	//return ("Holi--->".$promocion_vale);
 });
+
+
+Route::get('prueba2', function()
+{
+	return ("Holi");	
+});
