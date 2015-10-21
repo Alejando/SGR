@@ -47,7 +47,7 @@
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
-						<a class="" href="registrarVale">
+						<a class="" href="../registrarVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Emitir Vales
 						</a>
 					</li>
@@ -64,12 +64,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-3">
 					<li>
-						<a class="" href="crearCliente">
+						<a class="" href="../crearCliente">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Cliente
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarClientes">
+						<a class="" href="../consultarClientes">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Clientes
 						</a>
 					</li>
@@ -82,12 +82,12 @@
 				<ul class="children collapse" id="sub-item-4">
 					<li>
 						<a class="" href="#">
-							<span class="glyphicon glyphicon-share-alt"></span> Conslutar Promciones
+							<span class="glyphicon glyphicon-share-alt"></span> Consultar Promciones
 						</a>
 					</li>
 				</ul>
 			</li>
-			<li><a href="buttons.html"><span class="glyphicon glyphicon-hand-up"></span> Opciones</a></li>
+			<li><a ><span class="glyphicon glyphicon-hand-up"></span> Opciones</a></li>
 			<li role="presentation" class="divider"></li>
 
 			<li><a href="login.html"><span class="glyphicon glyphicon-user"></span> Cerrar Sesión</a></li>
