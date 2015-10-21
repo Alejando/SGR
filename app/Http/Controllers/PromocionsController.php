@@ -19,6 +19,7 @@ class PromocionsController extends Controller
 
     public function guardarPromocion(Request $request)
     {   //Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quinsenas" 3="Pague en  8 quinsenas"
+        $fechaHoy=Carbon::today(); 
         $promocionNueva = new Promocion;
         $promocionNueva->tipo_promocion = $request->input('tipo_promocion');
         $promocionNueva->fecha_creacion = $request->input('fecha_creacion');
@@ -26,6 +27,8 @@ class PromocionsController extends Controller
         if($request->input('fecha_inicio') != NULL)
         {
             $promocionNueva->fecha_inicio = $request->input('fecha_inicio');
+            $fechaInicioPagoPromoDB=$promocionNueva->fecha_inicio;
+            $fechaInicioPagoNuevaCarbon=Carbon::parse($fechaInicioPagoPromoDB);
         }
 
         if($request->input('numero_pagos') != NULL)
@@ -58,15 +61,63 @@ class PromocionsController extends Controller
                
             }
 
-        if($Repetida){
 
-            Session::flash('message','Ya se encuentra una promción vigente del mismo tipo');
+        if($fechaInicioNuevaCarbon<$fechaHoy)
+        {
+            Session::flash('message','La fecha de inicio no puede ser menor a la fecha de hoy');
             Session::flash('class','danger');
-        }else{
-            $promocionNueva->save();
-            Session::flash('message','Guardado Correctamente');
-            Session::flash('class','success');
-        }
+        }else
+            {
+                if($fechaInicioNuevaCarbon>=$fechaTerminoNuevaCarbon)
+                {
+                    Session::flash('message','La fecha de inicio no puede ser mayor o igual a la fecha de termino');
+                    Session::flash('class','danger');
+                }else
+                    {
+                        if($fechaTerminoNuevaCarbon<=$fechaInicioNuevaCarbon)
+                        {
+                            Session::flash('message','La fecha de termino no puede ser menor o igual a fecha de inicio');
+                            Session::flash('class','danger');
+                        }else
+                            {
+                                if($request->input('fecha_inicio') != NULL)
+                                {
+                                    if($fechaInicioPagoNuevaCarbon<=$fechaTerminoNuevaCarbon){
+                                        Session::flash('message','La fecha del primer pago no puede ser menor o igual a la fecha termino');
+                                        Session::flash('class','danger');
+                                    }else
+                                        {
+                                            if($Repetida)
+                                            {
+                                                Session::flash('message','Ya se encuentra una promoción vigente del mismo tipo');
+                                                Session::flash('class','danger');
+                                            }else
+                                                {
+                                                    $promocionNueva->save();
+                                                    Session::flash('message','Guardado Correctamente');
+                                                    Session::flash('class','success');
+                                                }
+                                        }
+                                }else
+                                    {
+                                        if($Repetida)
+                                        {
+                                            Session::flash('message','Ya se encuentra una promoción vigente del mismo tipo');
+                                            Session::flash('class','danger');
+                                        }else
+                                            {
+                                                $promocionNueva->save();
+                                                Session::flash('message','Guardado Correctamente');
+                                                Session::flash('class','success');
+                                            }
+                                    }
+                                
+
+                            }
+
+                    }
+                }
+
         /*
         if($promocionNueva->save()){
             Session::flash('message','Guardado Correctamente');
