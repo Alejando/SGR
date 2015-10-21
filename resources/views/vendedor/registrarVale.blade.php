@@ -104,7 +104,7 @@
 			</div><!-- /.col-->
 		</div><!-- /.row -->
 		
-	</div><!--/.main-->
+
 @stop
 
 @section ('js') 

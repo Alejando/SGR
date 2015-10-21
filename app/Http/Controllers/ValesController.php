@@ -83,6 +83,33 @@ class ValesController extends Controller
         return $vale;
     }
 
+    public function consultarVales()
+    {
+        $vales = Vale::all();
+        return view('vendedor.consultarVales',compact('vales'));
+    }
+    public function obtenerVales()
+    {
+
+        $vales = Vale::all();
+        for ($i=0; $i <sizeof($vales); $i++) { 
+             $vales[$i]->id_distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
+             if($vales[$i]->estatus==0){
+                $vales[$i]->estatus="Disponible";
+             }
+             if($vales[$i]->estatus==1){
+                $vales[$i]->estatus="Ocupado";
+             }
+             if($vales[$i]->estatus==2){
+                $vales[$i]->estatus="Cancelado";
+             }
+              $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>';    
+        }
+         
+         
+        return $vales;
+    }
+
     public function buscarIdDistribuidor(Request $request){
          
          $id = $request->input('id');

@@ -1,6 +1,6 @@
 @extends ('m_admin')
 
-@section ('titulo') Editar vale
+@section ('titulo') Crear Vale
 @stop
 
 @section ('css')

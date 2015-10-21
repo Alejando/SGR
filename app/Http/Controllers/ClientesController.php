@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -56,6 +55,12 @@ class ClientesController extends Controller
     public function obtenerClientes()
     {
         $clientes = Cliente::all();
+        for ($i=0; $i <sizeof($clientes); $i++) { 
+       $clientes[$i]->calle=$clientes[$i]->calle." #".$clientes[$i]->numero_exterior." ".$clientes[$i]->colonia." ".$clientes[$i]->municipio." ".$clientes[$i]->estado." ".$clientes[$i]->codigo_postal;
+             
+              $clientes[$i]->id_cliente='<a type="button" class="btn btn-primary margin" href="editarCliente/'. $clientes[$i]->id_cliente.'">Actualizar</a>';    
+        }
+        
         return $clientes;
     }
     

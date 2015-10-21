@@ -36,7 +36,8 @@ Route::get('buscarVale', 'ValesController@buscarVale');
 Route::get('buscarIdDistribuidor', 'ValesController@buscarIdDistribuidor');
 Route::get('buscarCliente', 'ValesController@buscarCliente');
 Route::get('buscarIdCliente', 'ValesController@buscarIdCliente');
-
+Route::get('consultarVales', 'ValesController@consultarVales' );
+Route::get('obtenerVales', 'ValesController@obtenerVales' );
 
 //******************* CLASE PROMOCION *******************//
 Route::get('crearPromocion', 'PromocionsController@crearPromocion');
@@ -75,8 +76,8 @@ Route::get('prueba', function()
 
 	//Pruebas para la relacion de 1 - * de vales y distribuidor (Aprobada)
 	$vales_distribuidor = Distribuidor::find(1)->vales;
-	$colonia_distribuidor = Vale::find(1)->distribuidor->colonia;
-
+	$colonia_distribuidor = Vale::find(1)->distribuidor->nombre;
+/*
 	//Pruebas para la relacion de 1 - * de vales y clientes (Aprobada)
 	$vales_cliente = Cliente::find(1)->vales;
 	$telefono_cliente = Vale::find(1)->cliente->telefono;
@@ -84,7 +85,7 @@ Route::get('prueba', function()
 	//Pruebas para la relacion de 1 - * de vales y promociones (Aprobada)
 	$vales_promocion = Promocion::find(14)->vales;
 	$promocion_vale = Vale::find(1)->promociones;
-	
-	return ("Holi--->".$vales_promocion);
+	*/
+	return ("Holi--->".$colonia_distribuidor);
 	//return ("Holi--->".$promocion_vale);
 });

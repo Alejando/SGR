@@ -1,6 +1,6 @@
 @extends ('m_vendedor')
 
-@section ('titulo') pagina 2
+@section ('titulo') Crear cliente nuevo
 @stop
 
 @section ('contenido')
