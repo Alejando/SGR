@@ -88,3 +88,9 @@ Route::get('prueba', function()
 	return ("Holi--->".$vales_promocion);
 	//return ("Holi--->".$promocion_vale);
 });
+
+
+Route::get('prueba2', function()
+{
+	return ("Holi");	
+});
