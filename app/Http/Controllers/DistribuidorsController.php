@@ -67,6 +67,25 @@ class DistribuidorsController extends Controller
         }
        return view('distribuidor.crearDistribuidor');
     }
+    public function buscarIdDistribuidor(Request $request){
+         
+         $id = $request->input('id');
+         $distribuidor = Distribuidor::find($id);
+
+        return $distribuidor->nombre;
+    }
+    public function buscarDistribuidor(Request $request)
+    {
+        $distribuidor = $request->input('temp'); 
+
+        $distris = Distribuidor::where('nombre', 'LIKE', '%'.$distribuidor.'%')->take(5)->get();
+        $results = array();
+        foreach ($distris as $distri)
+            {
+                $results[] = [ 'id' => $distri->id_distribuidor, 'value' => $distri->nombre ];
+            }
+        return response()->json($results);
+    }
 
     public function verDistribuidor($id)
     {

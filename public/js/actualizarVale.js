@@ -3,6 +3,7 @@ var nPagosGlobal=4;
 var Fecha = new Date(); //variable
 var fechaInicioPago=Fecha.getFullYear() + "-" + (Fecha.getMonth() +1) + "-" + Fecha.getDate();
 var BoolFechaPromo=0;
+var inputOcultos="" // datos que no tienen un input y se creara oculto :)
 
 $(function() {
 	mostrarPromocion();
@@ -18,7 +19,17 @@ $(function() {
 		}
 	  	code+="<div class='col-md-3'><div class='panel panel-primary'><div class='panel-heading'> Ultimo pago </div><div class='panel-body'><p>De $"+pagoFinal+".00  el "+cambiarTipoFecha(fechaPago(fechaInicioPago,nPagosGlobal))+"</p></div></div></div>";
 		$("#pagos").html(code);
+		$("#ocultos").html(inputOcultos);
 	})
+
+	$('#nombreCliente').autocomplete({
+    source: 'buscarCliente',
+   	minLength: 3,
+	  select: function(event, ui) {
+	  	$('#nombreCliente').val(ui.item.id);
+	  }
+	});
+
 
 });
 
@@ -37,6 +48,7 @@ function fechaPago(fecha,nPago){
 	function llegada(data){
 		 //console.log(data);
 		 nFecha=data;
+
 		 //control=1;
 		}
 	function problemas(data){
@@ -64,14 +76,17 @@ function mostrarPromocion(){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Comience a pagar el  "+cambiarTipoFecha(data[i].fecha_inicio)+" </div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
 		    	fechaInicioPago=data[i].fecha_inicio;
 		    	BoolFechaPromo=1;
+		    	inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'>';
 		     }
 		     if(data[i].tipo_promocion==2 ){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 6 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
 			 	nPagosGlobal=6;
+			 	inputOcultos+='<input type="hidden" name="numero_pagos" value='+nPagosGlobal+'>';
 			 }
 		     if(data[i].tipo_promocion==3){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 8 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
 			 	nPagosGlobal=8;
+			 	inputOcultos+='<input type="hidden" name="numero_pagos" value='+nPagosGlobal+'>';
 			 }
 		};
 		//Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quinsenas" 3="Pague en  8 quinsenas"

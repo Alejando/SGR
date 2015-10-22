@@ -18,6 +18,8 @@ Route::get('consultarClientes', 'ClientesController@consultarClientes' );
 Route::get('obtenerClientes', 'ClientesController@obtenerClientes' );
 Route::get('editarCliente/{id}', 'ClientesController@editarCliente');
 Route::post('actualizarCliente/{id}', 'ClientesController@actualizarCliente');
+Route::get('buscarCliente', 'ClientesController@buscarCliente');
+Route::get('buscarIdCliente', 'ClientesController@buscarIdCliente');
 
 //----------------------------------------------------------//
 //--------------------> RUTAS ADMINISTRADOR <---------------//
@@ -26,16 +28,15 @@ Route::post('actualizarCliente/{id}', 'ClientesController@actualizarCliente');
 //******************* CLASE DISTRIBUIDOR *******************//
 Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
 Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
+Route::get('buscarIdDistribuidor', 'DistribuidorsController@buscarIdDistribuidor');
+Route::get('buscarDistribuidor', 'DistribuidorsController@completarCampo');
 
 //******************* CLASE VALE *******************//
 Route::get('crearVale', 'ValesController@crearVale');
-Route::get('completarCampo', 'ValesController@completarCampo');
+
 Route::post('guardarVale', 'ValesController@guardarVale');
 Route::get('registrarVale', 'ValesController@registrarVale');
 Route::get('buscarVale', 'ValesController@buscarVale');
-Route::get('buscarIdDistribuidor', 'ValesController@buscarIdDistribuidor');
-Route::get('buscarCliente', 'ValesController@buscarCliente');
-Route::get('buscarIdCliente', 'ValesController@buscarIdCliente');
 Route::get('consultarVales', 'ValesController@consultarVales' );
 Route::get('obtenerVales', 'ValesController@obtenerVales' );
 

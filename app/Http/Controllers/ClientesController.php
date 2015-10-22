@@ -99,4 +99,21 @@ class ClientesController extends Controller
         }
        return  view('vendedor.editarCliente',compact('cliente'));
     }
+    public function buscarCliente(Request $request){
+            $valor = $request->input('nombre'); 
+
+        $clientes = cliente::where('nombre', 'LIKE', '%'.$valor.'%')->take(5)->get();
+        $results = array();
+        foreach ($clientes as $cliente)
+            {
+                $results[] = [ 'id' => $cliente->id_cliente, 'value' => $cliente->nombre ];
+            }
+        return response()->json($results);
+    }
+    public function buscarIdCliente(Request $request){
+           $id = $request->input('id');
+         $cliente = Cliente::find($id);
+
+        return $cliente->nombre;
+    }
 }
