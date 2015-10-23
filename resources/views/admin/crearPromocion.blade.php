@@ -45,29 +45,5 @@
 		</div><!-- /.row -->
 		
 	</div><!--/.main-->
-						<!--div class="col-md-12">
-								<div class="form-group col-md-4">
-									<label>Fecha de inicio</label>
-									<input type="date"  name="fecha_inicio" class="form-control" required>
-								</div>
-								<div class="form-group col-md-4">
-									<label>Fecha de creación</label>
-									<input type="date"  name="fecha_creacion" class="form-control" required>
-								</div>	
-								<div class="form-group col-md-4">
-									<label>Fecha de termino</label>
-									<input type="date"  name="fecha_termino" class="form-control" >
-								</div>		
-							</div>
-							<div class="col-md-12">
-								<div class="form-group col-md-6">
-									<label>Fecha de creación</label>
-									<input type="date"  name="fecha_creacion" class="form-control" required>
-								</div>	
-								<div class="form-group col-md-6">
-									<label>Fecha de termino</label>
-									<input type="date"  name="fecha_termino" class="form-control" >
-								</div>		
-							</div-->
 
 @stop

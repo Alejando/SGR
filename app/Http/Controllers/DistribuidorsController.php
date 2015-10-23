@@ -14,7 +14,7 @@ class DistribuidorsController extends Controller
 
     public function crearDistribuidor()
     {
-        return view('distribuidor.crearDistribuidor');
+        return view('admin.crearDistribuidor');
     }
 
  
