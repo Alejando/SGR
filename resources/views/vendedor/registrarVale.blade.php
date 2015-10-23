@@ -14,7 +14,7 @@
 						    <button type="button" class="close" data-dismiss="alert">&times;</button>
 						    <strong> {{ Session::get('message')}} </strong>
 					    </div>
-		                <form class="form" role="form" method="GET" action="actualizarVale" >
+		                <form class="form" role="form" method="POST" action="ventaVale" >
 		                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<div class="col-md-12">
 								<label>Registro de vales</label>

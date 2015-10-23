@@ -65,9 +65,10 @@ class ValesController extends Controller
 
     public function consultarVales()
     {
-        $vales = Vale::all();
-        return view('vendedor.consultarVales',compact('vales'));
+       
+        return view('admin.consultarVales',compact('vales'));
     }
+    
 
     public function obtenerVales()
     {
@@ -87,11 +88,34 @@ class ValesController extends Controller
         }    
         return $vales;
     }
-
+     public function consultarValesV()
+    {
+       
+        return view('vendedor.consultarValesV',compact('vales'));
+    }
+    public function obtenerValesV()
+    {
+       $cuenta=1;
+        $vales = Vale::where('id_cuenta',$cuenta)->where('fecha_venta',Carbon::today())->get();
+       for ($i=0; $i <sizeof($vales); $i++) { 
+             $vales[$i]->id_distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
+             if($vales[$i]->estatus==0){
+                $vales[$i]->estatus="Disponible";
+             }
+             if($vales[$i]->estatus==1){
+                $vales[$i]->estatus="Ocupado";
+             }
+             if($vales[$i]->estatus==2){
+                $vales[$i]->estatus="Cancelado";
+             }
+              $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>';    
+        }    
+        return $vales;
+    }
     public function ventaVale(Request $request){
-        $serie = $request->input('serie');
-        $folio = $request->input('folio');
-        $vale = Vale::where('serie',$serie)->where('folio', $folio)->get();
+        
+        $vale = Vale::find($request->input('id_vale'));
+        $idCliente = $request->input('id_cliente');
         $nombre = $request->input('nombre');
         $cuenta = 1;
         $fechaVenta = Carbon::today(); 
@@ -99,62 +123,65 @@ class ValesController extends Controller
         $folioVenta = $request->input('folio_venta');
         $cantidad = $request->input('cantidad');
         $fechaPago = $request->input('fecha_inicio_pago');
+        $saldoDistribuidor=$vale->distribuidor->saldo_actual;
+        $saldoNuevoDistribuidor=$saldoDistribuidor+$cantidad;
+        $limiteCreditoDistribuidor=$vale->distribuidor->limite_credito;
+        if($vale->estatus==0){
+            if($vale->distribuidor->estatus==0){ //0->activo 1->desactivado
+                if($vale->cantidad_limite==0 || $cantidad> $vale->cantidad_limite){
+               
+                    if($saldoNuevoDistribuidor<$limiteCreditoDistribuidor){
 
-        if($vale->estatus!=0){
-            if($vale->cantidad_limite==0 || $cantidad> $vale->cantidad_limite){
-                $saldoDistribuidor=Vale::find($vale->id_distribuidor)->distribuidor->saldo_actual;
-                $saldoNuevoDistribuidor=$saldoDistribuidor+$cantidad;
-                $limiteCreditoDistribuidor=Vale::find($id_distribuidor)->distribuidor->limite_credito;
-                if($saldoNuevoDistribuidor<$limiteCreditoDistribuidor;){
-                $vale->id_cliente=$id_distribuidor;
-                $vale->serie=$serie;
-                $vale->folio=$i;
-                $vale->cantidad_limite=Distribuidor::find($id_distribuidor)->limite_vale;
-                $vale->fecha_creacion=date("Y-m-d");
-                $vale->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
-                $vale->save();
+                        $vale->id_cliente=$idCliente;
+                        $vale->id_cuenta=$cuenta;
+                        $vale->fecha_venta=Carbon::today();
+                        $vale->cantidad=$cantidad;
+                        $vale->numero_pagos=$numeroPagos;
+                        $vale->folio_venta=$folioVenta;
+                        $vale->deuda_actual=$cantidad;
+                        $vale->estatus=1; // 0=disponible, 1=ocupado 2=cancelado
+                        $vale->fecha_inicio_pago=$fechaPago;
+                        if($vale->save()){
+                            Session::flash('message','Regsitro de vale exitoso!');
+                            Session::flash('class','success');
+                        }
+                        else{
+                            Session::flash('Error al guardar el vale en la base de datos');
+                            Session::flash('class','danger');
+                        }
+
+                    }
+                    else{
+                        Session::flash('El distribuidor a superado limite de credito por $'.$saldoNuevoDistribuidor-$limiteCreditoDistribuidor.'.00');
+                        Session::flash('class','danger');
+                    }
                 }
                 else{
-                    Session::flash('El distribuidor a superado limite de credito por $'$saldoNuevoDistribuidor-$limiteCreditoDistribuidor'.00');
+                    Session::flash('El monto de venta es mayor al limite permitido para este vale');
                     Session::flash('class','danger');
                 }
             }
             else{
-                Session::flash('El monto de venta es mayor al limite permitido para este vale');
+                Session::flash('Por el momento el distribuidor se encuentra dado de baja temporalmente');
                 Session::flash('class','danger');
-                }
-        }
-        else{
-            Session::flash('message','El vale  '.$serie.'-'.$folio.'ya ha sido utilizado');
-            Session::flash('class','danger');
-        }
-       
-        /////////////////////////////////////////
-        if (count($auxV)==0) {
-            $ultimo=0;
-        }
-        else{
-            $ultimo=$auxV->last()->folio;
-        }
-        if($folioInicio>$ultimo){
-            for($i=$folioInicio;$i<=$folioFin;$i++){
-                $vale = new Vale;
-                $vale->id_distribuidor=$id_distribuidor;
-                $vale->serie=$serie;
-                $vale->folio=$i;
-                $vale->cantidad_limite=Distribuidor::find($id_distribuidor)->limite_vale;
-                $vale->fecha_creacion=date("Y-m-d");
-                $vale->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
-                $vale->save();
             }
-            Session::flash('message','Guardado Correctamente');
-                Session::flash('class','success');
+
         }
         else{
-             Session::flash('message','Folio repetido el ultimo folio es: '.$auxV->last()->folio);
-            Session::flash('class','danger');
+            if($vale->estatus==2){
+                Session::flash('message','El vale '.$serie.'-'.$folio.'se encuentra cancelado debiado a: '.$vale->motivo_cancelacion);
+                Session::flash('class','danger');
+            }
+            else{
+                Session::flash('message','El vale  '.$serie.'-'.$folio.'ya ha sido utilizado');
+                Session::flash('class','danger');
+            }   
         }
-       return view('admin.crearVale'); 
+            
+        
+       
+        
+       return view('vendedor.registrarVale');
     }
 
 

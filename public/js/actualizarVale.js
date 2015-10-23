@@ -26,7 +26,7 @@ $(function() {
     source: 'buscarCliente',
    	minLength: 3,
 	  select: function(event, ui) {
-	  	$('#nombreCliente').val(ui.item.id);
+	  	inputOcultos+='<input type="hidden" name="id_cliente" value='+ui.item.id+'>';
 	  }
 	});
 
@@ -115,6 +115,9 @@ function datosVale(){
 	function llegada(data){
 		$.each(data, function() {
 			$.each(this, function(name, value) {
+				if(name=="id_vale"){
+					inputOcultos+='<input type="hidden" name="id_vale" value='+value+'>';
+				}
 			    if(name=="estatus"){
 			     	 	//console.log(name + 'r:' + value); 
 			    	if(value==0){
