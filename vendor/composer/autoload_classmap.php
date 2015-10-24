@@ -9,6 +9,7 @@ return array(
     'AddCampoToValesTable' => $baseDir . '/database/migrations/2015_10_15_233724_add_campo_to_vales_table.php',
     'AddCamposPromoTable' => $baseDir . '/database/migrations/2015_10_19_204003_add_campos_promo_table.php',
     'AddCamposValesTable' => $baseDir . '/database/migrations/2015_10_12_230949_add_campos_vales_table.php',
+    'AddEstatusDistribuidorsTable' => $baseDir . '/database/migrations/2015_10_22_190749_add_estatus_distribuidors_table.php',
     'AddFieldToClientesTable' => $baseDir . '/database/migrations/2015_09_25_222210_add_field_to_clientes_table.php',
     'AddFieldToDistribuidorsTable' => $baseDir . '/database/migrations/2015_09_25_220659_add_field_to_distribuidors_table.php',
     'AddFieldToPagosTable' => $baseDir . '/database/migrations/2015_09_25_231859_add_field_to_pagos_table.php',

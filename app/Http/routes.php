@@ -5,6 +5,15 @@ use App\Cuenta;
 use App\Promocion;
 use App\Vale;
 use App\Distribuidor;
+<<<<<<< HEAD
+=======
+
+//----------------------------------------------------------//
+//--------------------> RUTAS PUBLICAS <--------------------//
+//----------------------------------------------------------//
+Route::get('login', 'LoginController@login');
+
+>>>>>>> origin/master
 //----------------------------------------------------------//
 //--------------------> RUTAS VENDEDOR <--------------------//
 //----------------------------------------------------------//
@@ -49,6 +58,7 @@ Route::get('obtenerPromociones', 'PromocionsController@obtenerPromociones' );
 
 //******************* CLASE CUENTA *******************//
 Route::get('crearCuentaVendedor', 'CuentasController@crearCuentaVendedor');
+Route::post('guardarCuentaVendedor', 'CuentasController@guardarCuentaVendedor');
 
 
 //----------------------------------------------------------//
