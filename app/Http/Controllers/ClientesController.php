@@ -11,8 +11,13 @@ class ClientesController extends Controller
 {
 
     public function crearCliente()
-    {
-        return view('vendedor.crearCliente');
+    {   
+        if(1==1){
+            return view('admin.crearCliente');
+        }
+        else{
+            return view('vendedor.crearCliente');
+        }
     }
 
     public function guardarCliente(Request $request)
@@ -43,13 +48,22 @@ class ClientesController extends Controller
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
-       return view('vendedor.crearCliente');
+       if(1==1){
+            return view('admin.crearCliente');
+        }
+        else{
+            return view('vendedor.crearCliente');
+        }
     }
 
     public function consultarClientes()
     {
-        $clientes = Cliente::all();
-        return view('vendedor.consultarClientes',compact('clientes'));
+        if(1==1){
+            return view('admin.consultarClientes');
+        }
+        else{
+            return view('vendedor.consultarClientes');
+        }
     }
 
     public function obtenerClientes()
@@ -67,7 +81,13 @@ class ClientesController extends Controller
     public function editarCliente($id)
     {
         $cliente = Cliente::find($id);
-        return view('vendedor.editarCliente',compact('cliente'));
+        if(1==1){
+            return view('admin.editarCliente',compact('cliente'));
+        }
+        else{
+            return view('vendedor.editarCliente',compact('cliente'));   
+        }
+        
     }
      public function actualizarCliente(Request $request,$id)
     {
@@ -97,7 +117,12 @@ class ClientesController extends Controller
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
-       return  view('vendedor.editarCliente',compact('cliente'));
+       if(1==1){
+            return view('admin.editarCliente',compact('cliente'));
+        }
+        else{
+            return view('vendedor.editarCliente',compact('cliente'));   
+        }
     }
     public function buscarCliente(Request $request){
             $valor = $request->input('nombre'); 

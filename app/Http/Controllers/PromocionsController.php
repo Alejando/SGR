@@ -117,16 +117,6 @@ class PromocionsController extends Controller
 
                     }
                 }
-
-        /*
-        if($promocionNueva->save()){
-            Session::flash('message','Guardado Correctamente');
-            Session::flash('class','success');
-        }else{
-            Session::flash('message','Ha ocurrido un error');
-            Session::flash('class','danger');
-        }
-        */
        return view('admin.crearPromocion');
     }
     
@@ -197,6 +187,31 @@ class PromocionsController extends Controller
         }
 
    
+    }
+    function consultarPromociones(){
+        if(1==2){
+            return view('vendedor.consultarPromociones');
+        }
+        else{
+             return view('admin.consultarPromociones');
+        }
+    }
+    function obtenerPromociones(){
+        
+        $promocion = Promocion::where('fecha_termino','>=',Carbon::parse(Carbon::today()))->get();
+        for ($i=0; $i <sizeof($promocion); $i++) {        
+                if($promocion[$i]->fecha_inicio=="0000-00-00"){
+                    $promocion[$i]->fecha_inicio="No aplica";
+                }
+                if($promocion[$i]->tipo_promocion==2){
+                    $promocion[$i]->tipo_promocion="Paga en ".$promocion[$i]->numero_pagos." quinsenas";
+                }
+                if($promocion[$i]->tipo_promocion==1){
+                    $promocion[$i]->tipo_promocion="Comienza a pagar en...";
+                }
+                $promocion[$i]->id_promocion='<a type="button" class="btn btn-primary margin" href="editarVale/'. $promocion[$i]->id_promocion.'">Actualizar</a>'; 
+        }    
+        return $promocion;
     }
 
 }

@@ -12,9 +12,10 @@ use Session;
 class ValesController extends Controller
 {
     public function crearVale()
-    {
+    {   
         return view('admin.crearVale');
     }
+    
 
     public function guardarVale(Request $request)
     {
@@ -52,7 +53,12 @@ class ValesController extends Controller
     }
 
     public function registrarVale(){
-         return view('vendedor.registrarVale');
+        if(1==1){
+            return view('admin.registrarVale');
+        }else{
+            return view('vendedor.registrarVale');
+        }
+         
     }
 
     public function buscarVale(Request $request){
@@ -65,11 +71,15 @@ class ValesController extends Controller
 
     public function consultarVales()
     {
-       
-        return view('admin.consultarVales',compact('vales'));
+       if(1==1){
+        return view('admin.consultarVales');
+       }
+       else{
+        return view('vendedor.consultarVales');
+       }
+        
     }
     
-
     public function obtenerVales()
     {
         $vales = Vale::all();
@@ -88,11 +98,7 @@ class ValesController extends Controller
         }    
         return $vales;
     }
-     public function consultarValesV()
-    {
-       
-        return view('vendedor.consultarValesV',compact('vales'));
-    }
+    
     public function obtenerValesV()
     {
        $cuenta=1;
@@ -108,7 +114,7 @@ class ValesController extends Controller
              if($vales[$i]->estatus==2){
                 $vales[$i]->estatus="Cancelado";
              }
-              $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>';    
+                
         }    
         return $vales;
     }
@@ -149,7 +155,6 @@ class ValesController extends Controller
                             Session::flash('Error al guardar el vale en la base de datos');
                             Session::flash('class','danger');
                         }
-
                     }
                     else{
                         Session::flash('El distribuidor a superado limite de credito por $'.$saldoNuevoDistribuidor-$limiteCreditoDistribuidor.'.00');
@@ -165,7 +170,6 @@ class ValesController extends Controller
                 Session::flash('Por el momento el distribuidor se encuentra dado de baja temporalmente');
                 Session::flash('class','danger');
             }
-
         }
         else{
             if($vale->estatus==2){
@@ -177,15 +181,17 @@ class ValesController extends Controller
                 Session::flash('class','danger');
             }   
         }
-            
-        
-       
-        
-       return view('vendedor.registrarVale');
+        if(1==1){
+            return view('admin.registrarVale');
+        }
+        else{
+            return view('vendedor.registrarVale');
+        }
+      
     }
 
 
     
     
-  
+
 }

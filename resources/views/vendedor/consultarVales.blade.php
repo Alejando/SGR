@@ -21,7 +21,6 @@
 						        <th data-field="pagos_realizados" data-halign="center" data-sortable="true">Pagos realizados</th>
 						        <th data-field="deuda_actual"data-halign="center" data-sortable="true">Adeudo</th>
 						        <th data-field="estatus" data-halign="center" data-sortable="true">Estatus</th>
-						        <th data-field="id_vale" data-halign="center" data-sortable="true">Acciones</th>
 						    </tr>
 						    </thead>
 						</table>

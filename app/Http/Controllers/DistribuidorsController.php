@@ -14,7 +14,7 @@ class DistribuidorsController extends Controller
 
     public function crearDistribuidor()
     {
-        return view('distribuidor.crearDistribuidor');
+        return view('admin.crearDistribuidor');
     }
 
  
@@ -65,7 +65,7 @@ class DistribuidorsController extends Controller
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
-       return view('distribuidor.crearDistribuidor');
+       return view('admin.crearDistribuidor');
     }
     public function buscarIdDistribuidor(Request $request){
          

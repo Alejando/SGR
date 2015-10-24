@@ -54,7 +54,7 @@
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
+						<a class="" href="consultarVales">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Vales
 						</a>
 					</li>
@@ -83,8 +83,8 @@
 				</a>
 				<ul class="children collapse" id="sub-item-4">
 					<li>
-						<a class="" href="#">
-							<span class="glyphicon glyphicon-share-alt"></span> Conslutar Promciones
+						<a class="" href="consultarPromociones">
+							<span class="glyphicon glyphicon-share-alt"></span> Consultar Promciones
 						</a>
 					</li>
 				</ul>

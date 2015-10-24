@@ -6,9 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>@yield('titulo', 'Zapateria el Gran Remate')</title>
 
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/datepicker3.css" rel="stylesheet">
-	<link href="css/styles.css" rel="stylesheet">
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/datepicker3.css" rel="stylesheet">
+	<link href="../css/styles.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 	@yield('css')
 
@@ -43,17 +43,17 @@
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
-						<a class="" href="crearVale">
+						<a class="" href="../crearVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Vales
 						</a>
 					</li>
 					<li>
-						<a class="" href="registrarVale">
+						<a class="" href="../registrarVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Emitir Vales
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarVales">
+						<a class="" href="../consultarVales">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Vales
 						</a>
 					</li>
@@ -65,7 +65,7 @@
 				</a>
 				<ul class="children collapse" id="sub-item-2">
 					<li>
-						<a class="" href="crearDistribuidor">
+						<a class="" href="../crearDistribuidor">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Distribuidor
 						</a>
 					</li>
@@ -82,12 +82,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-3">
 					<li>
-						<a class="" href="crearCliente">
+						<a class="" href="../crearCliente">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Cliente
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarClientes">
+						<a class="" href="../consultarClientes">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Clientes
 						</a>
 					</li>
@@ -99,12 +99,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-4">
 					<li>
-						<a class="" href="crearPromocion">
+						<a class="" href="../crearPromocion">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Promoción
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarPromociones">
+						<a class="" href="../consularPromociones">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Promciones
 						</a>
 					</li>
@@ -116,7 +116,7 @@
 				</a>
 				<ul class="children collapse" id="sub-item-5">
 					<li>
-						<a class="" href="crearCuentaVendedor">
+						<a class="" href="../crearCuentaVendedor">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Cuenta
 						</a>
 					</li>
@@ -140,17 +140,17 @@
 		@yield('contenido')
 	</div>	<!--/.main-->
 </body>
-	<script src="js/jquery.js"></script>
-	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/chart.min.js"></script>
-	<script src="js/chart-data.js"></script>
-	<script src="js/easypiechart.js"></script>
-	<script src="js/easypiechart-data.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/custom.js"></script>
-	<script src="js/bootstrap-table.js"></script>
-	<script src="js/tipoPromocion.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/chart.min.js"></script>
+	<script src="../js/chart-data.js"></script>
+	<script src="../js/easypiechart.js"></script>
+	<script src="../js/easypiechart-data.js"></script>
+	<script src="../js/bootstrap-datepicker.js"></script>
+	<script src="../js/custom.js"></script>
+	<script src="../js/bootstrap-table.js"></script>
+	<script src="../js/tipoPromocion.js"></script>
 
 	
 	

@@ -5,8 +5,6 @@ use App\Cuenta;
 use App\Promocion;
 use App\Vale;
 use App\Distribuidor;
-
-
 //----------------------------------------------------------//
 //--------------------> RUTAS VENDEDOR <--------------------//
 //----------------------------------------------------------//
@@ -37,15 +35,17 @@ Route::post('guardarVale', 'ValesController@guardarVale');
 Route::get('registrarVale', 'ValesController@registrarVale');
 Route::get('buscarVale', 'ValesController@buscarVale');
 Route::get('consultarVales', 'ValesController@consultarVales' );
-Route::get('consultarValesV', 'ValesController@consultarValesV' );
 Route::get('obtenerVales', 'ValesController@obtenerVales' );
 Route::get('obtenerValesV', 'ValesController@obtenerValesV' );
 Route::post('ventaVale', 'ValesController@ventaVale' );
+
 //******************* CLASE PROMOCION *******************//
 Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
 Route::get('buscarPromocion', 'PromocionsController@buscarPromocion');
 Route::get('fechaPago', 'PromocionsController@fechaPago');
+Route::get('consultarPromociones', 'PromocionsController@consultarPromociones' );
+Route::get('obtenerPromociones', 'PromocionsController@obtenerPromociones' );
 
 //******************* CLASE CUENTA *******************//
 Route::get('crearCuentaVendedor', 'CuentasController@crearCuentaVendedor');
