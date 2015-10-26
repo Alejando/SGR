@@ -11,7 +11,13 @@ use App\Distribuidor;
 //----------------------------------------------------------//
 //--------------------> RUTAS PUBLICAS <--------------------//
 //----------------------------------------------------------//
-Route::get('login', 'LoginController@login');
+Route::get('sesion', 'LoginController@mostrarLogin');
+Route::post('login','LoginController@login');
+Route::get('logout','LoginController@logout');
+Route::get('verificar', ['middleware' => 'prado', function()
+{
+    return ("Todo con exito");
+}]);
 
 >>>>>>> origin/master
 //----------------------------------------------------------//
@@ -102,8 +108,21 @@ Route::get('prueba', function()
 	//return ("Holi--->".$promocion_vale);
 });
 
-
-Route::get('prueba2', function()
-{
-	return ("Holi");	
+Route::group(['middleware' => 'admin'], function () {
+   	Route::get('admin1', function() { return ("Holi admin1");	});
+	Route::get('admin2', function() { return ("Holi admin2");	});
+	Route::get('admin3', function() { return ("Holi admin3");	});
+	Route::get('admin4', function() { return ("Holi admin4");	});
+	Route::get('admin5', function() { return ("Holi admin5");	});
 });
+
+Route::group(['middleware' => 'vendedor'], function () {
+	Route::get('vendedor1', function() { return ("Holi vendedor1");	});
+	Route::get('vendedor2', function() { return ("Holi vendedor2");	});
+	Route::get('vendedor3', function() { return ("Holi vendedor3");	});
+	Route::get('vendedor4', function() { return ("Holi vendedor4");	});
+	Route::get('vendedor5', function() { return ("Holi vendedor5");	});	
+});
+
+
+
