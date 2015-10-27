@@ -18,16 +18,6 @@ class LoginController extends Controller
         return view('login');
     }
 
-    /*public function login(Request $request)
-    {
-       if(Auth::attempt(['email' => $request['usuario'], 'password' => $request['contrasena']]))
-       {
-       	 return ("Entro");
-       }else{
-       	return ("Ni madres");
-       }
-    }*/
-
     public function login(Request $request)
     {
     	$usuario = $request->input('usuario');

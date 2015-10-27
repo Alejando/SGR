@@ -20,7 +20,7 @@ class filtro_vendedor
         if($tipo != "2")
         {
             
-           return redirect('c_sesion');
+           return redirect('sesion');
         }
         return $next($request);
     }

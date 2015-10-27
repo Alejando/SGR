@@ -19,7 +19,7 @@ class filtro_super_admin
         
         if($tipo != "0")
         {
-            return redirect('c_sesion');
+            return redirect('sesion');
         }
         return $next($request);
     }

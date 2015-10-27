@@ -19,7 +19,7 @@ class filtro_mixto
         
         if($tipo==NULL)
         {
-            return view('c_sesion');
+            return redirect('sesion');
         }
         return $next($request);
     }

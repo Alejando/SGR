@@ -1,4 +1,4 @@
-1@extends ('m_admin')
+@extends ('m_admin')
 
 @section ('titulo') Consultar vales
 @stop
