@@ -189,12 +189,18 @@ class PromocionsController extends Controller
    
     }
     function consultarPromociones(){
-        if(1==2){
-            return view('vendedor.consultarPromociones');
-        }
-        else{
-             return view('admin.consultarPromociones');
-        }
+        switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.consultarPromociones');
+                break;
+            case 2:
+                 return view('vendedor.consultarPromociones');
+                break;
+        }   
     }
     function obtenerPromociones(){
         

@@ -53,12 +53,19 @@ class ValesController extends Controller
     }
 
     public function registrarVale(){
-        if(1==1){
-            return view('admin.registrarVale');
-        }else{
-            return view('vendedor.registrarVale');
-        }
-         
+       
+        switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+               return view('admin.registrarVale');
+                break;
+            case 2:
+                 return view('vendedor.registrarVale');
+                break;
+        } 
     }
 
     public function buscarVale(Request $request){
@@ -71,13 +78,18 @@ class ValesController extends Controller
 
     public function consultarVales()
     {
-       if(1==1){
-        return view('admin.consultarVales');
-       }
-       else{
-        return view('vendedor.consultarVales');
-       }
-        
+       switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.consultarVales');
+                break;
+            case 2:
+                 return view('vendedor.consultarVales');
+                break;
+        }         
     }
     
     public function obtenerVales()
@@ -181,12 +193,19 @@ class ValesController extends Controller
                 Session::flash('class','danger');
             }   
         }
-        if(1==1){
-            return view('admin.registrarVale');
-        }
-        else{
-            return view('vendedor.registrarVale');
-        }
+        
+        switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.registrarVale');
+                break;
+            case 2:
+                 return view('vendedor.registrarVale');
+                break;
+        }   
       
     }
 

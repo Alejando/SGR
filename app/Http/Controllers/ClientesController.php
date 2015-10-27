@@ -12,12 +12,18 @@ class ClientesController extends Controller
 
     public function crearCliente()
     {   
-        if(1==1){
-            return view('admin.crearCliente');
-        }
-        else{
-            return view('vendedor.crearCliente');
-        }
+       switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.crearCliente');
+                break;
+            case 2:
+                 return view('vendedor.crearCliente');
+                break;
+        }   
     }
 
     public function guardarCliente(Request $request)
@@ -48,21 +54,33 @@ class ClientesController extends Controller
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
-       if(1==1){
-            return view('admin.crearCliente');
-        }
-        else{
-            return view('vendedor.crearCliente');
+       switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.crearCliente');
+                break;
+            case 2:
+                 return view('vendedor.crearCliente');
+                break;
         }
     }
 
     public function consultarClientes()
     {
-        if(1==1){
-            return view('admin.consultarClientes');
-        }
-        else{
-            return view('vendedor.consultarClientes');
+        switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.consultarClientes');
+                break;
+            case 2:
+                 return view('vendedor.consultarClientes');
+                break;
         }
     }
 
@@ -81,14 +99,20 @@ class ClientesController extends Controller
     public function editarCliente($id)
     {
         $cliente = Cliente::find($id);
-        if(1==1){
-            return view('admin.editarCliente',compact('cliente'));
-        }
-        else{
-            return view('vendedor.editarCliente',compact('cliente'));   
-        }
-        
+        switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.editarCliente',compact('cliente'));
+                break;
+            case 2:
+                 return view('vendedor.editarCliente',compact('cliente'));
+                break;
+        }        
     }
+    
      public function actualizarCliente(Request $request,$id)
     {
         $cliente = Cliente::find($id);
@@ -117,12 +141,18 @@ class ClientesController extends Controller
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
-       if(1==1){
-            return view('admin.editarCliente',compact('cliente'));
-        }
-        else{
-            return view('vendedor.editarCliente',compact('cliente'));   
-        }
+       switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.editarCliente',compact('cliente'));
+                break;
+            case 2:
+                 return view('vendedor.editarCliente',compact('cliente'));
+                break;
+        }  
     }
     public function buscarCliente(Request $request){
             $valor = $request->input('nombre'); 

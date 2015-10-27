@@ -45,16 +45,16 @@ class LoginController extends Controller
 
     			switch ($cuenta->tipo) {
 				    case 0:
-				        //return redirect('');
-				    	return ("Eres un super administrador");
+				       // return redirect('');
+				    	//return ("Eres un super administrador");
 				        break;
 				    case 1:
-				        //return redirect('');
-				    	return ("Eres un administrador");
+				        return redirect('crearVale');
+				    	//return ("Eres un administrador");
 				        break;
 				    case 2:
-				        //return redirect('');
-				    	return ("Eres un vendedor");
+				        return redirect('registrarVale');
+				    	//return ("Eres un vendedor");
 				        break;
 				}
     		}
@@ -68,7 +68,7 @@ class LoginController extends Controller
     public function logout()
     {
     	Session::flush();
-        return "exit";
+        return redirect("sesion");
     }
     
 }

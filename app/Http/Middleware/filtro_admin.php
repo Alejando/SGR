@@ -17,11 +17,10 @@ class filtro_admin
     {
         $tipo = Session::get('tipo');
         
-        if($tipo == "1")
+        if($tipo != "1")
         {
-            return ("Entras administrador");
-        }else{
-            return ("Ni mandres, tu no eres un administrador");
+            return redirect('c_sesion');
         }
+        return $next($request);
     }
 }

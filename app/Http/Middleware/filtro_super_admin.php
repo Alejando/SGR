@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 use Session;
 use Closure;
-
+use Redirect;
 class filtro_super_admin
 {
     /**
@@ -17,11 +17,10 @@ class filtro_super_admin
     {
         $tipo = Session::get('tipo');
         
-        if($tipo == "0")
+        if($tipo != "0")
         {
-            return ("Entras super_administrador");
-        }else{
-            return ("Ni mandres, tu no eres un super_administrador");
+            return redirect('c_sesion');
         }
+        return $next($request);
     }
 }

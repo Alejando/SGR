@@ -29,9 +29,9 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'prado' => \App\Http\Middleware\prado::class,
         'admin' => \App\Http\Middleware\filtro_admin::class,
         'super_admin' => \App\Http\Middleware\filtro_super_admin::class,
         'vendedor' => \App\Http\Middleware\filtro_vendedor::class,
+        'mixto' => \App\Http\Middleware\filtro_mixto::class, 
     ];
 }

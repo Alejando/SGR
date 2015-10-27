@@ -17,11 +17,11 @@ class filtro_vendedor
     {
         $tipo = Session::get('tipo');
         
-        if($tipo == "2")
+        if($tipo != "2")
         {
-            return ("Entras vendedor");
-        }else{
-            return ("Ni mandres, tu no eres un vendedor");
+            
+           return redirect('c_sesion');
         }
+        return $next($request);
     }
 }

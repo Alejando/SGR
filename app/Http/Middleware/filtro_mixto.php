@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 use Session;
 use Closure;
 
-class prado
+class filtro_mixto
 {
     /**
      * Handle an incoming request.
@@ -15,13 +15,12 @@ class prado
      */
     public function handle($request, Closure $next)
     {
-        $tipo = Session::get('tipo');
+         $tipo = Session::get('tipo');
         
-        if($tipo == "1")
+        if($tipo==NULL)
         {
-            return ("Entras");
-        }else{
-            return ("Ni mandres");
+            return view('c_sesion');
         }
+        return $next($request);
     }
 }
