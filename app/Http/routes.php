@@ -23,7 +23,10 @@ Route::group(['middleware' => 'mixto'], function () {
 	Route::get('consultarVales', 'ValesController@consultarVales' );
 
 	Route::get('consultarPromociones', 'PromocionsController@consultarPromociones' );
-
+	Route::get('buscarPromocion', 'PromocionsController@buscarPromocion');
+	Route::get('fechaPago', 'PromocionsController@fechaPago');
+	Route::get('obtenerPromociones', 'PromocionsController@obtenerPromociones' );
+	
 	Route::get('buscarIdDistribuidor', 'DistribuidorsController@buscarIdDistribuidor');
 	Route::get('buscarDistribuidor', 'DistribuidorsController@completarCampo');
 
@@ -46,9 +49,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 	Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
-	Route::get('buscarPromocion', 'PromocionsController@buscarPromocion');
-	Route::get('fechaPago', 'PromocionsController@fechaPago');
-	Route::get('obtenerPromociones', 'PromocionsController@obtenerPromociones' );
+	
 });
 
 Route::group(['middleware' => 'vendedor'], function () {

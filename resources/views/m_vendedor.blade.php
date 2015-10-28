@@ -42,6 +42,7 @@
 
 		<ul class="nav menu">
 			<li ><h3>Bienvenido</h3></li>
+			<li ><h4>{{Session::get('nombre')}}</h4></li>
 			<li role="presentation" class="divider"></li>
 			<li class="parent ">
 				<a href="">

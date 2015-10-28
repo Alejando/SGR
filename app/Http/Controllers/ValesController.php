@@ -135,7 +135,7 @@ class ValesController extends Controller
         $vale = Vale::find($request->input('id_vale'));
         $idCliente = $request->input('id_cliente');
         $nombre = $request->input('nombre');
-        $cuenta = 1;
+        $cuenta = Session::get('id');
         $fechaVenta = Carbon::today(); 
         $numeroPagos = $request->input('numero_pagos');
         $folioVenta = $request->input('folio_venta');
