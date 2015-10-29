@@ -20,35 +20,41 @@ class ValesController extends Controller
     public function guardarVale(Request $request)
     {
         $id_distribuidor = $request->input('id_distribuidor');
-        $serie = $request->input('serie');
+        $serie = strtoupper($request->input('serie'));
         $folioInicio = $request->input('folio_inicio');
         $folioFin = $request->input('folio_fin');
-        $auxV= Vale::where('serie',$serie)->get();  
-        if (count($auxV)==0) {
-            $ultimo=0;
-        }
-        else{
-            $ultimo=$auxV->last()->folio;
-        }
-        if($folioInicio>$ultimo){
-            for($i=$folioInicio;$i<=$folioFin;$i++){
-                $vale = new Vale;
-                $vale->id_distribuidor=$id_distribuidor;
-                $vale->serie=$serie;
-                $vale->folio=$i;
-                $vale->cantidad_limite=Vale::find($id_distribuidor)->distribuidor->limite_vale;
-                $vale->fecha_creacion=Carbon::today(); 
-                $vale->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
-                $vale->save();
+        if($folioFin>=$folioInicio){
+            $auxV= Vale::where('serie',$serie)->get();  
+            if (count($auxV)==0) {
+                $ultimo=0;
             }
-            Session::flash('message','Guardado Correctamente');
-                Session::flash('class','success');
+            else{
+                $ultimo=$auxV->last()->folio;
+            }
+            if($folioInicio>$ultimo){
+                for($i=$folioInicio;$i<=$folioFin;$i++){
+                    $vale = new Vale;
+                    $vale->id_distribuidor=$id_distribuidor;
+                    $vale->serie=$serie;
+                    $vale->folio=$i;
+                    $vale->cantidad_limite=Distribuidor::find($id_distribuidor)->limite_vale;
+                    $vale->fecha_creacion=Carbon::today(); 
+                    $vale->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
+                    $vale->save();
+                }
+                Session::flash('message','Guardado Correctamente');
+                    Session::flash('class','success');
+            }
+            else{
+                 Session::flash('message','Folio repetido, el ultimo folio es: '.$auxV->last()->folio);
+                Session::flash('class','danger');
+            }
         }
         else{
-             Session::flash('message','Folio repetido el ultimo folio es: '.$auxV->last()->folio);
-            Session::flash('class','danger');
+             Session::flash('message','Folio fin debe ser mayor a folio inicio ');
+                Session::flash('class','danger');
         }
-       return view('admin.crearVale'); 
+       return redirect('crearVale'); 
        
     }
 
@@ -73,7 +79,14 @@ class ValesController extends Controller
          $serie = $request->input('serie');
          $folio = $request->input('folio');
          $vale = Vale::where('serie',$serie)->where('folio', $folio)->get();
-        return $vale;
+         if(sizeof($vale)<=0){
+           return "no";
+         }
+         else{
+            return $vale;
+         }
+        
+       
     }
 
     public function consultarVales()
@@ -200,15 +213,20 @@ class ValesController extends Controller
                 //return ("Eres un super administrador");
                 break;
             case 1:
-                return view('admin.registrarVale');
+                return redirect('admin.registrarVale');
                 break;
             case 2:
-                 return view('vendedor.registrarVale');
+                 return redirect('vendedor.registrarVale');
                 break;
         }   
       
     }
 
+    public function obtenerUltimoVale(){
+        $id = Vale::max('id_vale');
+        $vale =Vale::find($id);
+        return $vale;
+    }
 
     
     

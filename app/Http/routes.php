@@ -43,6 +43,7 @@ Route::group(['middleware' => 'admin'], function () {
    	Route::get('crearVale', 'ValesController@crearVale');
    	Route::post('guardarVale', 'ValesController@guardarVale');
    	Route::get('obtenerVales', 'ValesController@obtenerVales' );
+   	Route::get('obtenerUltimoVale', 'ValesController@obtenerUltimoVale' );
 
 	Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');

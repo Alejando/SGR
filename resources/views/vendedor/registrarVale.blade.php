@@ -5,16 +5,20 @@
 
 @section ('contenido')
 
-   <div class="row">
+    <div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">Registrar Vales</div>
 					<div class="panel-body">
+						<div id="mensaje">
+						@if(Session::has('message'))
 						<div class="alert alert-{{ Session::get('class') }} alert-dismissable">
-						    <button type="button" class="close" data-dismiss="alert">&times;</button>
-						    <strong> {{ Session::get('message')}} </strong>
+							    <button type="button" class="close" data-dismiss="alert"></button>
+							    <strong> {{ Session::get('message')}} </strong>
+						</div>
+						@endif
 					    </div>
-		                <form class="form" role="form" method="POST" action="ventaVale" >
+		                <form class="form" id="form"role="form" method="POST" action="ventaVale" >
 		                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<div class="col-md-12">
 								<label>Registro de vales</label>
@@ -22,7 +26,7 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<label>Serie</label>
-										<input type="text"  id="serie" name="serie" class="form-control" required>
+										<input type="text"  id="serie" name="serie" class="form-control" >
 									</div>	
 								</div>
 								<div class="col-md-2">
@@ -33,8 +37,8 @@
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Verificar</label>
-										<p  id="bVericar"class="btn btn-primary" onclick="datosVale()" >Comprobar</p>
+										<label> --- Verificar --- </label>
+										<p  id="bVericar"class="btn btn-primary" onclick="datosVale()"> Comprobar </p>
 									</div>		
 								</div>
 								<div class="col-md-6">
@@ -69,7 +73,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Folio venta </label>
-										<input type="number"  id="folioVenta"name="folio_venta" class="form-control" >
+										<input type="number"  id="folioVenta"name="folio_venta" class="form-control" required>
 									</div>		
 								</div>
 								
@@ -101,8 +105,6 @@
 				</div>
 			</div><!-- /.col-->
 		</div><!-- /.row -->
-		
-
 @stop
 
 @section ('js') 

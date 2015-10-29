@@ -3,9 +3,12 @@ var nPagosGlobal=4;
 var Fecha = new Date(); //variable
 var fechaInicioPago=Fecha.getFullYear() + "-" + (Fecha.getMonth() +1) + "-" + Fecha.getDate();
 var BoolFechaPromo=0;
-var inputOcultos="" // datos que no tienen un input y se creara oculto :)
+var inputOcultos=""; // datos que no tienen un input y se creara oculto :)
+var mensaje="";
+var confirma=0;
 
 $(function() {
+	
 	mostrarPromocion();
     $("#cantidad").focusout(function(){
     	var cantidad=$("#cantidad").val(); // obtenemos cantidad del vale
@@ -29,7 +32,19 @@ $(function() {
 	  	inputOcultos+='<input type="hidden" name="id_cliente" value='+ui.item.id+'>';
 	  }
 	});
-
+	$('#form').submit(function(){
+		if(confirma==1){
+			return true;
+		}
+		else{
+			mensaje='<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong> El vale no a sido verificado </strong></div>';
+			$('#mensaje').html(mensaje);
+					setTimeout(function() {
+		        $("#mensaje").fadeOut(1500);
+		    },3000);
+			return false;
+		}
+	});
 
 });
 
@@ -54,7 +69,7 @@ function fechaPago(fecha,nPago){
 	function problemas(data){
 		alert("error en buscar fecha de pago");
 	}
-		console.log(fecha+"->"+nPago+":"+nFecha);
+		//console.log(fecha+"->"+nPago+":"+nFecha);
 		return nFecha;
 }
 function mostrarPromocion(){
@@ -101,32 +116,49 @@ function mostrarPromocion(){
 function datosVale(){	
 	var serie = $('#serie').val();
 	var folio = $('#folio').val();
-	$("#nombreCliente").val("");
-	$("#pagos").empty();
+	$("#form")[0].reset();
 	$.ajax({
 		type: "GET",
-		dataType: "json",
  		url: "buscarVale",
  		data: {serie:serie, folio:folio},
 		success: llegada,
 		error: problemas
 	});
-	//return false;
 	function llegada(data){
+		
+		if(data=="no"){
+			
+			mensaje='<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong> El vale no existe </strong></div>';
+			$('#mensaje').html(mensaje);
+			$("#bVericar").removeClass("btn btn-danger"); 
+			$("#bVericar").removeClass("btn btn-success"); 
+			$("#bVericar").removeClass("btn btn-primary"); 
+	    	$("#bVericar").addClass("btn btn-warning"); 
+			    	setTimeout(function() {
+		        $("#mensaje").fadeOut(1500);
+		    },3000);
+			
+		}
 		$.each(data, function() {
 			$.each(this, function(name, value) {
 				if(name=="id_vale"){
 					inputOcultos+='<input type="hidden" name="id_vale" value='+value+'>';
+					
 				}
 			    if(name=="estatus"){
 			     	 	//console.log(name + 'r:' + value); 
 			    	if(value==0){
-			    		$("#bVericar").removeClass("btn btn-danger"); 
+			    		$("#bVericar").removeClass("btn btn-danger");
+			    		$("#bVericar").removeClass("btn btn-warning");  
 			    		$("#bVericar").addClass("btn btn-success"); 
+			    		confirma=1;
+
 			    	}
 			    	else{
 						$("#bVericar").removeClass("btn btn-success");
+						$("#bVericar").removeClass("btn btn-warning"); 
 			    		$("#bVericar").addClass("btn btn-danger"); 
+			    		
 			    	}
 			    }
 			   	if(name=="cantidad_limite"){
@@ -134,7 +166,8 @@ function datosVale(){
 			   	}
 			   	if(name=="cantidad"){
 			   		$("#cantidad").val(value);
-			   	}if(name=="folio_venta"){
+			   	}
+			   	if(name=="folio_venta"){
 			   		$("#folioVenta").val(value);
 			   	}
 			   	if(name=="id_cliente"){
@@ -163,6 +196,7 @@ function datosVale(){
 			});
 		});
 	}
+
 	function problemas()
 	{
 		alert('fallo');

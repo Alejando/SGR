@@ -45,7 +45,7 @@
 			<li ><h4>{{Session::get('nombre')}}</h4></li>
 			<li role="presentation" class="divider"></li>
 			<li class="parent ">
-				<a href="">
+				<a href="" >
 					<span class="glyphicon glyphicon-list"></span> Vales <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-1">

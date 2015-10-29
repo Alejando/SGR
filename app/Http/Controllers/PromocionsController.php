@@ -140,42 +140,51 @@ class PromocionsController extends Controller
         //return($fecha);
     }
     public function fechaPago(Request $request){
-       $fecha=$request->input('fecha');
-       $nPago=$request->input('nPago');
-       $cambioFecha=$request->input('cambioFecha');
+        $fecha=$request->input('fecha');
+        $nPago=$request->input('nPago');
+        $cambioFecha=$request->input('cambioFecha');
+
+        $fechaCarbon=Carbon::parse($fecha);
+
+        $diasMes=$fechaCarbon->daysInMonth;
        
-       $fechaCarbon=Carbon::parse($fecha);
-       $diasMes=$fechaCarbon->daysInMonth;
-       if($cambioFecha==0){          
-                $fechaCarbon->addDay();
-       }
-       if($cambioFecha==1 && $fechaCarbon->day<=15){
-              $fechaCarbon->subDay();
-       }
-        if($fechaCarbon->day>=15 && $fechaCarbon->day<=$diasMes){
+            
+            if($cambioFecha==1){
+                if($fechaCarbon->day==15){
+                    $fechaCarbon->day=8;
+                }
+                else{
+                    $fechaCarbon->day=15;
+                }
+            }
+        
+        if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
             $fechaCarbon->day=1;
             if($nPago%2==0){
-                $fechaCarbon->addMonths($nPago/2);
+               $fechaCarbon->addMonths($nPago/2);
                  $fechaCarbon->day(15);
                 return $fechaCarbon->toDateString();
             }
             else{
-                $fechaCarbon->addMonths(($nPago+1)/2);
+                
+                
+                 $fechaCarbon->addMonths(($nPago+1)/2);
                  $fechaCarbon->subDay();
                 return $fechaCarbon->toDateString();
             }
           
         }
         else{
-            if($fechaCarbon->day>15){
-                 $fechaCarbon->day=1;
-                 $fechaCarbon->addMonth();
+            if($fechaCarbon->day<=9){
+                $fechaCarbon->day=15;
             }else{
-                 $fechaCarbon->day=1;
+                $fechaCarbon->day=15;
+                $fechaCarbon->addMonth();
             }
            
             if($nPago%2==0){
                  $fechaCarbon->addMonths(($nPago)/2);
+                  $fechaCarbon->day=1;
                  $fechaCarbon->subDay();
                 return $fechaCarbon->toDateString();
             }
@@ -183,10 +192,10 @@ class PromocionsController extends Controller
                $fechaCarbon->addMonths($nPago/2);
                  $fechaCarbon->day(15);
                 return $fechaCarbon->toDateString();
+                
             }
         }
-
-   
+        
     }
     function consultarPromociones(){
         switch (Session::get('tipo')) {
