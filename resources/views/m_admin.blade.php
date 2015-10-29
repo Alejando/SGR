@@ -39,7 +39,7 @@
 			<li ><h4>{{Session::get('nombre')}}</h4></li>
 			<li role="presentation" class="divider"></li>
 			<li class="parent ">
-				<a href="#">
+				<a data-toggle="collapse" href="#sub-item-1">
 					<span class="glyphicon glyphicon-list"></span> Vales <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-1">
@@ -61,7 +61,7 @@
 				</ul>
 			</li>
 			<li class="parent ">
-				<a href="#">
+				<a data-toggle="collapse" href="#sub-item-2">
 					<span class="glyphicon glyphicon-list"></span> Distribuidores <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-2">
@@ -78,7 +78,7 @@
 				</ul>
 			</li>
 			<li class="parent ">
-				<a href="#">
+				<a data-toggle="collapse" href="#sub-item-3">
 					<span class="glyphicon glyphicon-list"></span> Clientes <span data-toggle="collapse" href="#sub-item-3" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-3">
@@ -95,7 +95,7 @@
 				</ul>
 			</li>
 			<li class="parent "> 
-				<a href="#">
+				<a data-toggle="collapse" href="#sub-item-4">
 					<span class="glyphicon glyphicon-list"></span> Promociones <span data-toggle="collapse" href="#sub-item-4" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-4">
@@ -111,18 +111,35 @@
 					</li>
 				</ul>
 			</li>
-			<li class="parent ">
-				<a href="#">
-					<span class="glyphicon glyphicon-list"></span> Cuentas <span data-toggle="collapse" href="#sub-item-5" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+			<li class="parent "> 
+				<a data-toggle="collapse" href="#sub-item-5">
+					<span class="glyphicon glyphicon-list"></span> Comisiones <span data-toggle="collapse" href="#sub-item-5" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-5">
+					<li>
+						<a class="" href="#">
+							<span class="glyphicon glyphicon-share-alt"></span> Crear Comisión
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<span class="glyphicon glyphicon-share-alt"></span> Consultar Comisiones
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-item-6">
+					<span class="glyphicon glyphicon-list"></span> Cuentas <span data-toggle="collapse" href="#sub-item-6" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				</a>
+				<ul class="children collapse" id="sub-item-6">
 					<li>
 						<a class="" href="crearCuentaVendedor">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Cuenta
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
+						<a class="" href="consultarCuentasVendedor">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Usuarios
 						</a>
 					</li>

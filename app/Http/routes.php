@@ -44,9 +44,6 @@ Route::group(['middleware' => 'admin'], function () {
    	Route::post('guardarVale', 'ValesController@guardarVale');
    	Route::get('obtenerVales', 'ValesController@obtenerVales' );
 
-   	Route::get('crearCuentaVendedor', 'CuentasController@crearCuentaVendedor');
-	Route::post('guardarCuentaVendedor', 'CuentasController@guardarCuentaVendedor');
-
 	Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
 	
@@ -58,6 +55,19 @@ Route::group(['middleware' => 'vendedor'], function () {
 Route::group(['middleware' => 'super_admin'], function () {
 	Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
 	Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
+});
+
+Route::group(['middleware' => 'super_y_admin'], function () {
+	Route::get('crearCuentaVendedor', 'CuentasController@crearCuentaVendedor');
+	Route::post('guardarCuentaVendedor', 'CuentasController@guardarCuentaVendedor');
+	Route::get('consultarCuentasVendedor', 'CuentasController@consultarCuentasVendedor' );
+	Route::get('obtenerCuentasVendedor', 'CuentasController@obtenerCuentasVendedor' );
+	Route::get('editarCuentaVendedor/{id}', 'CuentasController@editarCuentaVendedor');
+	Route::post('actualizarCuentaVendedor/{id}', 'CuentasController@actualizarCuentaVendedor');
+
+	Route::get('crearComision', 'ComisionsController@crearComision');
+	Route::post('guardarComision', 'ComisionsController@guardarComision');
+
 });
 
 

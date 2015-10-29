@@ -32,6 +32,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\filtro_admin::class,
         'super_admin' => \App\Http\Middleware\filtro_super_admin::class,
         'vendedor' => \App\Http\Middleware\filtro_vendedor::class,
-        'mixto' => \App\Http\Middleware\filtro_mixto::class, 
+        'mixto' => \App\Http\Middleware\filtro_mixto::class,
+        'super_y_admin' => \App\Http\Middleware\filtro_super_y_admin::class,  
     ];
 }

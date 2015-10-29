@@ -29,20 +29,20 @@ class ClientesController extends Controller
     public function guardarCliente(Request $request)
     {
         $cliente = new Cliente;
-        $cliente->nombre = $request->input('nombre');
+        $cliente->nombre = strtoupper($request->input('nombre'));
         $cliente->telefono = $request->input('telefono');
         $cliente->celular = $request->input('celular');
         $cliente->numero_elector = $request->input('numero_elector');
-        $cliente->calle = $request->input('calle');
+        $cliente->calle = strtoupper($request->input('calle'));
         $cliente->numero_exterior = $request->input('numero_exterior');
         $cliente->numero_interior = $request->input('numero_interior');
-        $cliente->colonia = $request->input('colonia');
-        $cliente->municipio = $request->input('municipio');
-        $cliente->estado = $request->input('estado');
+        $cliente->colonia = strtoupper($request->input('colonia'));
+        $cliente->municipio = strtoupper($request->input('municipio'));
+        $cliente->estado = strtoupper($request->input('estado'));
         $cliente->codigo_postal = $request->input('codigo_postal');
-        $cliente->nombre_referencia_1 = $request->input('nombre_referencia_1');
+        $cliente->nombre_referencia_1 = strtoupper($request->input('nombre_referencia_1'));
         $cliente->telefono_referencia_1 = $request->input('telefono_referencia_1');
-        $cliente->nombre_referencia_2 = $request->input('nombre_referencia_2');
+        $cliente->nombre_referencia_2 = strtoupper($request->input('nombre_referencia_2'));
         $cliente->telefono_referencia_2 = $request->input('telefono_referencia_2');
         
 
@@ -88,9 +88,8 @@ class ClientesController extends Controller
     {
         $clientes = Cliente::all();
         for ($i=0; $i <sizeof($clientes); $i++) { 
-       $clientes[$i]->calle=$clientes[$i]->calle." #".$clientes[$i]->numero_exterior." ".$clientes[$i]->colonia." ".$clientes[$i]->municipio." ".$clientes[$i]->estado." ".$clientes[$i]->codigo_postal;
-             
-              $clientes[$i]->id_cliente='<a type="button" class="btn btn-primary margin" href="editarCliente/'. $clientes[$i]->id_cliente.'">Actualizar</a>';    
+            $clientes[$i]->calle=$clientes[$i]->calle." #".$clientes[$i]->numero_exterior." ".$clientes[$i]->colonia." ".$clientes[$i]->municipio." ".$clientes[$i]->estado." ".$clientes[$i]->codigo_postal; 
+            $clientes[$i]->id_cliente='<a type="button" class="btn btn-primary margin" href="editarCliente/'. $clientes[$i]->id_cliente.'">Actualizar</a>';    
         }
         
         return $clientes;
@@ -116,20 +115,20 @@ class ClientesController extends Controller
      public function actualizarCliente(Request $request,$id)
     {
         $cliente = Cliente::find($id);
-        $cliente->nombre = $request->input('nombre');
+        $cliente->nombre = strtoupper($request->input('nombre'));
         $cliente->telefono = $request->input('telefono');
         $cliente->celular = $request->input('celular');
         $cliente->numero_elector = $request->input('numero_elector');
-        $cliente->calle = $request->input('calle');
+        $cliente->calle = strtoupper($request->input('calle'));
         $cliente->numero_exterior = $request->input('numero_exterior');
         $cliente->numero_interior = $request->input('numero_interior');
-        $cliente->colonia = $request->input('colonia');
-        $cliente->municipio = $request->input('municipio');
-        $cliente->estado = $request->input('estado');
+        $cliente->colonia = strtoupper($request->input('colonia'));
+        $cliente->municipio = strtoupper($request->input('municipio'));
+        $cliente->estado = strtoupper($request->input('estado'));
         $cliente->codigo_postal = $request->input('codigo_postal');
-        $cliente->nombre_referencia_1 = $request->input('nombre_referencia_1');
+        $cliente->nombre_referencia_1 = strtoupper($request->input('nombre_referencia_1'));
         $cliente->telefono_referencia_1 = $request->input('telefono_referencia_1');
-        $cliente->nombre_referencia_2 = $request->input('nombre_referencia_2');
+        $cliente->nombre_referencia_2 = strtoupper($request->input('nombre_referencia_2'));
         $cliente->telefono_referencia_2 = $request->input('telefono_referencia_2');
         
 
@@ -147,10 +146,10 @@ class ClientesController extends Controller
                 //return ("Eres un super administrador");
                 break;
             case 1:
-                return view('admin.editarCliente',compact('cliente'));
+                return redirect('consultarClientes');
                 break;
             case 2:
-                 return view('vendedor.editarCliente',compact('cliente'));
+                 return redirect('consultarClientes');
                 break;
         }  
     }
@@ -166,8 +165,8 @@ class ClientesController extends Controller
         return response()->json($results);
     }
     public function buscarIdCliente(Request $request){
-           $id = $request->input('id');
-         $cliente = Cliente::find($id);
+        $id = $request->input('id');
+        $cliente = Cliente::find($id);
 
         return $cliente->nombre;
     }
