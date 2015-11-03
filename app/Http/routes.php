@@ -40,13 +40,7 @@ Route::group(['middleware' => 'mixto'], function () {
 	Route::get('buscarIdCliente', 'ClientesController@buscarIdCliente');
 });
 Route::group(['middleware' => 'admin'], function () {
-   	Route::get('crearVale', 'ValesController@crearVale');
-   	Route::post('guardarVale', 'ValesController@guardarVale');
-   	Route::get('obtenerVales', 'ValesController@obtenerVales' );
-   	Route::get('obtenerUltimoVale', 'ValesController@obtenerUltimoVale' );
 
-	Route::get('crearPromocion', 'PromocionsController@crearPromocion');
-	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
 	
 });
 
@@ -54,8 +48,7 @@ Route::group(['middleware' => 'vendedor'], function () {
 	Route::get('obtenerValesV', 'ValesController@obtenerValesV' );
 });
 Route::group(['middleware' => 'super_admin'], function () {
-	Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
-	Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
+	
 });
 
 Route::group(['middleware' => 'super_y_admin'], function () {
@@ -69,6 +62,18 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('crearComision', 'ComisionsController@crearComision');
 	Route::post('guardarComision', 'ComisionsController@guardarComision');
 
+	Route::get('crearVale', 'ValesController@crearVale');
+   	Route::post('guardarVale', 'ValesController@guardarVale');
+   	Route::get('obtenerVales', 'ValesController@obtenerVales' );
+   	Route::get('obtenerUltimoVale', 'ValesController@obtenerUltimoVale' );
+   	Route::get('editarVale/{id}', 'ValesController@editarVale');
+	Route::post('actualizarVale/{id}', 'ValesController@actualizarVale');
+
+   	Route::get('crearPromocion', 'PromocionsController@crearPromocion');
+	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
+
+	Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
+	Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
 });
 
 

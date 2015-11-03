@@ -13,9 +13,27 @@ class ValesController extends Controller
 {
     public function crearVale()
     {   
-        return view('admin.crearVale');
+        switch (Session::get('tipo')) {
+            case 0:   
+                return view('s_admin.crearVale');
+            break;
+            case 1:
+               return view('admin.crearVale');
+            break; 
+        } 
     }
-    
+     public function editarVale($id)
+    {   
+        $vale=Vale::find($id);
+         switch (Session::get('tipo')) {
+            case 0:   
+                return view('s_admin.editarVale');
+            break;
+            case 1:
+               return view('admin.editarVale',compact('vale'));
+            break; 
+        } 
+    }
 
     public function guardarVale(Request $request)
     {
