@@ -20,8 +20,8 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-    	$usuario = $request->input('usuario');
-    	$contrasena = $request->input('contrasena');
+    	$usuario = strtoupper($request->input('usuario'));
+    	$contrasena = strtoupper($request->input('contrasena'));
 
     	$cuentas = Cuenta::all();
 

@@ -61,6 +61,10 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 
 	Route::get('crearComision', 'ComisionsController@crearComision');
 	Route::post('guardarComision', 'ComisionsController@guardarComision');
+	Route::get('consultarComisiones', 'ComisionsController@consultarComisiones' );
+	Route::get('obtenerComisiones', 'ComisionsController@obtenerComisiones' );
+	Route::get('editaromision/{id}', 'ComisionsController@editaromision');
+	Route::post('actualizaromision/{id}', 'ComisionsController@actualizaromision');
 
 	Route::get('crearVale', 'ValesController@crearVale');
    	Route::post('guardarVale', 'ValesController@guardarVale');
