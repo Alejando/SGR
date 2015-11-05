@@ -63,8 +63,8 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::post('guardarComision', 'ComisionsController@guardarComision');
 	Route::get('consultarComisiones', 'ComisionsController@consultarComisiones' );
 	Route::get('obtenerComisiones', 'ComisionsController@obtenerComisiones' );
-	Route::get('editaromision/{id}', 'ComisionsController@editaromision');
-	Route::post('actualizaromision/{id}', 'ComisionsController@actualizaromision');
+	Route::get('editarComision/{id}', 'ComisionsController@editarComision');
+	Route::post('actualizarComision/{id}', 'ComisionsController@actualizarComision');
 
 	Route::get('crearVale', 'ValesController@crearVale');
    	Route::post('guardarVale', 'ValesController@guardarVale');
@@ -78,6 +78,10 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 
 	Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
 	Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
+	Route::get('consultarDistribuidores', 'DistribuidorsController@consultarDistribuidores' );
+	Route::get('obtenerDistribuidores', 'DistribuidorsController@obtenerDistribuidores' );
+	Route::get('editarDistribuidor/{id}', 'DistribuidorsController@editarDistribuidor');
+	Route::post('actualizarDistribuidor/{id}', 'DistribuidorsController@actualizarDistribuidor');
 });
 
 

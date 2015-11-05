@@ -19,18 +19,63 @@ class ComisionsController extends Controller
 
      public function guardarComision(Request $request)
     {
-        $comision = new Comision;
-        $comision->cantidad_inicial = $request->input('cantidad_inicial');
-        $comision->cantidad_final = $request->input('cantidad_final');
-        $comision->porcentaje = $request->input('porcentaje');
+        $comisionNueva = new Comision;
+        $comisionNueva->cantidad_inicial = $request->input('cantidad_inicial');
+        $comisionNueva->cantidad_final = $request->input('cantidad_final');
+        $comisionNueva->porcentaje = $request->input('porcentaje');
 
-        if($comision->save()){
-            Session::flash('message','Guardado Correctamente');
-            Session::flash('class','success');
-        }else{
-            Session::flash('message','Ha ocurrido un error');
-            Session::flash('class','danger');
+        $comisiones = Comision::all();
+         foreach ($comisiones as $comision)
+            {
+                if(($comisionNueva->cantidad_inicial >= $comision->cantidad_inicial && $comisionNueva->cantidad_inicial <= $comision->cantidad_final ) ||  ($comisionNueva->cantidad_final >= $comision->cantidad_inicial && $comisionNueva->cantidad_final <= $comision->cantidad_final )) 
+                {
+                    $comision_repetida = $comision;
+                    $Repetida = true;
+                    break;
+                }else{
+                   $Repetida = false; 
+                }
+            }
+
+        if($comisionNueva->porcentaje >= 50)
+        {
+            Session::flash('message','El porcentaje de comisión no puede ser mayor al 50%');
+            Session::flash('class','danger'); 
         }
+        else
+        {
+            if($comisionNueva->cantidad_inicial < 0 || $comisionNueva->cantidad_final < 0 )
+            {
+                Session::flash('message','Las cantidades no pueden ser menores a cero');
+                Session::flash('class','danger');
+            }
+            else
+            {
+                if($comisionNueva->cantidad_final <= $comisionNueva->cantidad_inicial)
+                {
+                    Session::flash('message','La cantidad final no puede ser menor o igual a la cantidad inicial');
+                    Session::flash('class','danger');
+                }else
+                {
+                    if($Repetida)
+                    {
+                        Session::flash('message','Las cantidades ingresadas ya se encuentran en el rango de una comisión que va de '. $comision_repetida->cantidad_inicial .' a '. $comision_repetida->cantidad_final );
+                        Session::flash('class','danger');
+                    }else
+                        {
+                            if($comisionNueva->save())
+                            {
+                                Session::flash('message','Guardado Correctamente');
+                                Session::flash('class','success');
+                            }else{
+                                Session::flash('message','Ha ocurrido un error');
+                                Session::flash('class','danger');
+                            }
+                        }
+                }
+            }
+        }
+
        return redirect('crearComision');
     }
 
@@ -60,7 +105,7 @@ class ComisionsController extends Controller
         return $comisiones;
     }
 
-    public function editaromision($id)
+    public function editarComision($id)
     {
         $comision = Comision::find($id);
         switch (Session::get('tipo')) {
@@ -75,31 +120,77 @@ class ComisionsController extends Controller
         }        
     }
 
-    public function actualizaromision(Request $request,$id)
+    public function actualizarComision(Request $request,$id)
     {
-        $cuenta = Cuenta::find($id);
-        $cuenta->nombre = strtoupper($request->input('nombre'));
-        $cuenta->telefono = $request->input('telefono');
-        $cuenta->usuario = strtoupper($request->input('usuario'));
-        $cuenta->contrasena = $request->input('contrasena');
+        $comisionEditada = Comision::find($id);
+        $comisionEditada->cantidad_inicial = $request->input('cantidad_inicial');
+        $comisionEditada->cantidad_final = $request->input('cantidad_final');
+        $comisionEditada->porcentaje = $request->input('porcentaje');
+
         
+        $comisiones = Comision::all();
+        for($i=0; $i<count($comisiones); $i++)
+            {
+                if($comisionEditada->id_comision != $comisiones[$i]->id_comision)
+                {
+                    $NuevasComisiones[$i] = $comisiones[$i];
+                }
+            }
 
+        //return $NuevasComisiones; 
+               
+        foreach ($NuevasComisiones as $NuevaComision)
+            {
+                if(($comisionEditada->cantidad_inicial >= $NuevaComision->cantidad_inicial && $comisionEditada->cantidad_inicial <= $NuevaComision->cantidad_final ) ||  ($comisionEditada->cantidad_final >= $NuevaComision->cantidad_inicial && $comisionEditada->cantidad_final <= $NuevaComision->cantidad_final )) 
+                {
+                    $comision_repetida = $NuevaComision;
+                    $Repetida = true;
+                    break;
+                }else{
+                   $Repetida = false; 
+                }
+            }
 
-        if($cuenta->save()){
-            Session::flash('message','Datos actualizados  Correctamente');
-            Session::flash('class','success');
-        }else{
-            Session::flash('message','Ha ocurrido un error');
-            Session::flash('class','danger');
+        if($comisionEditada->porcentaje >= 50)
+        {
+            Session::flash('message','El porcentaje de comisión no puede ser mayor al 50%');
+            Session::flash('class','danger'); 
         }
-       switch (Session::get('tipo')) {
-            case 0:
-               // return redirect('');
-                //return view('admin.consultarCuentasVendedor');
-                break;
-            case 1:
-                return redirect('consultarCuentasVendedor');
-                break;
-        }  
+        else
+        {
+            if($comisionEditada->cantidad_inicial < 0 || $comisionEditada->cantidad_final < 0 )
+            {
+                Session::flash('message','Las cantidades no pueden ser menores a cero');
+                Session::flash('class','danger');
+            }
+            else
+            {
+                if($comisionEditada->cantidad_final <= $comisionEditada->cantidad_inicial)
+                {
+                    Session::flash('message','La cantidad final no puede ser menor o igual a la cantidad inicial');
+                    Session::flash('class','danger');
+                }else
+                {
+                    if($Repetida)
+                    {
+                        Session::flash('message','Las cantidades ingresadas ya se encuentran en el rango de una comisión que va de '. $comision_repetida->cantidad_inicial .' a '. $comision_repetida->cantidad_final );
+                        Session::flash('class','danger');
+                    }else
+                        {
+                            if($comisionEditada->save())
+                            {
+                                Session::flash('message','Guardado Correctamente');
+                                Session::flash('class','success');
+                            }else{
+                                Session::flash('message','Ha ocurrido un error');
+                                Session::flash('class','danger');
+                            }
+                        }
+                }
+            }
+        }
+
+       return redirect('consultarComisiones');
+       
     }
 }

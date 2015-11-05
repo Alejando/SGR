@@ -51,7 +51,7 @@
 					</li>
 					<li>
 						<a class="" href="registrarVale">
-							<span class="glyphicon glyphicon-share-alt"></span> Emitir Vales
+							<span class="glyphicon glyphicon-share-alt"></span> Registro de ventas
 						</a>
 					</li>
 					<li>
@@ -69,6 +69,11 @@
 					<li>
 						<a class="" href="crearDistribuidor">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Distribuidor
+						</a>
+					</li>
+					<li>
+						<a class="" href="consultarDistribuidores">
+							<span class="glyphicon glyphicon-share-alt"></span> Ver distribuidores
 						</a>
 					</li>
 					<li>
@@ -90,7 +95,7 @@
 					</li>
 					<li>
 						<a class="" href="consultarClientes">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Clientes
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Clientes
 						</a>
 					</li>
 				</ul>
@@ -107,7 +112,7 @@
 					</li>
 					<li>
 						<a class="" href="consultarPromociones">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Promciones
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Promociones
 						</a>
 					</li>
 				</ul>
@@ -118,13 +123,13 @@
 				</a>
 				<ul class="children collapse" id="sub-item-5">
 					<li>
-						<a class="" href="#">
+						<a class="" href="crearComision">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Comisión
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Comisiones
+						<a class="" href="consultarComisiones">
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Comisiones
 						</a>
 					</li>
 				</ul>
@@ -141,7 +146,7 @@
 					</li>
 					<li>
 						<a class="" href="consultarCuentasVendedor">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Usuarios
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Usuarios
 						</a>
 					</li>
 				</ul>

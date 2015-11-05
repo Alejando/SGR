@@ -20,4 +20,9 @@ class Distribuidor extends Model
     {
         return $this->hasMany('App\Pago', 'id_distribuidor');
     }
+
+    public function comision()
+    {
+        return $this->belongsTo('App\Comision', 'id_distribuidor');
+    }
 }

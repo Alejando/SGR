@@ -56,7 +56,7 @@
 					</li>
 					<li>
 						<a class="" href="consultarVales">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Vales
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Vales
 						</a>
 					</li>
 				</ul>
@@ -73,7 +73,7 @@
 					</li>
 					<li>
 						<a class="" href="consultarClientes">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Clientes
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Clientes
 						</a>
 					</li>
 				</ul>
@@ -85,7 +85,7 @@
 				<ul class="children collapse" id="sub-item-4">
 					<li>
 						<a class="" href="consultarPromociones">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Promciones
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Promociones
 						</a>
 					</li>
 				</ul>

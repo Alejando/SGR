@@ -23,22 +23,16 @@
      					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<div class="form-group">
 									<label>Cantidad inicial</label>
-									<input type="text" value="{{ $cuenta->nombre }}"  name="nombre" class="form-control" required>
+									<input type="number"  value="{{ $comision->cantidad_inicial }}" name="cantidad_inicial" class="form-control" required>
 								</div>
 								<div class="form-group">
-									<label>Cantidad Final</label>
-									<input type="text" value="{{ $cuenta->telefono }}"  name="telefono" class="form-control" required>
+									<label>Cantidad final</label>
+									<input type="number"  value="{{ $comision->cantidad_final }}" name="cantidad_final" class="form-control" required>
 								</div>
 								<div class="form-group">
 									<label>Porcentaje</label>
-									<input type="text" value="{{ $cuenta->usuario }}"  name="usuario" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Contraseña</label>
-									<input type="text" value="{{ $cuenta->contrasena }}"  name="contrasena" class="form-control" required>
-								</div>
-							
-								
+									<input type="number"  value="{{ $comision->porcentaje }}" name="porcentaje" class="form-control" required>
+								</div>			
 						</div>
 							
 							

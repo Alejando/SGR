@@ -45,11 +45,11 @@ class DistribuidorsController extends Controller
         $distribuidor->limite_vale = $request->input('limite_vale');
        
         $file = $request->file('foto');
-        $nombreFoto='foto'.$nombre.'.'.$file->getClientOriginalExtension();
+        $nombreFoto='FOTO_'.$distribuidor->nombre.'.'.$file->getClientOriginalExtension();
         $distribuidor->foto=$nombreFoto;
       
        $file = $request->file('firma');
-        $nombreFirma='firma'.$nombre.'.'.$file->getClientOriginalExtension();
+        $nombreFirma='FIRMA_'.$distribuidor->nombre.'.'.$file->getClientOriginalExtension();
         $distribuidor->firma=$nombreFirma;
         ;
         
@@ -86,20 +86,74 @@ class DistribuidorsController extends Controller
         return response()->json($results);
     }
 
-    public function verDistribuidor($id)
+    public function consultarDistribuidores()
     {
-        //
+    
+        switch (Session::get('tipo')) {
+            case 0:
+                // return redirect('');
+                //return view('superAdmin.consultarCuentasVendedor');
+                break;
+            case 1:
+                return view('admin.consultarDistribuidores');
+                break;
+        }  
+    }
+
+    public function obtenerDistribuidores()
+    {
+        $distribuidores = Distribuidor::all();
+        for ($i=0; $i <sizeof($distribuidores); $i++) 
+        {
+            
+            //$distribuidores[$i]->calle=$distribuidores[$i]->calle." #".$distribuidores[$i]->numero_exterior." ".$distribuidores[$i]->colonia." ".$distribuidores[$i]->municipio." ".$distribuidores[$i]->estado." ".$distribuidores[$i]->codigo_postal; 
+            $distribuidores[$i]->acciones = '<a type="button" class="btn btn-success margin" href="editarDistribuidor/'. $distribuidores[$i]->id_distribuidor .'">Ver</a> <a type="button" class="btn btn-primary margin" href="editarDistribuidor/'. $distribuidores[$i]->id_distribuidor .'">Actualizar</a>';    
+        }
+        
+        return $distribuidores;
     }
 
     public function editarDistribuidor($id)
     {
-        //
+        $comision = Comision::find($id);
+        switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.editarComision',compact('comision'));
+                break;
+            
+        }        
     }
 
-  
-    public function actualizarDistribuidor(Request $request, $id)
+    public function actualizarDistribuidor(Request $request,$id)
     {
-        //
+        $cuenta = Cuenta::find($id);
+        $cuenta->nombre = strtoupper($request->input('nombre'));
+        $cuenta->telefono = $request->input('telefono');
+        $cuenta->usuario = strtoupper($request->input('usuario'));
+        $cuenta->contrasena = $request->input('contrasena');
+        
+
+
+        if($cuenta->save()){
+            Session::flash('message','Datos actualizados  Correctamente');
+            Session::flash('class','success');
+        }else{
+            Session::flash('message','Ha ocurrido un error');
+            Session::flash('class','danger');
+        }
+       switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return view('admin.consultarCuentasVendedor');
+                break;
+            case 1:
+                return redirect('consultarCuentasVendedor');
+                break;
+        }  
     }
 
 }
