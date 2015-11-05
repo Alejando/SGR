@@ -7,6 +7,9 @@ $(function(){
 		  	inputOcultos+='<input type="hidden" name="id_distribuidor" value='+ui.item.id+'>';
 		  }
 	});*/
+	setTimeout(function() {
+		        $("#mensaje").fadeOut(1500);
+		    },3000);
 	$.ajax({
 		type: "GET",
 		dataType: "json",

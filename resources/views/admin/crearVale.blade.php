@@ -1,6 +1,6 @@
 @extends ('m_admin')
 
-@section ('titulo') Editar vale
+@section ('titulo') Crear vales
 @stop
 
 @section ('css')
@@ -14,7 +14,7 @@
 				<div class="panel-heading">Crear Vales</div>
 				<div class="panel-body">
 					@if(Session::has('message'))
-                    <div class="alert alert-{{ Session::get('class') }} alert-dismissable">
+                    <div id="mensaje"class="alert alert-{{ Session::get('class') }} alert-dismissable">
 					    <button type="button" class="close" data-dismiss="alert">&times;</button>
 					    <strong> {{ Session::get('message')}} </strong>
 			    	</div>
@@ -25,7 +25,7 @@
  					    	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						
 							<div class="form-group ">
-								<label>Nombre del distribuidor</label>
+								<label>Número del distribuidor</label>
 								<input type="text"  name="id_distribuidor" id="nombreDistribuidor"class="form-control" required >
 
 							</div>
@@ -39,7 +39,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label>Folio Inicio</label>
-									<input type="number"  id="folio_inicio"  class="form-control" disabled >
+									<input type="number"  id="folio_inicio"  class="form-control"  required>
 								</div>		
 							</div>
 							<div class="col-md-4">

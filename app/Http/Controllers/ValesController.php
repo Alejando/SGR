@@ -166,18 +166,26 @@ class ValesController extends Controller
         $vale = Vale::find($request->input('id_vale'));
         $idCliente = $request->input('id_cliente');
         $nombre = $request->input('nombre');
+         if($idCliente==0){
+            $cliente= new Cliente;
+            $cliente->nombre=$nombre;
+            $cliente->save();
+             $idCliente = Cliente::max('id_cliente');
+
+        }
         $cuenta = Session::get('id');
         $fechaVenta = Carbon::today(); 
         $numeroPagos = $request->input('numero_pagos');
         $folioVenta = $request->input('folio_venta');
         $cantidad = $request->input('cantidad');
         $fechaPago = $request->input('fecha_inicio_pago');
+
         $saldoDistribuidor=$vale->distribuidor->saldo_actual;
         $saldoNuevoDistribuidor=$saldoDistribuidor+$cantidad;
-        $limiteCreditoDistribuidor=$vale->distribuidor->limite_credito;
+        $limiteCreditoDistribuidor=$vale()->distribuidor->limite_credito;
         if($vale->estatus==0){
             if($vale->distribuidor->estatus==0){ //0->activo 1->desactivado
-                if($vale->cantidad_limite==0 || $cantidad> $vale->cantidad_limite){
+                if($cantidad<$vale->cantidad_limite || $vale->cantidad_limite==0){
                
                     if($saldoNuevoDistribuidor<$limiteCreditoDistribuidor){
 
@@ -191,7 +199,7 @@ class ValesController extends Controller
                         $vale->estatus=1; // 0=disponible, 1=ocupado 2=cancelado
                         $vale->fecha_inicio_pago=$fechaPago;
                         if($vale->save()){
-                            Session::flash('message','Regsitro de vale exitoso!');
+                            Session::flash('message','Venta con vale exitoso!');
                             Session::flash('class','success');
                         }
                         else{
@@ -231,10 +239,10 @@ class ValesController extends Controller
                 //return ("Eres un super administrador");
                 break;
             case 1:
-                return redirect('admin.registrarVale');
+                return redirect('registrarVale');
                 break;
             case 2:
-                 return redirect('vendedor.registrarVale');
+                 return redirect('registrarVale');
                 break;
         }   
       

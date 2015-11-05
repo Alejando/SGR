@@ -154,15 +154,15 @@ class ClientesController extends Controller
         }  
     }
     public function buscarCliente(Request $request){
-            $valor = $request->input('nombre'); 
+            $valor = $request->input('term'); 
 
-        $clientes = cliente::where('nombre', 'LIKE', '%'.$valor.'%')->take(5)->get();
+        $clientes = cliente::where('nombre', 'LIKE', '%'.$valor.'%')->get();
         $results = array();
         foreach ($clientes as $cliente)
             {
-                $results[] = [ 'id' => $cliente->id_cliente, 'value' => $cliente->nombre ];
+                $results[] = $cliente->nombre;
             }
-        return response()->json($results);
+        return $results;
     }
     public function buscarIdCliente(Request $request){
         $id = $request->input('id');

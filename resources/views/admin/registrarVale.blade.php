@@ -19,20 +19,20 @@
 						@endif
 					    </div>
 		                <form class="form" id="form"role="form" method="POST" action="ventaVale" >
-		                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		                	<input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 							<div class="col-md-12">
 								<label>Registro de vales</label>
 								</br>
 								<div class="col-md-2">
 									<div class="form-group">
 										<label>Serie</label>
-										<input type="text"  id="serie" name="serie" class="form-control" >
+										<input type="text"  id="serie" name="serie" class="form-control" />
 									</div>	
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
 										<label>Folio </label>
-										<input type="number"  id="folio" name="folio" class="form-control" required>
+										<input type="number"  id="folio" name="folio" class="form-control" required/>
 									</div>		
 								</div>
 								<div class="col-md-2">
@@ -44,21 +44,22 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Limite de Credito</label>
-										<input type="text"  id="limite_vale" name="limite_vale" class="form-control" disabled>
+										<input type="text"  id="limite_vale" name="limite_vale" class="form-control" disabled/>
 									</div>	
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="col-md-6">
-									<div class="form-group">
+									<div   class="form-group">
 										<label>Nombre del cliente</label>
-										<input type="text"  id="nombreCliente" name="nombre"  class="form-control" required>
+										<input type="text"  id="nombreCliente" name="nombre"  class="form-control " required/>
+
 									</div>	
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Nombre del distribuidor</label>
-										<input type="text" id="nombreDistribuidor"  name="nombre_distribuidor" class="form-control" disabled>
+										<input type="text" id="nombreDistribuidor"  name="nombre_distribuidor" class="form-control" disabled/>
 									</div>	
 								</div>
 							</div>	
@@ -67,13 +68,13 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Cantidad de venta</label>
-										<input type="number"  id="cantidad" name="cantidad" class="form-control" required>
+										<input type="number"  id="cantidad" name="cantidad" class="form-control" required/>
 									</div>	
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Folio venta </label>
-										<input type="number"  id="folioVenta"name="folio_venta" class="form-control" required>
+										<input type="number"  id="folioVenta"name="folio_venta" class="form-control" required/>
 									</div>		
 								</div>
 								
@@ -112,3 +113,4 @@
 @section ('js') 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="js/actualizarVale.js"></script>
+		
