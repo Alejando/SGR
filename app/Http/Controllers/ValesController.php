@@ -164,31 +164,30 @@ class ValesController extends Controller
     public function ventaVale(Request $request){
         
         $vale = Vale::find($request->input('id_vale'));
+        $folio = $request->input('folio');
+        $serie = $request->input('serie');
         $idCliente = $request->input('id_cliente');
-        $nombre = $request->input('nombre');
-         if($idCliente==0){
-            $cliente= new Cliente;
-            $cliente->nombre=$nombre;
-            $cliente->save();
-             $idCliente = Cliente::max('id_cliente');
-
-        }
+        $nombre = strtoupper($request->input('nombre'));
         $cuenta = Session::get('id');
         $fechaVenta = Carbon::today(); 
         $numeroPagos = $request->input('numero_pagos');
         $folioVenta = $request->input('folio_venta');
         $cantidad = $request->input('cantidad');
         $fechaPago = $request->input('fecha_inicio_pago');
-
         $saldoDistribuidor=$vale->distribuidor->saldo_actual;
         $saldoNuevoDistribuidor=$saldoDistribuidor+$cantidad;
-        $limiteCreditoDistribuidor=$vale()->distribuidor->limite_credito;
+        $limiteCreditoDistribuidor=$vale->distribuidor->limite_credito;
         if($vale->estatus==0){
             if($vale->distribuidor->estatus==0){ //0->activo 1->desactivado
                 if($cantidad<$vale->cantidad_limite || $vale->cantidad_limite==0){
                
-                    if($saldoNuevoDistribuidor<$limiteCreditoDistribuidor){
-
+                    if($saldoNuevoDistribuidor<$limiteCreditoDistribuidor){ 
+                         if(is_null($idCliente)){
+                            $cliente= new Cliente;
+                            $cliente->nombre=$nombre;
+                            $cliente->save();
+                             $idCliente = Cliente::max('id_cliente');
+                        }
                         $vale->id_cliente=$idCliente;
                         $vale->id_cuenta=$cuenta;
                         $vale->fecha_venta=Carbon::today();
@@ -203,32 +202,32 @@ class ValesController extends Controller
                             Session::flash('class','success');
                         }
                         else{
-                            Session::flash('Error al guardar el vale en la base de datos');
+                            Session::flash('message','Error al guardar el vale en la base de datos');
                             Session::flash('class','danger');
                         }
                     }
                     else{
-                        Session::flash('El distribuidor a superado limite de credito por $'.$saldoNuevoDistribuidor-$limiteCreditoDistribuidor.'.00');
+                        Session::flash('message','El distribuidor a superado limite de credito por $'.$saldoNuevoDistribuidor-$limiteCreditoDistribuidor.'.00');
                         Session::flash('class','danger');
                     }
                 }
                 else{
-                    Session::flash('El monto de venta es mayor al limite permitido para este vale');
+                    Session::flash('message','El monto de venta es mayor al limite permitido para este vale');
                     Session::flash('class','danger');
                 }
             }
             else{
-                Session::flash('Por el momento el distribuidor se encuentra dado de baja temporalmente');
+                Session::flash('message','Por el momento el distribuidor se encuentra dado de baja temporalmente');
                 Session::flash('class','danger');
             }
         }
         else{
             if($vale->estatus==2){
-                Session::flash('message','El vale '.$serie.'-'.$folio.'se encuentra cancelado debiado a: '.$vale->motivo_cancelacion);
+                Session::flash('message','El vale '.$serie.' - '.$folio.' se encuentra cancelado debiado a: '.$vale->motivo_cancelacion);
                 Session::flash('class','danger');
             }
             else{
-                Session::flash('message','El vale  '.$serie.'-'.$folio.'ya ha sido utilizado');
+                Session::flash('message','El vale  '.$serie.' - '.$folio.' ya ha sido utilizado');
                 Session::flash('class','danger');
             }   
         }

@@ -156,7 +156,7 @@ class ClientesController extends Controller
     public function buscarCliente(Request $request){
             $valor = $request->input('term'); 
 
-        $clientes = cliente::where('nombre', 'LIKE', '%'.$valor.'%')->get();
+        $clientes = Cliente::where('nombre', 'LIKE', '%'.$valor.'%')->get();
         $results = array();
         foreach ($clientes as $cliente)
             {

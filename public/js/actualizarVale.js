@@ -22,26 +22,30 @@ $(function() {
 		}
 	  	code+="<div class='col-md-3'><div class='panel panel-primary'><div class='panel-heading'> Ultimo pago </div><div class='panel-body'><p>De $"+pagoFinal+".00  el "+cambiarTipoFecha(fechaPago(fechaInicioPago,nPagosGlobal))+"</p></div></div></div>";
 		$("#pagos").html(code);
-		$("#ocultos").html(inputOcultos);
+		
 		
 	})
 
 	$('#nombreCliente').autocomplete({
     source: 'buscarCliente',
-   	minLength: 3,
+   	minLength: 1,
 	  select: function(event, ui) {
 	  	inputOcultos+='<input type="hidden" name="id_cliente" value='+ui.item.id+'>';
 	  }
 	});
 	$('#form').submit(function(){
+		if(BoolFechaPromo==0){
+			inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'/>';
+		}
+		$("#ocultos").html(inputOcultos);
 		if(confirma==1){
 			return true;
 		}
 		else{
-			mensaje='<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong> El vale no a sido verificado </strong></div>';
+			mensaje='<div id="borrarMensaje" facclass="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong> El vale no a sido verificado </strong></div>';
 			$('#mensaje').html(mensaje);
 					setTimeout(function() {
-		        $("#mensaje").fadeOut(1500);
+		        $("#borrarMensaje").fadeOut(1500);
 		    },3000);
 			return false;
 		}
@@ -117,6 +121,7 @@ function mostrarPromocion(){
 function datosVale(){	
 	var serie = $('#serie').val();
 	var folio = $('#folio').val();
+	
 	$.ajax({
 		type: "GET",
  		url: "buscarVale",
@@ -128,14 +133,14 @@ function datosVale(){
 		
 		if(data=="no"){
 			
-			mensaje='<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong> El vale no existe </strong></div>';
+			mensaje='<div id="borrarMensaje" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong> El vale no existe </strong></div>';
 			$('#mensaje').html(mensaje);
 			$("#bVericar").removeClass("btn btn-danger"); 
 			$("#bVericar").removeClass("btn btn-success"); 
 			$("#bVericar").removeClass("btn btn-primary"); 
 	    	$("#bVericar").addClass("btn btn-warning"); 
 			    	setTimeout(function() {
-		        $("#mensaje").fadeOut(1500);
+		        $("#borrarMensaje").fadeOut(1500);
 		    },3000);
 			
 		}
@@ -148,9 +153,17 @@ function datosVale(){
 			    if(name=="estatus"){
 			     	 	//console.log(name + 'r:' + value); 
 			    	if(value==0){
+			    		$('#nombreCliente').removeAttr("disabled");
+						$('#folioVenta').removeAttr("disabled");
+						$('#cantidad').removeAttr("disabled");
 			    		$("#bVericar").removeClass("btn btn-danger");
 			    		$("#bVericar").removeClass("btn btn-warning");  
 			    		$("#bVericar").addClass("btn btn-success"); 
+			    		mensaje='<div id="borrarMensaje"class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El vale esta disponible</strong></div>';
+						$('#mensaje').html(mensaje);
+						    	setTimeout(function() {
+					        $("#borrarMensaje").fadeOut(1500);
+					    },3000);
 			    		confirma=1;
 
 			    	}
@@ -158,7 +171,11 @@ function datosVale(){
 						$("#bVericar").removeClass("btn btn-success");
 						$("#bVericar").removeClass("btn btn-warning"); 
 			    		$("#bVericar").addClass("btn btn-danger"); 
-			    		
+			    		mensaje='<div  id="borrarMensaje"class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong> El vale no esta disponible </strong></div>';
+						$('#mensaje').html(mensaje);
+						    	setTimeout(function() {
+					        $("#borrarMensaje").fadeOut(1500);
+					    },3000);
 			    	}
 			    }
 			   	if(name=="cantidad_limite"){

@@ -75,15 +75,16 @@ class DistribuidorsController extends Controller
     }
     public function buscarDistribuidor(Request $request)
     {
-        $distribuidor = $request->input('temp'); 
-
-        $distris = Distribuidor::where('nombre', 'LIKE', '%'.$distribuidor.'%')->take(5)->get();
+        $valor = $request->input('term');
+        $distris = Distribuidor::where('nombre', 'LIKE', '%'.$valor.'%')->orWhere('id_distribuidor', 'LIKE', '%'.$valor.'%')->take(5)->get();
         $results = array();
+
         foreach ($distris as $distri)
-            {
-                $results[] = [ 'id' => $distri->id_distribuidor, 'value' => $distri->nombre ];
-            }
-        return response()->json($results);
+        {
+                $cadena=$distri->id_distribuidor.".-".$distri->nombre; // cadena conjunta de id y nombre
+                 $results[] = [ 'id' => $distri->id_distribuidor, 'value' => $cadena ];
+        }
+        return $results;
     }
 
     public function consultarDistribuidores()

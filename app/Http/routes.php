@@ -28,7 +28,7 @@ Route::group(['middleware' => 'mixto'], function () {
 	Route::get('obtenerPromociones', 'PromocionsController@obtenerPromociones' );
 	
 	Route::get('buscarIdDistribuidor', 'DistribuidorsController@buscarIdDistribuidor');
-	Route::get('buscarDistribuidor', 'DistribuidorsController@completarCampo');
+	Route::get('buscarDistribuidor', 'DistribuidorsController@buscarDistribuidor');
 
 	Route::get('crearCliente', 'ClientesController@crearCliente');
 	Route::post('guardarCliente', 'ClientesController@guardarCliente');

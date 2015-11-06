@@ -175,7 +175,6 @@
 	<script src="js/custom.js"></script>
 	<script src="js/bootstrap-table.js"></script>
 	<script src="js/tipoPromocion.js"></script>
-
 	
 	
 	
