@@ -16,11 +16,11 @@
 		                @endif
 						<div class="col-md-6">
 							<label>Datos del Vendedor</label>
-							<form class="form" role="form" method="POST" action="guardarCuentaVendedor" enctype="multipart/form-data">
+							<form class="form" role="form" method="POST" action="guardarCuenta" enctype="multipart/form-data">
      					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
      					    	<div class="form-group">
 									<label>Tipo de cuenta</label>
-									<select name="tipo_promocion" class="form-control" id="tipo_promocion">
+									<select name="tipo" class="form-control" id="tipo">
 									  <option value="1" class="form-control">Administrador</option>
 									  <option value="2" class="form-control">Vendedor</option>
 									</select>

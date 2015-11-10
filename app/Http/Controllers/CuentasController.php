@@ -18,16 +18,11 @@ class CuentasController extends Controller
         return view('admin.crearCuentaVendedor');
     }
 
-    public function crearCuenta()
-    {
-        return view('admin.crearCuenta');
-    }
-
      public function guardarCuentaVendedor(Request $request)
     {
         $vendedor = new Cuenta;
         $vendedor->nombre = strtoupper($request->input('nombre'));
-        $vendedor->telefono = strtoupper($request->input('telefono'));
+        $vendedor->telefono = $request->input('telefono');
         $vendedor->usuario = strtoupper($request->input('usuario'));
         $vendedor->contrasena = $request->input('contrasena');
         $vendedor->tipo = 2;
@@ -117,6 +112,66 @@ class CuentasController extends Controller
                 return redirect('consultarCuentasVendedor');
                 break;
         }  
+    }
+
+    public function crearCuenta()
+    {
+        return view('admin.crearCuenta');
+    }
+
+     public function guardarCuenta(Request $request)
+    {
+        $cuenta = new Cuenta;
+        $cuenta->tipo = $request->input('tipo');
+        $cuenta->nombre = strtoupper($request->input('nombre'));
+        $cuenta->telefono = $request->input('telefono');
+        $cuenta->usuario = strtoupper($request->input('usuario'));
+        $cuenta->contrasena = $request->input('contrasena');
+        
+        $contrasena = $request->input('contrasena');
+        $contrasena2 = $request->input('contrasena2');
+
+        if($contrasena != $contrasena2)
+        {
+            Session::flash('message','La primera contraseña escrita no coincide con la segunda');
+            Session::flash('class','danger');
+        }else
+            {
+                if($cuenta->save()){
+                    Session::flash('message','Guardado Correctamente');
+                    Session::flash('class','success');
+                }else{
+                    Session::flash('message','Ha ocurrido un error');
+                    Session::flash('class','danger');
+                }
+            }
+       return view('admin.crearCuenta');
+    }
+
+    public function consultarCuentas()
+    {
+        return view('admin.consultarCuentas');
+
+    }
+
+    public function obtenerCuentas()
+    {
+        $cuentas = Cuenta::where('tipo','!=',0)->get();
+        for ($i=0; $i <sizeof($cuentas); $i++) {
+             
+            $cuentas[$i]->id_cuenta='<a type="button" class="btn btn-primary margin" href="editarCuentaVendedor/'. $cuentas[$i]->id_cuenta.'">Actualizar</a>';    
+            switch ($cuentas[$i]->tipo) 
+             {
+                case 1:
+                    $cuentas[$i]->tipo = "Administrador";
+                    break;
+                case 2:
+                    $cuentas[$i]->tipo = "Vendedor";
+                    break;
+            }
+        }
+        
+        return $cuentas;
     }
     
 }

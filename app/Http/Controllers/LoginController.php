@@ -29,7 +29,7 @@ class LoginController extends Controller
     	{
     		if(($cuenta->usuario == $usuario) && ($cuenta->contrasena == $contrasena))
     		{
-    			Session::put('id', $cuenta->id );
+    			Session::put('id', $cuenta->id_cuenta );
     			Session::put('nombre', $cuenta->nombre );
     			Session::put('tipo', $cuenta->tipo );
 

@@ -89,6 +89,3 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('editarDistribuidor/{id}', 'DistribuidorsController@editarDistribuidor');
 	Route::post('actualizarDistribuidor/{id}', 'DistribuidorsController@actualizarDistribuidor');
 });
-
-
-

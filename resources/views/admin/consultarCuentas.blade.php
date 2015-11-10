@@ -8,10 +8,10 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Cuentas</div>
 					<div class="panel-body">
-						<table data-toggle="table" data-url="obtenerCuentasVendedor"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+						<table data-toggle="table" data-url="obtenerCuentas"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
-
+						   	 	<th data-field="tipo" data-sortable="true">Tipo</th>
 						        <th data-field="nombre" data-sortable="true">Nombre</th>
 						        <th data-field="telefono" data-halign="center"data-sortable="true">Teléfono</th>
 						        <th data-field="usuario"   data-halign="center"data-sortable="true">Usuario</th>
