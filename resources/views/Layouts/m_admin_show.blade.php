@@ -141,7 +141,7 @@
 		@yield('contenido')
 	</div>	<!--/.main-->
 </body>
-	<script src="../js/jquery.js"></script>
+	<script src="../js/jquery.min.js"></script>
 	<script src="../js/jquery-ui.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/chart.min.js"></script>
@@ -151,7 +151,6 @@
 	<script src="../js/bootstrap-datepicker.js"></script>
 	<script src="../js/custom.js"></script>
 	<script src="../js/bootstrap-table.js"></script>
-	<script src="../js/tipoPromocion.js"></script>
 
 	
 	

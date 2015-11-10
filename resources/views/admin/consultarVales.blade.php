@@ -9,18 +9,18 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Vales</div>
 					<div class="panel-body">
-						<table data-toggle="table" data-url="obtenerVales"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+						<table data-toggle="table" data-url="obtenerVales"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true"  data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
 
-						        <th data-field="serie" data-halign="center" data-sortable="true">Serie</th>
+						        <th data-field="serie"  data-cell-style="cellStyle" data-halign="center" data-sortable="true">Serie</th>
 						        <th data-field="folio" data-halign="center"data-sortable="true">Folio</th>
-						        <th data-field="id_distribuidor"  data-sortable="true">Dsitribuidor</th>
+						        <th data-field="id_distribuidor" data-sortable="true">Dsitribuidor</th>
 						        <th data-field="cantidad" data-halign="center" data-sortable="true">Deuda</th>
 						        <th data-field="numero_pagos" data-halign="center" data-sortable="true">Total pagos</th>
 						        <th data-field="pagos_realizados" data-halign="center" data-sortable="true">Pagos realizados</th>
 						        <th data-field="deuda_actual"data-halign="center" data-sortable="true">Adeudo</th>
-						        <th data-field="estatus" data-halign="center" data-sortable="true">Estatus</th>
+						        <th data-field="estatus" data-halign="center"  data-sortable="true">Estatus</th>
 						        <th data-field="id_vale" data-halign="center" data-sortable="true">Acciones</th>
 						    </tr>
 						    </thead>
@@ -30,3 +30,18 @@
 			</div>
 		</div><!--/.row-->	
 @stop
+
+<script>
+   function cellStyle(value, row, index) {
+        var classes = ['active', 'success', 'info', 'warning', 'danger'];
+        if (index % 2 === 0 && index / 2 < classes.length) {
+            return {
+                //classes: classes[index / 2]
+                css: {
+                    "background-color": "red",
+                }
+            };
+        }
+        return {};
+    } 
+</script>

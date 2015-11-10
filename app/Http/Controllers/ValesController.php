@@ -93,8 +93,8 @@ class ValesController extends Controller
     }
 
     public function buscarVale(Request $request){
-         
-         $serie = $request->input('serie');
+       return  " > ".Session::get('tipo')." <";
+       /*  $serie = $request->input('serie');
          $folio = $request->input('folio');
          $vale = Vale::where('serie',$serie)->where('folio', $folio)->get();
          if(sizeof($vale)<=0){
@@ -103,7 +103,7 @@ class ValesController extends Controller
          else{
             return $vale;
          }
-        
+        */
        
     }
 

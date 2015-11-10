@@ -1,16 +1,18 @@
 //Varibales Globales
 var nPagosGlobal=4;
 var Fecha = new Date(); //variable
-var fechaInicioPago=Fecha.getFullYear() + "-" + (Fecha.getMonth() +1) + "-" + Fecha.getDate();
+var fechaInicioPago=Fecha.getFullYear() + "-" + ('0' + (Fecha.getMonth() + 1)).slice(-2) + "-" +('0' + Fecha.getDate()).slice(-2); 
 var BoolFechaPromo=0;
 var inputOcultos=""; // datos que no tienen un input y se creara oculto :)
 var mensaje="";
 var confirma=0;
 var clientes
 $(function() {
-	
+	$('#fecha').val(fechaInicioPago);
+
 	mostrarPromocion();
     $("#cantidad").focusout(function(){
+    	fechaInicioPago=$('#fecha').val();
     	var cantidad=$("#cantidad").val(); // obtenemos cantidad del vale
     	var pagos=cantidad/nPagosGlobal;
     	var pago=pagos.toFixed(); // crea

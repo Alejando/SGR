@@ -40,10 +40,16 @@
 										<p  id="bVericar"class="btn btn-primary" onclick="datosVale()"> Comprobar </p>
 									</div>		
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-3">
 									<div class="form-group">
 										<label>Limite de Credito</label>
 										<input type="text"  id="limite_vale" name="limite_vale" class="form-control" disabled/>
+									</div>	
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Fecha</label>
+										<input type="date"  id="fecha" name="fecha" class="form-control" />
 									</div>	
 								</div>
 							</div>
@@ -111,4 +117,4 @@
 @section ('js') 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="js/actualizarVale.js"></script>
-		
+@stop
