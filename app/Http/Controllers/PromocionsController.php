@@ -18,7 +18,7 @@ class PromocionsController extends Controller
     }
 
     public function guardarPromocion(Request $request)
-    {   //Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quinsenas" 3="Pague en  8 quinsenas"
+    {   //Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quincenas" 3="Pague en  8 quincenas"
         $fechaHoy=Carbon::today(); 
         $promocionNueva = new Promocion;
         $promocionNueva->tipo_promocion = $request->input('tipo_promocion');
@@ -52,6 +52,7 @@ class PromocionsController extends Controller
 
                 if(($promocionNueva->tipo_promocion == $promocion->tipo_promocion) && (($fechaInicioNuevaCarbon >= $fechaInicioCarbon && $fechaInicioNuevaCarbon <= $fechaTerminoCarbon) ||  ($fechaTerminoNuevaCarbon >= $fechaInicioCarbon && $fechaTerminoNuevaCarbon <= $fechaTerminoCarbon))) 
                 {
+                    $promocionRepetida = $promocion;
                     $Repetida = true;
                     break;
                 }else{
@@ -89,8 +90,18 @@ class PromocionsController extends Controller
                                         {
                                             if($Repetida)
                                             {
-                                                Session::flash('message','Ya se encuentra una promoción vigente del mismo tipo');
-                                                Session::flash('class','danger');
+                                               switch ($promocionRepetida->tipo_promocion)
+                                               {
+                                                    case 1:
+                                                        Session::flash('message','Ya se encuentra una promoción vigente que abarca del '. $promocionRepetida->fecha_creacion .' al '. $promocionRepetida->fecha_termino .' con fecha de inicio de '. $promocionRepetida->fecha_inicio);
+                                                        Session::flash('class','danger');
+                                                        break;
+                                                    case 2:
+                                                        Session::flash('message','Ya se encuentra una promoción vigente que abarca del '. $promocionRepetida->fecha_creacion .' al '. $promocionRepetida->fecha_termino .' a '. $promocionRepetida->numero_pagos .' quincenas');
+                                                        Session::flash('class','danger');
+                                                        break;
+                                                }
+                                                
                                             }else
                                                 {
                                                     $promocionNueva->save();
@@ -219,14 +230,168 @@ class PromocionsController extends Controller
                     $promocion[$i]->fecha_inicio="No aplica";
                 }
                 if($promocion[$i]->tipo_promocion==2){
-                    $promocion[$i]->tipo_promocion="Paga en ".$promocion[$i]->numero_pagos." quinsenas";
+                    $promocion[$i]->tipo_promocion="Paga en ".$promocion[$i]->numero_pagos." quincenas";
                 }
                 if($promocion[$i]->tipo_promocion==1){
                     $promocion[$i]->tipo_promocion="Comienza a pagar en...";
                 }
-                $promocion[$i]->id_promocion='<a type="button" class="btn btn-primary margin" href="editarVale/'. $promocion[$i]->id_promocion.'">Actualizar</a>'; 
+                $promocion[$i]->acciones='<a type="button" class="btn btn-primary margin" href="editarPromocion/'. $promocion[$i]->id_promocion.'">Actualizar</a>'; 
         }    
         return $promocion;
+    }
+
+    public function editarPromocion($id)
+    {
+        $promocion = Promocion::find($id);
+        switch (Session::get('tipo')) 
+        {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                switch ($promocion->tipo_promocion) 
+                {
+                    case 1:
+                        //Empiece a pagar apartir de una fehca
+                        return view('admin.editarPromocionTipo1',compact('promocion'));
+                        break;
+                    case 2:
+                        //Paga en 6 o 8 quincenas
+                        return view('admin.editarPromocionTipo2',compact('promocion'));
+                        break;
+                    
+                }
+                break;
+            
+        }        
+    }
+
+     public function actualizarPromocion(Request $request, $id)
+     {   //Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quincenas" 3="Pague en  8 quincenas"
+        $fechaHoy=Carbon::today(); 
+        $promocionEditada = Promocion::find($id);
+        //$promocionEditada->tipo_promocion = $request->input('tipo_promocion');
+        $promocionEditada->fecha_creacion = $request->input('fecha_creacion');
+        $promocionEditada->fecha_termino = $request->input('fecha_termino');
+        if($request->input('fecha_inicio') != NULL)
+        {
+            $promocionEditada->fecha_inicio = $request->input('fecha_inicio');
+            $fechaInicioPagoPromoDB=$promocionEditada->fecha_inicio;
+            $fechaInicioPagoNuevaCarbon=Carbon::parse($fechaInicioPagoPromoDB);
+        }
+        //var_dump($promocionEditada->fecha_termino);
+
+        if($request->input('numero_pagos') != NULL)
+        {
+            $promocionEditada->numero_pagos = $request->input('numero_pagos');
+        }
+
+        //return $promocionEditada;
+
+        $fechaCreacionPromoDB=$promocionEditada->fecha_creacion;
+        $fechaTerminoPromoDB=$promocionEditada->fecha_termino;
+        $fechaInicioNuevaCarbon=Carbon::parse($fechaCreacionPromoDB);
+        $fechaTerminoNuevaCarbon=Carbon::parse($fechaTerminoPromoDB);
+
+
+
+        $filtroPromocions = Promocion::all();
+        for($i=0; $i<count($filtroPromocions); $i++)
+            {
+                if($promocionEditada->id_promocion != $filtroPromocions[$i]->id_promocion)
+                {
+                    $promocions[$i] = $filtroPromocions[$i];
+                }
+            }
+
+        foreach ($promocions as $promocion)//2015-12-27
+            {   
+                
+                $fechaInicioCarbon=Carbon::parse($promocion->fecha_creacion);
+                $fechaTerminoCarbon=Carbon::parse($promocion->fecha_termino);
+               
+                //if(($fechaInicioNuevaCarbon>=$fechaCreacionCarbon && $fechaInicioNuevaCarbon<=$fechaTerminoCarbon) || ($fechaTerminoNuevaCarbon>=$fechaCreacionCarbon && $fechaTerminoNuevaCarbon<=$fechaTerminoCarbon))
+
+                if(($promocionEditada->tipo_promocion == $promocion->tipo_promocion) && (($fechaInicioNuevaCarbon >= $fechaInicioCarbon && $fechaInicioNuevaCarbon <= $fechaTerminoCarbon) ||  ($fechaTerminoNuevaCarbon >= $fechaInicioCarbon && $fechaTerminoNuevaCarbon <= $fechaTerminoCarbon))) 
+                {
+                    $promocionRepetida = $promocion;
+                    $Repetida = true;
+                    break;
+                }else{
+                   $Repetida = false; 
+                } 
+                
+               
+            }
+
+
+        if($fechaInicioNuevaCarbon<$fechaHoy)
+        {
+            Session::flash('message','La fecha de inicio no puede ser menor a la fecha de hoy');
+            Session::flash('class','danger');
+        }else
+            {
+                if($fechaInicioNuevaCarbon>=$fechaTerminoNuevaCarbon)
+                {
+                    Session::flash('message','La fecha de inicio no puede ser mayor o igual a la fecha de termino');
+                    Session::flash('class','danger');
+                }else
+                    {
+                        if($fechaTerminoNuevaCarbon<=$fechaInicioNuevaCarbon)
+                        {
+                            Session::flash('message','La fecha de termino no puede ser menor o igual a fecha de inicio');
+                            Session::flash('class','danger');
+                        }else
+                            {
+                                if($request->input('fecha_inicio') != NULL)
+                                {
+                                    if($fechaInicioPagoNuevaCarbon<=$fechaTerminoNuevaCarbon){
+                                        Session::flash('message','La fecha del primer pago no puede ser menor o igual a la fecha termino');
+                                        Session::flash('class','danger');
+                                    }else
+                                        {
+                                            if($Repetida)
+                                            {
+                                               switch ($promocionRepetida->tipo_promocion)
+                                               {
+                                                    case 1:
+                                                        Session::flash('message','Ya se encuentra una promoción vigente que abarca del '. $promocionRepetida->fecha_creacion .' al '. $promocionRepetida->fecha_termino .' con fecha de inicio de '. $promocionRepetida->fecha_inicio);
+                                                        Session::flash('class','danger');
+                                                        break;
+                                                    case 2:
+                                                        Session::flash('message','Ya se encuentra una promoción vigente que abarca del '. $promocionRepetida->fecha_creacion .' al '. $promocionRepetida->fecha_termino .' a '. $promocionRepetida->numero_pagos .' quincenas');
+                                                        Session::flash('class','danger');
+                                                        break;
+                                                }
+                                                
+                                            }else
+                                                {
+                                                    $promocionEditada->save();
+                                                    Session::flash('message','Guardado Correctamente');
+                                                    Session::flash('class','success');
+                                                }
+                                        }
+                                }else
+                                    {
+                                        if($Repetida)
+                                        {
+                                            Session::flash('message','Ya se encuentra una promoción vigente del mismo tipo');
+                                            Session::flash('class','danger');
+                                        }else
+                                            {
+                                                $promocionEditada->save();
+                                                Session::flash('message','Guardado Correctamente');
+                                                Session::flash('class','success');
+                                            }
+                                    }
+                                
+
+                            }
+
+                    }
+                }
+       return redirect('consultarPromociones');
     }
 
 }

@@ -18,6 +18,11 @@ class CuentasController extends Controller
         return view('admin.crearCuentaVendedor');
     }
 
+    public function crearCuenta()
+    {
+        return view('admin.crearCuenta');
+    }
+
      public function guardarCuentaVendedor(Request $request)
     {
         $vendedor = new Cuenta;

@@ -40,10 +40,7 @@ class ClientesController extends Controller
         $cliente->municipio = strtoupper($request->input('municipio'));
         $cliente->estado = strtoupper($request->input('estado'));
         $cliente->codigo_postal = $request->input('codigo_postal');
-        $cliente->nombre_referencia_1 = strtoupper($request->input('nombre_referencia_1'));
-        $cliente->telefono_referencia_1 = $request->input('telefono_referencia_1');
-        $cliente->nombre_referencia_2 = strtoupper($request->input('nombre_referencia_2'));
-        $cliente->telefono_referencia_2 = $request->input('telefono_referencia_2');
+       
         
 
 
@@ -126,12 +123,7 @@ class ClientesController extends Controller
         $cliente->municipio = strtoupper($request->input('municipio'));
         $cliente->estado = strtoupper($request->input('estado'));
         $cliente->codigo_postal = $request->input('codigo_postal');
-        $cliente->nombre_referencia_1 = strtoupper($request->input('nombre_referencia_1'));
-        $cliente->telefono_referencia_1 = $request->input('telefono_referencia_1');
-        $cliente->nombre_referencia_2 = strtoupper($request->input('nombre_referencia_2'));
-        $cliente->telefono_referencia_2 = $request->input('telefono_referencia_2');
         
-
 
         if($cliente->save()){
             Session::flash('message','Datos actualizados  Correctamente');

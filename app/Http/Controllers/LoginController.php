@@ -35,7 +35,7 @@ class LoginController extends Controller
 
     			switch ($cuenta->tipo) {
 				    case 0:
-				       // return redirect('');
+				        return redirect('crearCuenta');
 				    	//return ("Eres un super administrador");
 				        break;
 				    case 1:

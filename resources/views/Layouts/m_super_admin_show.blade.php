@@ -1,20 +1,16 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>@yield('titulo', 'Zapateria el Gran Remate')</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>@yield('titulo', 'Zapateria el Gran Remate')</title>
 
-<link href="../css/bootstrap.min.css" rel="stylesheet">
-<link href="../css/datepicker3.css" rel="stylesheet">
-<link href="../css/styles.css" rel="stylesheet">
-<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-
-<!--[if lt IE 9]>
-<link href="css/rgba-fallback.css" rel="stylesheet">
-<script src="js/html5shiv.js"></script>
-<script src="js/respond.min.js"></script>
-<![endif]-->
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/datepicker3.css" rel="stylesheet">
+	<link href="../css/styles.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+	@yield('css')
 
 </head>
 
@@ -48,6 +44,11 @@
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
+						<a class="" href="../crearVale">
+							<span class="glyphicon glyphicon-share-alt"></span> Crear Vales
+						</a>
+					</li>
+					<li>
 						<a class="" href="../registrarVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Emitir Vales
 						</a>
@@ -55,6 +56,23 @@
 					<li>
 						<a class="" href="../consultarVales">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Vales
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="parent ">
+				<a href="#">
+					<span class="glyphicon glyphicon-list"></span> Distribuidores <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				</a>
+				<ul class="children collapse" id="sub-item-2">
+					<li>
+						<a class="" href="../crearDistribuidor">
+							<span class="glyphicon glyphicon-share-alt"></span> Alta Distribuidor
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<span class="glyphicon glyphicon-share-alt"></span> Reportes
 						</a>
 					</li>
 				</ul>
@@ -76,19 +94,41 @@
 					</li>
 				</ul>
 			</li>
-			<li class="parent ">
+			<li class="parent "> 
 				<a href="#">
 					<span class="glyphicon glyphicon-list"></span> Promociones <span data-toggle="collapse" href="#sub-item-4" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-4">
 					<li>
-						<a class="" href="../consultarPromociones">
+						<a class="" href="../crearPromocion">
+							<span class="glyphicon glyphicon-share-alt"></span> Crear Promoción
+						</a>
+					</li>
+					<li>
+						<a class="" href="../consularPromociones">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Promciones
 						</a>
 					</li>
 				</ul>
 			</li>
-			<li><a ><span class="glyphicon glyphicon-hand-up"></span> Opciones</a></li>
+			<li class="parent ">
+				<a href="#">
+					<span class="glyphicon glyphicon-list"></span> Cuentas <span data-toggle="collapse" href="#sub-item-5" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				</a>
+				<ul class="children collapse" id="sub-item-5">
+					<li>
+						<a class="" href="../crearCuentaVendedor">
+							<span class="glyphicon glyphicon-share-alt"></span> Crear Cuenta
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<span class="glyphicon glyphicon-share-alt"></span> Consultar Usuarios
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li><a href=""><span class="glyphicon glyphicon-hand-up"></span> Opciones</a></li>
 			<li role="presentation" class="divider"></li>
 
 			<li><a href="logout"><span class="glyphicon glyphicon-user"></span> Cerrar Sesión</a></li>
@@ -110,6 +150,11 @@
 	<script src="../js/easypiechart-data.js"></script>
 	<script src="../js/bootstrap-datepicker.js"></script>
 	<script src="../js/custom.js"></script>
+	<script src="../js/bootstrap-table.js"></script>
+	<script src="../js/tipoPromocion.js"></script>
+
+	
+	
 	
 	@yield('js')
 </html>
