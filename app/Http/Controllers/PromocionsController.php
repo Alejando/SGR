@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Promocion;
+use App\Vale;
 use Session;
 use Carbon\Carbon;
 
@@ -392,6 +393,14 @@ class PromocionsController extends Controller
                     }
                 }
        return redirect('consultarPromociones');
+    }
+
+   public function verPromo1(Request $request){
+         
+         $id = $request->input('id');
+         $promociones_vale = Vale::find(80)->promociones->get();
+
+        return $distribuidor->nombre;
     }
 
 }

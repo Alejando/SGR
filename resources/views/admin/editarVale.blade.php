@@ -23,6 +23,7 @@
 					    </div>
 		                <form class="form" id="form"role="form" method="POST" action="actualizarVale" >
 		                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		                	<input type="hidden" id="id_vale" value="{{$vale->id_vale}}">
 							<div class="col-md-12">
 								<label>Editar vale</label>
 								</br>
@@ -50,7 +51,13 @@
 										<input type="date" value="{{$vale->fecha_inicio_pago}}"  id="fecha_inicio_pago" name="fecha_inicio_pago" class="form-control" required>
 									</div>		
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-2">
+									<div class="checkbox">
+									<input type="checkbox" id="promo1" />
+									<label for="promo1">Promocion Empiece a pagar en...</label>
+								</div>	
+								</div>
+								<div class="col-md-2">
 									<div class="form-group">
 										<label>Limite de Credito</label>
 										<input type="text" value="{{$vale->cantidad_limite}}" name="limite_vale" class="form-control" >
@@ -61,19 +68,22 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nombre del cliente</label>
-										<input type="text" value="{{$vale->id_cliente}}" id="nombreCliente" name="nombre"  class="form-control" >
+										<input type="hidden"  value="{{$vale->id_cliente}}" id="id_cliente"/>
+										<input type="text"  id="nombreCliente" name="nombre"  class="form-control" >
 									</div>	
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nombre del distribuidor</label>
-										<input type="text"  value="{{$vale->id_distribuidor}}" id="nombreDistribuidor"  name="nombre_distribuidor" class="form-control" >
+										<input type="hidden" value="{{$vale->id_distribuidor}}" id="id_distribuidor"/>
+										<input type="text"   id="nombreDistribuidor"  name="nombre_distribuidor" class="form-control" >
 									</div>	
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nombre Vendedor</label>
-										<input type="text"  value="{{$vale->id_cuenta}}" id="nombreDistribuidor"  name="nombre_distribuidor" class="form-control" >
+										<input type="hidden"  value="{{$vale->id_cuenta}}" id="id_cuenta"/>
+										<input type="text"  id="nombreCuenta"  name="nombre_cuenta" class="form-control" >
 									</div>	
 								</div>
 							</div>	
@@ -100,17 +110,18 @@
 								<div class="col-md-3">
 									<div class="form-group">
 									<label>Estatus del vale</label>
-									<select name="estatus" class="form-control"  value= value="{{$vale->estatus}}" id="estatus">
-									  <option value="0"class="form-control">Disponible</option>
-									  <option value="1" class="form-control">Canjeado</option>
-									  <option value="2" class="form-control">Cancelado</option>
+									<input type="hidden"   value="{{$vale->estatus}}" id="id_estatus"/>
+									<select name="estatus" class="form-control" value="{{$vale->estatus}}"  id="estatus">
+									  <option id="0" value="0"class="form-control">Disponible</option>
+									  <option id="1" value="1" class="form-control">Canjeado</option>
+									  <option id="2" value="2" class="form-control">Cancelado</option>
 									</select>
 								</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Motivo de Concelación </label>
-										<input type="text"   value="{{$vale->motivo_cancelacion}}" name="motivo_cancelacion" class="form-control" disabled>
+										<input type="text"   value="{{$vale->motivo_cancelacion}}" id="cancelacion" name="motivo_cancelacion" class="form-control" disabled>
 									</div>		
 								</div>
 								

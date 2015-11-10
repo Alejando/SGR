@@ -174,6 +174,7 @@ class ValesController extends Controller
         $folioVenta = $request->input('folio_venta');
         $cantidad = $request->input('cantidad');
         $fechaPago = $request->input('fecha_inicio_pago');
+        $idPromocion=$request->input('id_promocion');
         $saldoDistribuidor=$vale->distribuidor->saldo_actual;
         $saldoNuevoDistribuidor=$saldoDistribuidor+$cantidad;
         $limiteCreditoDistribuidor=$vale->distribuidor->limite_credito;
@@ -187,6 +188,12 @@ class ValesController extends Controller
                             $cliente->nombre=$nombre;
                             $cliente->save();
                              $idCliente = Cliente::max('id_cliente');
+                        }
+                        if(is_null($idPromocion)){
+                            $vale_promo = new Vales_has_promociones;
+                            $vale_promo->vale_id = $vale->id_vale;
+                            $vale_promo->promocion_id = $idPromocion;
+                            $vale_promo->save();
                         }
                         $vale->id_cliente=$idCliente;
                         $vale->id_cuenta=$cuenta;

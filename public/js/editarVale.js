@@ -1,20 +1,98 @@
 $(function() {
 	mostrarPagos();
+	promo();
 	$("#calcularPagos").click(function(){
 		mostrarPagos();
 	});
-
+	cambiarIds();
 	$('#nombreCliente').autocomplete({
     source: '../buscarCliente',
    	minLength: 1,
 	  select: function(event, ui) {
-	  	inputOcultos+='<input type="hidden" name="id_cliente" value='+ui.item.id+'>';
-	  }
+	  $('#id_cliente').val(ui.item.id);
+		}
 	});
-
+	$('#nombreDistribuidor').autocomplete({
+	    source: '../buscarDistribuidor',
+	   	minLength: 1,
+		  select: function(event, ui) {
+		  	$('#id_distribuidor').val(ui.item.id);
+		  }
+	});
+	$('#nombreCuenta').autocomplete({
+	    source: '../buscarCuenta',
+	   	minLength: 1,
+		  select: function(event, ui) {
+		  	$('#id_cuenta').val(ui.item.id);
+		  }
+	});
+	$('#estatus').change(function(){
+		if($('#estatus').val()=="2"){
+			$('#cancelacion').removeAttr('disabled');
+		}else{
+			$('#cancelacion').Attr('disabled');
+		}
+	});
+	switch($('#id_estatus').val()){
+		case '0': $('#estatus > option[value="0"]').attr('selected', 'selected');
+			break;
+		case '1': $('#estatus > option[value="1"]').attr('selected', 'selected');
+			break;
+		case '2': $('#estatus > option[value="2"]').attr('selected', 'selected');
+				$('#cancelacion').removeAttr('disabled');
+			break;
+	}
+	
 });
 
+function cambiarIds(){
+	$.ajax({
+		type: "GET",
+		url: "../buscarIdCliente",
+ 		data: {id:$('#id_cliente').val()}						
+	}).done(function( result ) {
+	 //console.log(result); 
+		$("#nombreCliente").val(result);
+	});
 
+	$.ajax({
+		type: "GET",
+		url: "../buscarIdDistribuidor",
+ 		data: {id:$('#id_distribuidor').val()}						
+	}).done(function( result ) {
+	//console.log(result); 
+	$("#nombreDistribuidor").val(result);
+	});
+
+	$.ajax({
+		type: "GET",
+		url: "../buscarIdCuenta",
+ 		data: {id:$('#id_cuenta').val()}						
+	}).done(function( result ) {
+	//console.log(result); 
+	$("#nombreCuenta").val(result);
+	});
+}
+
+function promo(){
+	$.ajax({
+		type: "GET",
+		dataType: "text",
+ 		url: "../verPromo1",
+ 		data: {id:$('#id_vale').val()},
+		success: llegada,
+		error: problemas
+	});
+	function llegada(data){
+		 //console.log(data);
+		 nFecha=data;
+
+		 //control=1;
+		}
+	function problemas(data){
+		alert("error en buscar fecha de pago");
+	}
+}
 function fechaPago(fecha,nPago){
 	var nFecha="";
 	var control=0;
@@ -49,11 +127,11 @@ function cambiarTipoFecha(fecha){
 }
 function mostrarPagos(){
 	var cantidad=$("#cantidad").val(); // obtenemos cantidad del vale
-	console.log(cantidad);
+	//console.log(cantidad);
 	var nPagosGlobal=$("#numeroPagos").val();
 	var pagos=cantidad/nPagosGlobal;
 	var pago=pagos.toFixed(); //  para que no tenga decimales
-	console.log(pago);
+	//console.log(pago);
 	var pagoFinal=cantidad-(pago*(nPagosGlobal-1));
 	var code="";
 	var fechaInicioPago=$("#fecha_inicio_pago").val();
