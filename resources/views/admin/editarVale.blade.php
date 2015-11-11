@@ -21,9 +21,9 @@
 						</div>
 						@endif
 					    </div>
-		                <form class="form" id="form"role="form" method="POST" action="actualizarVale" >
+		                <form class="form" id="form"role="form" method="POST" action="../modificarVale" >
 		                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
-		                	<input type="hidden" id="id_vale" value="{{$vale->id_vale}}">
+		                	<input type="hidden" id="id_vale" name="id_vale" value="{{$vale->id_vale}}">
 							<div class="col-md-12">
 								<label>Editar vale</label>
 								</br>
@@ -55,6 +55,7 @@
 									<div class="checkbox">
 									<input type="checkbox" id="promo1" />
 									<label for="promo1">Promocion Empiece a pagar en...</label>
+									<input type="hidden"   value="{{$vale->id_promocion}}" name="id_promocion"/>
 								</div>	
 								</div>
 								<div class="col-md-2">
@@ -68,21 +69,21 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nombre del cliente</label>
-										<input type="hidden"  value="{{$vale->id_cliente}}" id="id_cliente"/>
-										<input type="text"  id="nombreCliente" name="nombre"  class="form-control" >
+										<input type="hidden"  value="{{$vale->id_cliente}}" name="id_cliente" id="id_cliente"/>
+										<input type="text"  id="nombreCliente" name="nombre_cliente"  class="form-control" >
 									</div>	
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nombre del distribuidor</label>
-										<input type="hidden" value="{{$vale->id_distribuidor}}" id="id_distribuidor"/>
+										<input type="hidden" value="{{$vale->id_distribuidor}}"  name="id_distribuidor" id="id_distribuidor"/>
 										<input type="text"   id="nombreDistribuidor"  name="nombre_distribuidor" class="form-control" >
 									</div>	
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nombre Vendedor</label>
-										<input type="hidden"  value="{{$vale->id_cuenta}}" id="id_cuenta"/>
+										<input type="hidden"  value="{{$vale->id_cuenta}}"  name="id_distribuidor" id="id_cuenta"/>
 										<input type="text"  id="nombreCuenta"  name="nombre_cuenta" class="form-control" >
 									</div>	
 								</div>
@@ -110,7 +111,7 @@
 								<div class="col-md-3">
 									<div class="form-group">
 									<label>Estatus del vale</label>
-									<input type="hidden"   value="{{$vale->estatus}}" id="id_estatus"/>
+									<input type="hidden"   value="{{$vale->estatus}}" name="id_estatus" id="id_estatus"/>
 									<select name="estatus" class="form-control" value="{{$vale->estatus}}"  id="estatus">
 									  <option id="0" value="0"class="form-control">Disponible</option>
 									  <option id="1" value="1" class="form-control">Canjeado</option>

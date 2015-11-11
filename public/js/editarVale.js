@@ -1,6 +1,30 @@
+var cambioFecha=0;
+var fecha_inicio_pago_promo;
 $(function() {
+	fecha_inicio_pago_promo=$('#fecha_inicio_pago').val();
+	if($('#id_promocion').val()>0){
+		cambioFecha=1;
+		$('#promo1').prop('checked', true);
+		$('#fecha_inicio_pago').prop('disabled', true);
+	} 
+	$('#promo1').change(function(){
+		alert("Vuelve a calcular los pagos");
+		if($('#promo1').prop('checked')){
+
+			if($('#id_promocion').val()>0){
+				
+				$('#fecha_inicio_pago').prop('disabled', true);
+				$('#fecha_inicio_pago').val(fecha_inicio_pago_promo);
+				cambioFecha=1;
+			}
+		}else{
+			
+			$('#fecha_inicio_pago').prop('disabled', false);
+			cambioFecha=0;
+			
+		}
+	});
 	mostrarPagos();
-	promo();
 	$("#calcularPagos").click(function(){
 		mostrarPagos();
 	});
@@ -30,7 +54,7 @@ $(function() {
 		if($('#estatus').val()=="2"){
 			$('#cancelacion').removeAttr('disabled');
 		}else{
-			$('#cancelacion').Attr('disabled');
+			$('#cancelacion').prop('disabled', true);
 		}
 	});
 	switch($('#id_estatus').val()){
@@ -69,30 +93,11 @@ function cambiarIds(){
 		url: "../buscarIdCuenta",
  		data: {id:$('#id_cuenta').val()}						
 	}).done(function( result ) {
-	//console.log(result); 
+	 	console.log(result); 
 	$("#nombreCuenta").val(result);
 	});
 }
 
-function promo(){
-	$.ajax({
-		type: "GET",
-		dataType: "text",
- 		url: "../verPromo1",
- 		data: {id:$('#id_vale').val()},
-		success: llegada,
-		error: problemas
-	});
-	function llegada(data){
-		 //console.log(data);
-		 nFecha=data;
-
-		 //control=1;
-		}
-	function problemas(data){
-		alert("error en buscar fecha de pago");
-	}
-}
 function fechaPago(fecha,nPago){
 	var nFecha="";
 	var control=0;
@@ -101,7 +106,7 @@ function fechaPago(fecha,nPago){
 		dataType: "text",
 		async: false, 
  		url: "../fechaPago",
- 		data: {fecha:fecha, nPago:nPago,cambioFecha:0},
+ 		data: {fecha:fecha, nPago:nPago,cambioFecha:cambioFecha},
 		success: llegada,
 		error: problemas
 	});

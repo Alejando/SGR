@@ -114,7 +114,5 @@
 
 @stop
 
-@section ('js') 
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="js/actualizarVale.js"></script>
+@section ('js') <script src="js/actualizarVale.js"></script>
 @stop

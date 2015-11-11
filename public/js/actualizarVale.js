@@ -2,7 +2,7 @@
 var nPagosGlobal=4;
 var Fecha = new Date(); //variable
 var fechaInicioPago=Fecha.getFullYear() + "-" + ('0' + (Fecha.getMonth() + 1)).slice(-2) + "-" +('0' + Fecha.getDate()).slice(-2); 
-var BoolFechaPromo=0;
+var BoolFechaPromo=0; //0= no hay promo 1=hay promo
 var inputOcultos=""; // datos que no tienen un input y se creara oculto :)
 var mensaje="";
 var confirma=0;
@@ -99,19 +99,18 @@ function mostrarPromocion(){
 		    	fechaInicioPago=data[i].fecha_inicio;
 		    	BoolFechaPromo=1;
 		    	inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'/>';
-		    	inputOcultos+='<input type="hidden" name="id_promocion" value='+data.id_promocion+'/>';
+		    	inputOcultos+='<input type="hidden" name="id_promocion" value='+data[i].id_promocion+'/>';
 		     }
 		     if(data[i].tipo_promocion==2 ){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 6 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
 			 	nPagosGlobal=6;
 			 	inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
-			 	inputOcultos+='<input type="hidden" name="id_promocion" value='+data.id_promocion+'/>';
+			 	
 			 }
 		     if(data[i].tipo_promocion==3){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 8 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
 			 	nPagosGlobal=8;
 			 	inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
-			 	inputOcultos+='<input type="hidden" name="id_promocion" value='+data.id_promocion+'/>';
 			 }
 		};
 		//Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quinsenas" 3="Pague en  8 quinsenas"

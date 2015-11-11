@@ -78,6 +78,7 @@ Route::group(['middleware' => 'super_y_admin'], function () {
    	Route::get('obtenerUltimoVale', 'ValesController@obtenerUltimoVale' );
    	Route::get('editarVale/{id}', 'ValesController@editarVale');
 	Route::post('actualizarVale/{id}', 'ValesController@actualizarVale');
+	Route::post('modificarVale', 'ValesController@modificarVale');
 
    	Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');

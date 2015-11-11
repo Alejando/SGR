@@ -13,7 +13,7 @@
 						    <thead>
 						    <tr>
 
-						        <th data-field="serie"  data-cell-style="cellStyle" data-halign="center" data-sortable="true">Serie</th>
+						        <th data-field="serie"   data-halign="center" data-sortable="true">Serie</th>
 						        <th data-field="folio" data-halign="center"data-sortable="true">Folio</th>
 						        <th data-field="id_distribuidor" data-sortable="true">Dsitribuidor</th>
 						        <th data-field="cantidad" data-halign="center" data-sortable="true">Deuda</th>
@@ -31,17 +31,3 @@
 		</div><!--/.row-->	
 @stop
 
-<script>
-   function cellStyle(value, row, index) {
-        var classes = ['active', 'success', 'info', 'warning', 'danger'];
-        if (index % 2 === 0 && index / 2 < classes.length) {
-            return {
-                //classes: classes[index / 2]
-                css: {
-                    "background-color": "red",
-                }
-            };
-        }
-        return {};
-    } 
-</script>

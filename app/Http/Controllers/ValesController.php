@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Distribuidor;
 use App\Vale;
 use App\Cliente;
+use App\Vales_has_promociones;
 use Carbon\Carbon;
 use Session;
 class ValesController extends Controller
@@ -93,8 +94,7 @@ class ValesController extends Controller
     }
 
     public function buscarVale(Request $request){
-       return  " > ".Session::get('tipo')." <";
-       /*  $serie = $request->input('serie');
+        $serie = $request->input('serie');
          $folio = $request->input('folio');
          $vale = Vale::where('serie',$serie)->where('folio', $folio)->get();
          if(sizeof($vale)<=0){
@@ -103,7 +103,7 @@ class ValesController extends Controller
          else{
             return $vale;
          }
-        */
+        
        
     }
 
@@ -127,15 +127,22 @@ class ValesController extends Controller
     {
         $vales = Vale::all();
         for ($i=0; $i <sizeof($vales); $i++) { 
-             $vales[$i]->id_distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
+
+             $distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
+            
+            if(Vale::find($vales[$i]->id_vale)->distribuidor->estatus==1){
+                $vales[$i]->id_distribuidor='<p  style="background-color: brown; ">'.$distribuidor.'</p>';
+            }else{
+                $vales[$i]->id_distribuidor=$distribuidor;
+            }
              if($vales[$i]->estatus==0){
-                $vales[$i]->estatus="Disponible";
+                $vales[$i]->estatus='Disponible';
              }
              if($vales[$i]->estatus==1){
-                $vales[$i]->estatus="Ocupado";
+                $vales[$i]->estatus='<p  style="background-color: green;">Ocupado</p>';
              }
              if($vales[$i]->estatus==2){
-                $vales[$i]->estatus="Cancelado";
+                $vales[$i]->estatus='<p  style="background-color: red;">cancelado</p>';
              }
               $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>';    
         }    
@@ -165,7 +172,7 @@ class ValesController extends Controller
         
         $vale = Vale::find($request->input('id_vale'));
         $folio = $request->input('folio');
-        $serie = $request->input('serie');
+        $serie = strtoupper($request->input('serie'));
         $idCliente = $request->input('id_cliente');
         $nombre = strtoupper($request->input('nombre'));
         $cuenta = Session::get('id');
@@ -189,7 +196,7 @@ class ValesController extends Controller
                             $cliente->save();
                              $idCliente = Cliente::max('id_cliente');
                         }
-                        if(is_null($idPromocion)){
+                        if($idPromocion>0){
                             $vale_promo = new Vales_has_promociones;
                             $vale_promo->vale_id = $vale->id_vale;
                             $vale_promo->promocion_id = $idPromocion;
@@ -202,6 +209,7 @@ class ValesController extends Controller
                         $vale->numero_pagos=$numeroPagos;
                         $vale->folio_venta=$folioVenta;
                         $vale->deuda_actual=$cantidad;
+                        $vale->id_promocion=$idPromocion;
                         $vale->estatus=1; // 0=disponible, 1=ocupado 2=cancelado
                         $vale->fecha_inicio_pago=$fechaPago;
                         if($vale->save()){
@@ -253,7 +261,6 @@ class ValesController extends Controller
         }   
       
     }
-
     public function obtenerUltimoVale(){
         $id = Vale::max('id_vale');
         $vale =Vale::find($id);
@@ -261,6 +268,64 @@ class ValesController extends Controller
     }
 
     
+    public function modificarVale(Request $request){
+        
+        $vale = Vale::find($request->input('id_vale'));
+        $folio = $request->input('folio');
+        $serie = $request->input('serie');
+        $fechaVenta = $request->input('fecha_venta');
+        $fechaPago = $request->input('fecha_inicio_pago');
+        $idPromocion = $request->input('id_promocion');
+        $limiteVale =$request->input('limite_vale');
+        $idCliente = $request->input('id_cliente');
+        $idCuenta = $request->input('id_cuenta');
+        $idDistribuidor = $request->input('id_distribuidor');
+        $cantidad = $request->input('cantidad');
+        $numeroPagos = $request->input('numero_pagos');
+        $folioVenta = $request->input('folio_venta');
+        $estatus = $request->input('id_estatus');
+        $motivoCancelacion = $request->input('motivo_cancelacion');
+       
+        $vale->folio=$folio;
+
+        $vale->serie=$serie;
+        $vale->fecha_venta=$fechaVenta;
+        $vale->fecha_inicio_pago=$fechaPago;
+        $vale->id_promocion=$idPromocion;
+        $vale->id_cliente=$idCliente;
+        $vale->id_cuenta=$idCuenta;
+        $vale->id_distribuidor=$idDistribuidor;
+        $vale->cantidad=$cantidad;
+        $vale->numero_pagos=$numeroPagos;
+        $vale->folio_venta=$folioVenta;
+        $vale->estatus=$estatus;
+        $vale->motivo_cancelacion=$motivoCancelacion;
+        
+        if($vale->save()){
+            Session::flash('message',' Vale actualizado exitoso!');
+            Session::flash('class','success');
+        }
+        else{
+            Session::flash('message','Error al guardar el vale en la base de datos');
+            Session::flash('class','danger');
+        }
+            
+            
+
+        switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return redirect('consultarVales');
+                break;
+            case 2:
+                 return redirect('consultarVales');
+                break;
+        }   
+      
+    }
     
 
 }
