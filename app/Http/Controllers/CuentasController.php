@@ -85,7 +85,25 @@ class CuentasController extends Controller
             
         }        
     }
+    public function buscarIdCuenta(Request $request){
+         
+         $id = $request->input('id');
+         $cuenta = Cuenta::find($id);
 
+        return $cuenta->nombre;
+    }
+     public function buscarCuenta(Request $request){
+            $valor = $request->input('term'); 
+
+        $cuentas = Cuenta::where('nombre', 'LIKE', '%'.$valor.'%')->orWhere('id_cuenta', 'LIKE', '%'.$valor.'%')->take(5)->get();
+        $results = array();
+        foreach ($cuentas as $cuenta)
+            {
+                 $cadena=$cuenta->id_cuenta.".-".$cuenta->nombre; // cadena conjunta de id y nombre
+                 $results[] = [ 'id' => $cuenta->id_cuenta, 'value' => $cadena ];
+            }
+        return $results;
+    }
     public function actualizarCuentaVendedor(Request $request,$id)
     {
         $cuenta = Cuenta::find($id);

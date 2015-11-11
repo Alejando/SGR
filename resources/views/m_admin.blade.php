@@ -169,14 +169,9 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
 	<script src="js/chart-data.js"></script>
-	<script src="js/easypiechart.js"></script>
-	<script src="js/easypiechart-data.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/bootstrap-table.js"></script>
-	<script src="js/tipoPromocion.js"></script>
-	
-	
-	
+	<script src="js/tipoPromocion.js"></script>	
 	@yield('js')
 </html>
