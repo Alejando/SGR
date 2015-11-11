@@ -177,7 +177,7 @@ class CuentasController extends Controller
         $cuentas = Cuenta::where('tipo','!=',0)->get();
         for ($i=0; $i <sizeof($cuentas); $i++) {
              
-            $cuentas[$i]->id_cuenta='<a type="button" class="btn btn-primary margin" href="editarCuentaVendedor/'. $cuentas[$i]->id_cuenta.'">Actualizar</a>';    
+            $cuentas[$i]->id_cuenta='<a type="button" class="btn btn-primary margin" href="editarCuenta/'. $cuentas[$i]->id_cuenta.'">Actualizar</a>';    
             switch ($cuentas[$i]->tipo) 
              {
                 case 1:
@@ -190,6 +190,35 @@ class CuentasController extends Controller
         }
         
         return $cuentas;
+    }
+
+    public function editarCuenta($id)
+    {
+        $cuenta = Cuenta::find($id);
+        return view('admin.editarCuenta',compact('cuenta'));      
+    }
+
+    public function actualizarCuenta(Request $request,$id)
+    {
+        $cuenta = Cuenta::find($id);
+        $cuenta->nombre = strtoupper($request->input('nombre'));
+        $cuenta->telefono = $request->input('telefono');
+        $cuenta->usuario = strtoupper($request->input('usuario'));
+        $cuenta->contrasena = $request->input('contrasena');
+        $cuenta->tipo = $request->input('tipo');
+        
+
+
+        if($cuenta->save()){
+            Session::flash('message','Datos actualizados  Correctamente');
+            Session::flash('class','success');
+        }else{
+            Session::flash('message','Ha ocurrido un error');
+            Session::flash('class','danger');
+        }
+      
+        return redirect('consultarCuentas');
+
     }
     
 }

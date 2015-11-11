@@ -32,42 +32,45 @@
 	</nav>
 		
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		
-
 		<ul class="nav menu">
 			<li ><h3>Bienvenido</h3></li>
 			<li ><h4>{{Session::get('nombre')}}</h4></li>
 			<li role="presentation" class="divider"></li>
 			<li class="parent ">
-				<a href="#">
+				<a data-toggle="collapse" href="#sub-item-1">
 					<span class="glyphicon glyphicon-list"></span> Vales <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
-						<a class="" href="../crearVale">
+						<a class="" href="crearVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Vales
 						</a>
 					</li>
 					<li>
-						<a class="" href="../registrarVale">
-							<span class="glyphicon glyphicon-share-alt"></span> Emitir Vales
+						<a class="" href="registrarVale">
+							<span class="glyphicon glyphicon-share-alt"></span> Registro de ventas
 						</a>
 					</li>
 					<li>
-						<a class="" href="../consultarVales">
+						<a class="" href="consultarVales">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Vales
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="parent ">
-				<a href="#">
+				<a data-toggle="collapse" href="#sub-item-2">
 					<span class="glyphicon glyphicon-list"></span> Distribuidores <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-2">
 					<li>
-						<a class="" href="../crearDistribuidor">
+						<a class="" href="crearDistribuidor">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Distribuidor
+						</a>
+					</li>
+					<li>
+						<a class="" href="consultarDistribuidores">
+							<span class="glyphicon glyphicon-share-alt"></span> Ver distribuidores
 						</a>
 					</li>
 					<li>
@@ -78,54 +81,84 @@
 				</ul>
 			</li>
 			<li class="parent ">
-				<a href="#">
+				<a data-toggle="collapse" href="#sub-item-3">
 					<span class="glyphicon glyphicon-list"></span> Clientes <span data-toggle="collapse" href="#sub-item-3" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-3">
 					<li>
-						<a class="" href="../crearCliente">
+						<a class="" href="crearCliente">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Cliente
 						</a>
 					</li>
 					<li>
-						<a class="" href="../consultarClientes">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Clientes
+						<a class="" href="consultarClientes">
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Clientes
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="parent "> 
-				<a href="#">
+				<a data-toggle="collapse" href="#sub-item-4">
 					<span class="glyphicon glyphicon-list"></span> Promociones <span data-toggle="collapse" href="#sub-item-4" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-4">
 					<li>
-						<a class="" href="../crearPromocion">
+						<a class="" href="crearPromocion">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Promoción
 						</a>
 					</li>
 					<li>
-						<a class="" href="../consularPromociones">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Promciones
+						<a class="" href="consultarPromociones">
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Promociones
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="parent "> 
+				<a data-toggle="collapse" href="#sub-item-5">
+					<span class="glyphicon glyphicon-list"></span> Comisiones <span data-toggle="collapse" href="#sub-item-5" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				</a>
+				<ul class="children collapse" id="sub-item-5">
+					<li>
+						<a class="" href="crearComision">
+							<span class="glyphicon glyphicon-share-alt"></span> Crear Comisión
+						</a>
+					</li>
+					<li>
+						<a class="" href="consultarComisiones">
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Comisiones
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="parent ">
-				<a href="#">
-					<span class="glyphicon glyphicon-list"></span> Cuentas <span data-toggle="collapse" href="#sub-item-5" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				<a data-toggle="collapse" href="#sub-item-6">
+					<span class="glyphicon glyphicon-list"></span> Cuentas <span data-toggle="collapse" href="#sub-item-6" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
-				<ul class="children collapse" id="sub-item-5">
+				<ul class="children collapse" id="sub-item-6">
 					<li>
-						<a class="" href="../crearCuentaVendedor">
+						<a class="" href="crearCuenta">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Cuenta
 						</a>
 					</li>
 					<li>
-						<a class="" href="#">
-							<span class="glyphicon glyphicon-share-alt"></span> Consultar Usuarios
+						<a class="" href="consultarCuentas">
+							<span class="glyphicon glyphicon-share-alt"></span> Ver Usuarios
 						</a>
 					</li>
+				</ul>
+			</li>
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-item-7">
+					<span class="glyphicon glyphicon-list"></span> Movimientos <span data-toggle="collapse" href="#sub-item-7" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				</a>
+				<ul class="children collapse" id="sub-item-7">
+					<li>
+						<a class="" href="#">
+							<span class="glyphicon glyphicon-share-alt"></span> Ver movimientos
+						</a>
+					</li>
+					
 				</ul>
 			</li>
 			<li><a href=""><span class="glyphicon glyphicon-hand-up"></span> Opciones</a></li>

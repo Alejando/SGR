@@ -1,4 +1,4 @@
-@extends ('Layouts.m_admin_show')
+@extends ('Layouts.m_super_admin_show')
 
 @section ('titulo') Editar Cuenta Vendedor
 @stop
@@ -18,9 +18,22 @@
 						 	                
 		                @endif
 						<div class="col-md-6">
-							<label>Datos Vendedor</label>
-							<form class="form" role="form" method="POST" action="{{URL::to('actualizarCuentaVendedor/').'/'.$cuenta->id_cuenta}}" enctype="multipart/form-data">
+							<label>Datos de la cuenta</label>
+							<form class="form" role="form" method="POST" action="{{URL::to('actualizarCuenta/').'/'.$cuenta->id_cuenta}}" enctype="multipart/form-data">
      					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+     					    	<div class="form-group">
+                        			<label>Tipo</label>
+                        			<select name="tipo" class="form-control" id="tipo">
+                        			@if($cuenta->tipo == 1)
+                        				<option selected="selected" value="1" class="form-control">Administrador</option>
+                        				<option value="2" class="form-control">Vendedor</option>
+                        			@endif
+                        			@if($cuenta->tipo == 2)
+                        				<option value="1" class="form-control">Administrador</option>
+                        				<option selected="selected" value="2" class="form-control">Vendedor</option>
+                        			@endif
+                        			</select>
+                        		</div>
 								<div class="form-group">
 									<label>Nombre</label>
 									<input type="text" value="{{ $cuenta->nombre }}"  name="nombre" class="form-control" required>
@@ -50,7 +63,6 @@
 				</div>
 			</div><!-- /.col-->
 		</div><!-- /.row -->
-		
 	</div><!--/.main-->
 
 @stop

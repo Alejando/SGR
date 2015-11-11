@@ -44,20 +44,20 @@ class DistribuidorsController extends Controller
         $distribuidor->limite_credito = $request->input('limite_credito');
         $distribuidor->limite_vale = $request->input('limite_vale');
        
-        $file = $request->file('foto');
-        $nombreFoto='FOTO_'.$distribuidor->nombre.'.'.$file->getClientOriginalExtension();
+        $fileFoto = $request->file('foto');
+        $nombreFoto='FOTO_'.$distribuidor->nombre.'.'.$fileFoto->getClientOriginalExtension();
         $distribuidor->foto=$nombreFoto;
       
-       $file = $request->file('firma');
-        $nombreFirma='FIRMA_'.$distribuidor->nombre.'.'.$file->getClientOriginalExtension();
+        $fileFirma = $request->file('firma');
+        $nombreFirma='FIRMA_'.$distribuidor->nombre.'.'.$fileFirma->getClientOriginalExtension();
         $distribuidor->firma=$nombreFirma;
         ;
         
        
 
         if($distribuidor->save()){
-            \Storage::disk('local')->put($nombreFoto,  \File::get($file));
-            \Storage::disk('local')->put($nombreFirma,  \File::get($file));
+            \Storage::disk('local')->put($nombreFoto,  \File::get($fileFoto));
+            \Storage::disk('local')->put($nombreFirma,  \File::get($fileFirma));
             Session::flash('message','Guardado Correctamente');
             Session::flash('class','success');
         }else{
@@ -108,7 +108,7 @@ class DistribuidorsController extends Controller
         {
             
             //$distribuidores[$i]->calle=$distribuidores[$i]->calle." #".$distribuidores[$i]->numero_exterior." ".$distribuidores[$i]->colonia." ".$distribuidores[$i]->municipio." ".$distribuidores[$i]->estado." ".$distribuidores[$i]->codigo_postal; 
-            $distribuidores[$i]->acciones = '<a type="button" class="btn btn-success margin" href="editarDistribuidor/'. $distribuidores[$i]->id_distribuidor .'">Ver</a> <a type="button" class="btn btn-primary margin" href="editarDistribuidor/'. $distribuidores[$i]->id_distribuidor .'">Actualizar</a>';    
+            $distribuidores[$i]->acciones = '<a type="button" class="btn btn-success margin" href="verDistribuidor/'. $distribuidores[$i]->id_distribuidor .'">Ver</a> <a type="button" class="btn btn-primary margin" href="editarDistribuidor/'. $distribuidores[$i]->id_distribuidor .'">Actualizar</a>';    
         }
         
         return $distribuidores;
@@ -116,7 +116,7 @@ class DistribuidorsController extends Controller
 
     public function editarDistribuidor($id)
     {
-        $comision = Comision::find($id);
+        /*$comision = Comision::find($id);
         switch (Session::get('tipo')) {
             case 0:
                // return redirect('');
@@ -126,12 +126,13 @@ class DistribuidorsController extends Controller
                 return view('admin.editarComision',compact('comision'));
                 break;
             
-        }        
+        } */
+        return "Pagina en pruebas";        
     }
 
     public function actualizarDistribuidor(Request $request,$id)
     {
-        $cuenta = Cuenta::find($id);
+       /* $cuenta = Cuenta::find($id);
         $cuenta->nombre = strtoupper($request->input('nombre'));
         $cuenta->telefono = $request->input('telefono');
         $cuenta->usuario = strtoupper($request->input('usuario'));
@@ -154,7 +155,23 @@ class DistribuidorsController extends Controller
             case 1:
                 return redirect('consultarCuentasVendedor');
                 break;
-        }  
+        }*/ 
+        return "Pagina en pruebas"; 
+    }
+
+    public function verDistribuidor($id)
+    {
+        $distribuidor = Distribuidor::find($id);
+        switch (Session::get('tipo')) {
+            case 0:
+               // return redirect('');
+                //return ("Eres un super administrador");
+                break;
+            case 1:
+                return view('admin.verDistribuidor',compact('distribuidor'));
+                break;
+            
+        } 
     }
 
 }

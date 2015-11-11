@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Promocion;
-<<<<<<< HEAD
+
 use App\Vales_has_promociones;
-=======
+
 use App\Vale;
->>>>>>> origin/master
+
 use Session;
 use Carbon\Carbon;
 
