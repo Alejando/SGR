@@ -14,16 +14,27 @@
 		                    <div class="alert alert-{{ Session::get('class') }}">{{ Session::get('message')}}</div>
 		                
 		                @endif
-						<div class="col-md-6">
+						<div class="col-md-6" style="background-color:#000000">
 							<label>Datos Distribuidor</label>
+							<br>
 							
-							
-								<div class="form-group">
+								<div class="form-group col-md-6" style="background-color:#262626">
+									<img src="../archivos/{{ $distribuidor->foto }}" name="aboutme" width="130" height="50" class="img-thumbnail">
+								</div>
+								<div class="form-group col-md-6" style="background-color:#595959">
 									<label>Nombre</label>
 									<p>{{ $distribuidor->nombre }}</p>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
 								</div>
 								
-								<div class="col-md-6">
+								
+								<div class="col-md-6" style="background-color:#404040">
+
 									
 									<div class="form-group">
 										<label>Calle</label>
@@ -46,7 +57,7 @@
 										<p>{{ $distribuidor->celular }}</p>
 									</div>	
 								</div>		
-								<div class="col-md-6">
+								<div class="col-md-6" style="background-color:#737373" >
 									<div class="form-group">	
 										<label>Colonia</label>
 										<p>{{ $distribuidor->colonia }}</p>
@@ -60,11 +71,7 @@
 										<p>{{ $distribuidor->estado }}</p>
 									</div>	
 				
-									<div class="form-group">
-										</br>
-										</br>
-										</br>
-									</div>	
+									
 									
 									<div class="form-group">
 										<label>Telefono</label>
@@ -122,20 +129,22 @@
 									</div>	
 									
 									<div class="form-group">
-										<label>Telefono</label>
+										<label>Teléfono</label>
 										<p>{{ $distribuidor->telefono_aval }}</p>
+
 									</div>	
 								</div>
 							</div>
-							<div class="row no-padding">
-								<div class="col-sm-3 col-lg-5 widget-left">
-									<img src="archivos/{{ $$distribuidor->foto }}" name="aboutme">
+							
+								
+								
+							<div class="form-group">
+								<label>Firma</label>
+								<div class="col-md-6">
+									<img src="../archivos/{{ $distribuidor->firma }}" name="aboutme" class="img-thumbnail">
 								</div>
-								<div class="col-sm-9 col-lg-7 widget-right">
-									<div class="large">120</div>
-									<div class="text-muted">New Orders</div>
-								</div>
-							</div>
+							</div>	
+						
 							
 							<!--div class="col-md-6">
 								<div class="form-group">

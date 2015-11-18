@@ -116,62 +116,89 @@ class DistribuidorsController extends Controller
 
     public function editarDistribuidor($id)
     {
-        /*$comision = Comision::find($id);
-        switch (Session::get('tipo')) {
-            case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
-                break;
-            case 1:
-                return view('admin.editarComision',compact('comision'));
-                break;
-            
-        } */
-        return "Pagina en pruebas";        
+        $distribuidor = Distribuidor::find($id);
+        return view('admin.editarDistribuidor',compact('distribuidor'));       
     }
 
     public function actualizarDistribuidor(Request $request,$id)
     {
-       /* $cuenta = Cuenta::find($id);
-        $cuenta->nombre = strtoupper($request->input('nombre'));
-        $cuenta->telefono = $request->input('telefono');
-        $cuenta->usuario = strtoupper($request->input('usuario'));
-        $cuenta->contrasena = $request->input('contrasena');
+
+        $distribuidor = Distribuidor::find($id);
+        $distribuidor->nombre = strtoupper($request->input('nombre'));
+        $distribuidor->calle = strtoupper($request->input('calle'));
+        $distribuidor->numero_exterior = $request->input('numero_exterior');
+        $distribuidor->municipio = strtoupper($request->input('municipio'));
+        $distribuidor->codigo_postal = $request->input('codigo_postal');
+        $distribuidor->celular = $request->input('celular');
+        $distribuidor->colonia = strtoupper($request->input('colonia'));
+        $distribuidor->numero_interior = $request->input('numero_interior');
+        $distribuidor->estado = strtoupper($request->input('estado'));
+        $distribuidor->telefono = $request->input('telefono');
+        $distribuidor->nombre_aval = strtoupper($request->input('nombre_aval'));
+        $distribuidor->calle_aval = strtoupper($request->input('calle_aval'));
+        $distribuidor->numero_exterior_aval = $request->input('numero_exterior_aval');
+        $distribuidor->municipio_aval = strtoupper($request->input('municipio_aval'));
+        $distribuidor->codigo_postal_aval = $request->input('codigo_postal_aval');
+        $distribuidor->celular_aval = $request->input('celular_aval');
+        $distribuidor->colonia_aval = strtoupper($request->input('colonia_aval'));
+        $distribuidor->numero_interior_aval = $request->input('numero_interior_aval');
+        $distribuidor->estado_aval = strtoupper($request->input('estado_aval'));
+        $distribuidor->telefono_aval = $request->input('telefono_aval');
+        $distribuidor->limite_credito = $request->input('limite_credito');
+        $distribuidor->limite_vale = $request->input('limite_vale');
+       
         
+        
+      
+        $fileFirma = $request->file('firma');
+        if($fileFirma)
+        {
+            $nombreFirma='FIRMA_'.$distribuidor->nombre.'.'.$fileFirma->getClientOriginalExtension();
+            $distribuidor->firma=$nombreFirma;
+            \Storage::disk('local')->put($nombreFirma,  \File::get($fileFirma));  
+        }
+        
+        
+        $fileFoto = $request->file('foto');
+        if($fileFoto)
+        {
+            $nombreFoto='FOTO_'.$distribuidor->nombre.'.'.$fileFoto->getClientOriginalExtension();
+            $distribuidor->foto=$nombreFoto;
+            \Storage::disk('local')->put($nombreFoto,  \File::get($fileFoto));
+        }
 
 
-        if($cuenta->save()){
-            Session::flash('message','Datos actualizados  Correctamente');
+
+
+
+        if($distribuidor->save()){
+            
+            Session::flash('message','Guardado Correctamente');
             Session::flash('class','success');
         }else{
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
-       switch (Session::get('tipo')) {
-            case 0:
-               // return redirect('');
-                //return view('admin.consultarCuentasVendedor');
-                break;
-            case 1:
-                return redirect('consultarCuentasVendedor');
-                break;
-        }*/ 
-        return "Pagina en pruebas"; 
+       return redirect('consultarDistribuidores');
     }
 
     public function verDistribuidor($id)
     {
+        //return "que mmdas";
         $distribuidor = Distribuidor::find($id);
-        switch (Session::get('tipo')) {
+        //return $distribuidor;
+        return view('admin.verDistribuidor',compact('distribuidor'));
+        /*switch (Session::get('tipo')) {
             case 0:
                // return redirect('');
                 //return ("Eres un super administrador");
                 break;
             case 1:
-                return view('admin.verDistribuidor',compact('distribuidor'));
+                
                 break;
+                
             
-        } 
+        } */
     }
 
 }
