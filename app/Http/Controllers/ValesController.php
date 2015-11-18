@@ -151,7 +151,7 @@ class ValesController extends Controller
     
     public function obtenerValesV()
     {
-       $cuenta=1;
+       $cuenta=Session::get('id');
         $vales = Vale::where('id_cuenta',$cuenta)->where('fecha_venta',Carbon::today())->get();
        for ($i=0; $i <sizeof($vales); $i++) { 
              $vales[$i]->id_distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
@@ -159,10 +159,10 @@ class ValesController extends Controller
                 $vales[$i]->estatus="Disponible";
              }
              if($vales[$i]->estatus==1){
-                $vales[$i]->estatus="Ocupado";
+                $vales[$i]->estatus='<p  style="background-color: green;">Ocupado</p>';
              }
              if($vales[$i]->estatus==2){
-                $vales[$i]->estatus="Cancelado";
+                $vales[$i]->estatus='<p  style="background-color: red;">cancelado</p>';
              }
                 
         }    

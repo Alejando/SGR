@@ -9,7 +9,9 @@
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<link href="../css/datepicker3.css" rel="stylesheet">
 	<link href="../css/styles.css" rel="stylesheet">
+	<link href="../css/ticket.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	@yield('css')
 
 </head>
@@ -161,7 +163,7 @@
 					
 				</ul>
 			</li>
-			<li><a href=""><span class="glyphicon glyphicon-hand-up"></span> Opciones</a></li>
+			
 			<li role="presentation" class="divider"></li>
 
 			<li><a href="logout"><span class="glyphicon glyphicon-user"></span> Cerrar Sesión</a></li>
@@ -185,9 +187,5 @@
 	<script src="../js/custom.js"></script>
 	<script src="../js/bootstrap-table.js"></script>
 	<script src="../js/tipoPromocion.js"></script>
-
-	
-	
-	
 	@yield('js')
 </html>

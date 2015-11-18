@@ -163,7 +163,7 @@
             return sprintf('Mostrando de %s al %s de %s filas', pageFrom, pageTo, totalRows);
         },
         formatSearch: function () {
-            return 'Buarcar';
+            return 'Buscar';
         },
         formatNoMatches: function () {
             return 'No elementos encontrados :(';

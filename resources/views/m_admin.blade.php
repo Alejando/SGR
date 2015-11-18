@@ -152,7 +152,7 @@
 					</li>
 				</ul>
 			</li>
-			<li><a href=""><span class="glyphicon glyphicon-hand-up"></span> Opciones</a></li>
+			
 			<li role="presentation" class="divider"></li>
 
 			<li><a href="logout"><span class="glyphicon glyphicon-user"></span> Cerrar Sesión</a></li>
