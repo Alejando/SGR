@@ -6,7 +6,10 @@ var BoolFechaPromo=0; //0= no hay promo 1=hay promo
 var inputOcultos=""; // datos que no tienen un input y se creara oculto :)
 var mensaje="";
 var confirma=0;
-var clientes
+var cliente;
+var distribuidor;
+var importe;
+
 $(function() {
 	$('#fecha').val(fechaInicioPago);
 
@@ -14,28 +17,46 @@ $(function() {
     $("#cantidad").focusout(function(){
     	fechaInicioPago=$('#fecha').val();
     	var cantidad=$("#cantidad").val(); // obtenemos cantidad del vale
+    	importe=cantidad;
     	var pagos=cantidad/nPagosGlobal;
     	var pago=pagos.toFixed(); // crea
     	var pagoFinal=cantidad-(pago*(nPagosGlobal-1));
     	var code="";
+    	var pagos="";
 	  	//alert(sumaFecha(22,sFecha));
 		for (var i = 1; i < nPagosGlobal;i++) {
 			code+="<div class='col-md-3'><div class='panel panel-primary'><div class='panel-heading'> Pago "+i+"</div><div class='panel-body'><p>De $"+pago+".00  el "+cambiarTipoFecha(fechaPago(fechaInicioPago,i))+"</p></div></div></div>";
-		}
+			pagos+="<p class='texto'>Pago "+i+" De $"+pago+".00 </p><p class='texto'>El "+cambiarTipoFecha(fechaPago(fechaInicioPago,i))+"</p>";
+			}
 	  	code+="<div class='col-md-3'><div class='panel panel-primary'><div class='panel-heading'> Ultimo pago </div><div class='panel-body'><p>De $"+pagoFinal+".00  el "+cambiarTipoFecha(fechaPago(fechaInicioPago,nPagosGlobal))+"</p></div></div></div>";
+		pagos+="<p class='texto'>Pago "+i+" De $"+pagoFinal+".00 </p><p class='texto'>El "+cambiarTipoFecha(fechaPago(fechaInicioPago,nPagosGlobal))+"</p>";
 		$("#pagos").html(code);
 		
-		
+		$('#pagosTicket').html(pagos)
 	})
+
+	
+
+    $( "#imprimir" ).click(function() {
+
+	});
 
 	$('#nombreCliente').autocomplete({
     source: 'buscarCliente',
    	minLength: 1,
 	  select: function(event, ui) {
+	  	cliente=ui.item.value;
 	  	inputOcultos+='<input type="hidden" name="id_cliente" value='+ui.item.id+'>';
 	  }
 	});
 	$('#form').submit(function(){
+		$('#pFecha').html("Fecha: "+cambiarTipoFecha(fechaInicioPago));
+  		$('#pDistribuidor').html("Distribuidor: "+distribuidor);
+  		$('#pCliente').html("Cliente: "+cliente);
+  		$('#pImporte').html("Importe: $"+importe+".00");
+  		$('#ticket').show();
+  		$('#ticket').printArea();
+  		$('#ticket').hide();
 		if(BoolFechaPromo==0){
 			inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'/>';
 		}
@@ -210,6 +231,7 @@ function datosVale(){
 				 		data: {id:value}						
 					}).done(function( result ) {
 					//console.log(result); 
+					distribuidor=result;
 					$("#nombreDistribuidor").val(result);
 					});
 			   	}
@@ -228,7 +250,7 @@ function datosVale(){
 function cambiarTipoFecha(fecha){
 	var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 	var anio = fecha.substring(0,4);
-	var mes =meses[parseInt(fecha.substring(5, 7))-1];
+	var mes =parseInt(fecha.substring(5, 7))-1;
 	var dia = fecha.substring(8);
-	return dia+" de "+mes+" de "+anio;
+	return " "+dia+"-"+mes+"-"+anio;
 }

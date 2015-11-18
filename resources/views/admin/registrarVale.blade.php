@@ -100,6 +100,7 @@
 							<div id="ocultos"></div>
 							<div class="col-md-12">
 								<div class="pull-right">
+										
 										<button type="reset" class="btn btn-danger ">Borrar datos</button>
 										<button type="submit" class="btn btn-success ">Guardar Vale</button>
 								</div>
@@ -111,6 +112,21 @@
 			</div><!-- /.col-->
 		</div><!-- /.row -->
 		
+		<div id="ticket" style="display: none">
+			<h4 class="titulo">Zapatería "El Gran Remate" </h4>
+			<h5 class="titulo">Pasaje Hidalgo #218 Col.Centro </h5>
+			<h5 class="titulo">CP. 99000 Fresnillo, zacatecas</h5>
+			<h4 class="titulo"> Venta a credito </h4>
+			<p class="texto" id="pFecha">Fecha: Juanito</p>
+			<p class="texto">Cajera:{{Session::get('nombre')}}</p>
+			<p class="texto" id="pDistribuidor">Distribuidor: Juanito</p>
+			<p class="texto" id="pCliente">Cliente: Juanito</p>
+			<p class="texto" id="pImporte">Importe: $348.00</p>
+			<h5 class="titulo"> Pagos</h3>
+			<div id="pagosTicket"></div>
+			<h4 class="titulo"> ¡Gracias por su compra! </h4>
+		</div>
+
 
 @stop
 
