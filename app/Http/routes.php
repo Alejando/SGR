@@ -13,6 +13,7 @@ Route::get('/','LoginController@mostrarLogin');
 Route::get('sesion', 'LoginController@mostrarLogin');
 Route::post('login','LoginController@login');
 Route::get('logout','LoginController@logout');
+Route::get('pdf', 'PdfController@invoice');
 
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {

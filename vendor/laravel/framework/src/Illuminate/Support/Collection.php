@@ -54,6 +54,30 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     }
 
     /**
+     * Get the average value of a given key.
+     *
+     * @param  string|null  $key
+     * @return mixed
+     */
+    public function avg($key = null)
+    {
+        if ($count = $this->count()) {
+            return $this->sum($key) / $count;
+        }
+    }
+
+    /**
+     * Alias for the "avg" method.
+     *
+     * @param  string|null  $key
+     * @return mixed
+     */
+    public function average($key = null)
+    {
+        return $this->avg($key);
+    }
+
+    /**
      * Collapse the collection of items into a single array.
      *
      * @return static
@@ -135,6 +159,17 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
         }
 
         return new static($new);
+    }
+
+    /**
+     * Get all items except for those with the specified keys.
+     *
+     * @param  mixed  $keys
+     * @return static
+     */
+    public function except($keys)
+    {
+        return new static(Arr::except($this->items, $keys));
     }
 
     /**
@@ -232,12 +267,14 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     /**
      * Remove an item from the collection by key.
      *
-     * @param  mixed  $key
+     * @param  string|array  $keys
      * @return $this
      */
-    public function forget($key)
+    public function forget($keys)
     {
-        $this->offsetUnset($key);
+        foreach ((array) $keys as $key) {
+            $this->offsetUnset($key);
+        }
 
         return $this;
     }
@@ -391,7 +428,7 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     }
 
     /**
-     * Get an array with the values of a given key.
+     * Get the values of a given key.
      *
      * @param  string  $value
      * @param  string  $key
@@ -471,6 +508,17 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     }
 
     /**
+     * Get the items with the specified keys.
+     *
+     * @param  mixed  $keys
+     * @return static
+     */
+    public function only($keys)
+    {
+        return new static(Arr::only($this->items, $keys));
+    }
+
+    /**
      * "Paginate" the collection by slicing it into a smaller collection.
      *
      * @param  int  $page
@@ -496,11 +544,12 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
      * Push an item onto the beginning of the collection.
      *
      * @param  mixed  $value
+     * @param  mixed  $key
      * @return $this
      */
-    public function prepend($value)
+    public function prepend($value, $key = null)
     {
-        array_unshift($this->items, $value);
+        $this->items = Arr::prepend($this->items, $value, $key);
 
         return $this;
     }
