@@ -25,4 +25,9 @@ class Distribuidor extends Model
     {
         return $this->belongsTo('App\Comision', 'id_distribuidor');
     }
+
+    public function cuenta()
+    {
+        return $this->belongsTo('App\Cuenta', 'id_cuenta');
+    }
 }

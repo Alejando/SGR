@@ -28,4 +28,11 @@ class Cuenta extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Pago', 'id_cuenta');
     }
+
+    public function movimientos()
+    {
+        return $this->hasMany('App\Movimiento', 'id_cuenta');
+    }
+
+    
 }

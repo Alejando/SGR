@@ -40,6 +40,7 @@ class PdfController extends Controller
         return $data;
     }
 
+<<<<<<< HEAD
     public function reporteR2($id,$fechaInicio,$fechaFin){
 
         $vales=Vale::where('id_distribuidor',$id)->whereBetween('fecha_inicio_pago',[$fechaInicio,$fechaFin]);
@@ -64,4 +65,7 @@ class PdfController extends Controller
 
     }
 
+=======
+    
+>>>>>>> origin/master
 }
