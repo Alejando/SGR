@@ -1,19 +1,78 @@
 table {
     border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid black;
     font-size: 12px;
+    font-family: sans-serif;
+}
+
+table thead tr th {
+    border: 1px solid black;
+    text-align: center;
 }
 
 
+table tbody tr td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+.invisible {
+    border: 0px solid blue;
+    text-align: center;
+}
 
 #encabezado {
-  background-color: #d8ff66;
+  background-color: #ff9933;
   color: black;
 }
 
 #cliente{
  width: 300px; 
+}
+
+tfoot
+{
+	text-align: right;
+}
+
+.medio{
+	width: 231px;
+}
+
+#logo{
+	text-align: left;
+}
+
+#titulo{
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
+#subtitulo{
+	font-size: 13px;
+	font-family: sans-serif; 
+}
+
+#distribuidor{
+	text-align: left;
+	font-size: 10px;
+}
+
+#fecha{
+	font-size: 10px;
+	text-align: right;
+}
+
+#fechaReporte{
+	font-size: 10px;
+	text-align: left;
+}
+
+#fechaLimite{
+	font-size: 10px;
+	text-align: right;
+}
+
+#periodo{
+	font-size: 10px;
+	text-align: center;
 }

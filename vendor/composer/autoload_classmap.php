@@ -17,6 +17,7 @@ return array(
     'AddFieldToPagosTable' => $baseDir . '/database/migrations/2015_09_25_231859_add_field_to_pagos_table.php',
     'AddFieldToValesTable' => $baseDir . '/database/migrations/2015_09_25_234947_add_field_to_vales_table.php',
     'AddIdComisionToDistribuidorsTable' => $baseDir . '/database/migrations/2015_10_28_191055_add_id_comision_to_distribuidors_table.php',
+    'AddTipoToMovimientosTable' => $baseDir . '/database/migrations/2015_11_19_191345_add_tipo_to_movimientos_table.php',
     'Adobe_Font_Metrics' => $vendorDir . '/phenx/php-font-lib/classes/Adobe_Font_Metrics.php',
     'Attribute_Translator' => $vendorDir . '/dompdf/dompdf/include/attribute_translator.cls.php',
     'Block_Frame_Decorator' => $vendorDir . '/dompdf/dompdf/include/block_frame_decorator.cls.php',
