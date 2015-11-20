@@ -9,7 +9,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Vales</div>
 					<div class="panel-body">
-						<table data-toggle="table" data-url="obtenerVales"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true"  data-sort-name="name" data-sort-order="desc">
+						<table data-toggle="table" data-url="obtenerVales"   data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true"  data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
 
