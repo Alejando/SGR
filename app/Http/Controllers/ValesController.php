@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Distribuidor;
 use App\Vale;
 use App\Cliente;
+use App\Movimiento;
 use App\Vales_has_promociones;
 use Carbon\Carbon;
 use Session;
@@ -125,7 +126,7 @@ class ValesController extends Controller
     
     public function obtenerVales()
     {
-        $vales = Vale::all();
+        $vales = Vale::where();
         for ($i=0; $i <sizeof($vales); $i++) { 
 
              $distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
@@ -271,6 +272,7 @@ class ValesController extends Controller
     public function modificarVale(Request $request){
         
         $vale = Vale::find($request->input('id_vale'));
+        $valeMovimiento=(string)$vale;
         $folio = $request->input('folio');
         $serie = $request->input('serie');
         $fechaVenta = $request->input('fecha_venta');
@@ -302,8 +304,17 @@ class ValesController extends Controller
         $vale->motivo_cancelacion=$motivoCancelacion;
         
         if($vale->save()){
+            $movimiento= new Movimiento;
+            $movimiento->id_cuenta=Session::get('id');
+            $movimiento->fecha=Carbon::today();
+            $movimiento->estado_anterior=$valeMovimiento;
+            $movimiento->estado_actual=(string)Vale::find($request->input('id_vale'));
+            $movimiento->tipo=1; // 1:vales 2:cuentas 3:pagos 4:distribuidores 5:comisiones
+            $movimiento->save();
+
             Session::flash('message',' Vale actualizado exitoso!');
             Session::flash('class','success');
+
         }
         else{
             Session::flash('message','Error al guardar el vale en la base de datos');

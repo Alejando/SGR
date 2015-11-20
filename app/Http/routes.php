@@ -54,6 +54,9 @@ Route::group(['middleware' => 'super_admin'], function () {
 	Route::get('obtenerCuentas', 'CuentasController@obtenerCuentas' );
 	Route::get('editarCuenta/{id}', 'CuentasController@editarCuenta');
 	Route::post('actualizarCuenta/{id}', 'CuentasController@actualizarCuenta');
+
+	Route::get('consultarMovimientos', 'MovimientosController@consultarMovimientos');
+	Route::get('obtenerMovimientos', 'MovimientosController@obtenerMovimientos');
 });
 
 Route::group(['middleware' => 'super_y_admin'], function () {

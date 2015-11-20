@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Distribuidor;
 use Session;
+use App\Movimiento;
+use Carbon\Carbon;
 class DistribuidorsController extends Controller
 {
     
@@ -124,6 +126,7 @@ class DistribuidorsController extends Controller
     {
 
         $distribuidor = Distribuidor::find($id);
+        $distribuidorMovimiento= (string)$distribuidor;
         $distribuidor->nombre = strtoupper($request->input('nombre'));
         $distribuidor->calle = strtoupper($request->input('calle'));
         $distribuidor->numero_exterior = $request->input('numero_exterior');
@@ -172,7 +175,13 @@ class DistribuidorsController extends Controller
 
 
         if($distribuidor->save()){
-            
+            $movimiento= new Movimiento;
+            $movimiento->id_cuenta=Session::get('id');
+            $movimiento->fecha=Carbon::today();
+            $movimiento->estado_anterior=$distribuidorMovimiento;
+            $movimiento->estado_actual=(string)Distribuidor::find($id);
+            $movimiento->tipo=4; // 1:vales 2:cuentas 3:pagos 4:distribuidores 5:comisiones
+            $movimiento->save();
             Session::flash('message','Guardado Correctamente');
             Session::flash('class','success');
         }else{

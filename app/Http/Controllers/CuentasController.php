@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Cuenta;
+use App\Movimiento;
+use Carbon\Carbon;
 use Session;
 
 //Tipo 1: Administrador
@@ -107,6 +109,7 @@ class CuentasController extends Controller
     public function actualizarCuentaVendedor(Request $request,$id)
     {
         $cuenta = Cuenta::find($id);
+        $CuentaMovimiento=(string)$cuenta;
         $cuenta->nombre = strtoupper($request->input('nombre'));
         $cuenta->telefono = $request->input('telefono');
         $cuenta->usuario = strtoupper($request->input('usuario'));
@@ -115,6 +118,13 @@ class CuentasController extends Controller
 
 
         if($cuenta->save()){
+            $movimiento= new Movimiento;
+            $movimiento->id_cuenta=Session::get('id');
+            $movimiento->fecha=Carbon::today();
+            $movimiento->estado_anterior=$CuentaMovimiento;
+            $movimiento->estado_actual=(string)Cuenta::find($id);
+            $movimiento->tipo=2; // 1:vales 2:cuentas 3:pagos 4:distribuidores 
+            $movimiento->save();
             Session::flash('message','Datos actualizados  Correctamente');
             Session::flash('class','success');
         }else{
@@ -156,6 +166,13 @@ class CuentasController extends Controller
         }else
             {
                 if($cuenta->save()){
+                    $movimiento= new Movimiento;
+                    $movimiento->id_cuenta=Session::get('id');
+                    $movimiento->fecha=Carbon::today();
+                    $movimiento->estado_anterior=$CuentaMovimiento;
+                    $movimiento->estado_actual=Cuenta::find($id);
+                    $movimiento->tipo=2; // 1:vales 2:cuentas 3:pagos 4:distribuidores 
+                    $movimiento->save();
                     Session::flash('message','Guardado Correctamente');
                     Session::flash('class','success');
                 }else{
@@ -201,6 +218,7 @@ class CuentasController extends Controller
     public function actualizarCuenta(Request $request,$id)
     {
         $cuenta = Cuenta::find($id);
+        $CuentaMovimiento=(string)$cuenta;
         $cuenta->nombre = strtoupper($request->input('nombre'));
         $cuenta->telefono = $request->input('telefono');
         $cuenta->usuario = strtoupper($request->input('usuario'));
@@ -210,6 +228,13 @@ class CuentasController extends Controller
 
 
         if($cuenta->save()){
+            $movimiento= new Movimiento;
+            $movimiento->id_cuenta=Session::get('id');
+            $movimiento->fecha=Carbon::today();
+            $movimiento->estado_anterior=$CuentaMovimiento;
+            $movimiento->estado_actual=Cuenta::find($id);
+            $movimiento->tipo=2; // 1:vales 2:cuentas 3:pagos 4:distribuidores 
+            $movimiento->save();
             Session::flash('message','Datos actualizados  Correctamente');
             Session::flash('class','success');
         }else{

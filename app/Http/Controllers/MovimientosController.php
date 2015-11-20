@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Movimiento;
+use App\Movimiento;
 
 class MovimientosController extends Controller
 {
@@ -14,17 +14,20 @@ class MovimientosController extends Controller
 
     public function obtenerMovimientos()
     {
-        //
+        $movimiento= Movimiento::all();
+
+        return$movimiento;
     }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function consultarMovimientos()
     {
-        //
+        return view('s_admin.consultarMovimientos');
     }
 
     /**
