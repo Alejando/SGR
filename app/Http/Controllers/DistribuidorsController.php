@@ -15,8 +15,16 @@ class DistribuidorsController extends Controller
 
 
     public function crearDistribuidor()
-    {
-        return view('admin.crearDistribuidor');
+    {   
+         switch (Session::get('tipo')) {
+            case 0:
+               return view('s_admin.crearDistribuidor');
+                break;
+            case 1:
+                 return view('admin.crearDistribuidor');
+                break;
+        }  
+       
     }
 
  
@@ -66,7 +74,14 @@ class DistribuidorsController extends Controller
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
-       return view('admin.crearDistribuidor');
+       switch (Session::get('tipo')) {
+            case 0:
+               return redirect('s_admin.crearDistribuidor');
+                break;
+            case 1:
+                 return redirect('admin.crearDistribuidor');
+                break;
+        }  
     }
     public function buscarIdDistribuidor(Request $request){
          
@@ -94,8 +109,7 @@ class DistribuidorsController extends Controller
     
         switch (Session::get('tipo')) {
             case 0:
-                // return redirect('');
-                //return view('superAdmin.consultarCuentasVendedor');
+                return view('s_admin.consultarDistribuidores');
                 break;
             case 1:
                 return view('admin.consultarDistribuidores');
@@ -119,7 +133,16 @@ class DistribuidorsController extends Controller
     public function editarDistribuidor($id)
     {
         $distribuidor = Distribuidor::find($id);
-        return view('admin.editarDistribuidor',compact('distribuidor'));       
+
+        switch (Session::get('tipo')) {
+            case 0:
+                return view('s_admin.editarDistribuidor',compact('distribuidor'));      
+                break;
+            case 1:
+                 return view('admin.editarDistribuidor',compact('distribuidor'));      
+                break;
+        }  
+        
     }
 
     public function actualizarDistribuidor(Request $request,$id)
@@ -188,26 +211,46 @@ class DistribuidorsController extends Controller
             Session::flash('message','Ha ocurrido un error');
             Session::flash('class','danger');
         }
+      
+      
        return redirect('consultarDistribuidores');
     }
 
     public function verDistribuidor($id)
     {
-        //return "que mmdas";
+      
         $distribuidor = Distribuidor::find($id);
-        //return $distribuidor;
-        return view('admin.verDistribuidor',compact('distribuidor'));
-        /*switch (Session::get('tipo')) {
+        switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+              return view('s_admin.verDistribuidor',compact('distribuidor'));
                 break;
             case 1:
-                
+                return view('admin.verDistribuidor',compact('distribuidor'));
                 break;
                 
             
-        } */
+        } 
     }
+    public function reporteCobranza()
+    {   
+         switch (Session::get('tipo')) {
+            case 0:
+               return view('s_admin.reporteCobranza');
+                break;
+            case 1:
+                 return view('admin.reporteCobranza');
+                break;
+        }  
+    }
+
+    public function emitirReporteCobranza()
+    {   
+
+        $id=2;
+         $vales=Vale::where('id_distribuidor',$id)->whereBetween('fecha_inicio_pago',[$fechaInicio,$fechaFin]);
+
+
+    }
+
 
 }

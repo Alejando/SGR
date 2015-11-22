@@ -18,8 +18,16 @@ class PromocionsController extends Controller
 {
 
     public function crearPromocion()
-    {
-        return view('admin.crearPromocion');
+    {   
+         switch (Session::get('tipo')) {
+            case 0:
+                return view('s_admin.crearPromocion');
+                break;
+            case 1:
+                 return view('admin.crearPromocion');
+                break;
+        }   
+       
     }
 
     public function guardarPromocion(Request $request)
@@ -133,7 +141,14 @@ class PromocionsController extends Controller
 
                     }
                 }
-       return view('admin.crearPromocion');
+      switch (Session::get('tipo')) {
+            case 0:
+                return redirect('s_admin.crearPromocion');
+                break;
+            case 1:
+                 return redirect('admin.crearPromocion');
+                break;
+        }   
     }
     
     public function buscarPromocion(){
@@ -216,8 +231,7 @@ class PromocionsController extends Controller
     function consultarPromociones(){
         switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+               return view('s_admin.consultarPromociones');
                 break;
             case 1:
                 return view('admin.consultarPromociones');
@@ -251,8 +265,18 @@ class PromocionsController extends Controller
         switch (Session::get('tipo')) 
         {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+                switch ($promocion->tipo_promocion) 
+                {
+                    case 1:
+                        //Empiece a pagar apartir de una fehca
+                        return view('s_admin.editarPromocionTipo1',compact('promocion'));
+                        break;
+                    case 2:
+                        //Paga en 6 o 8 quincenas
+                        return view('s_admin.editarPromocionTipo2',compact('promocion'));
+                        break;
+                    
+                }
                 break;
             case 1:
                 switch ($promocion->tipo_promocion) 

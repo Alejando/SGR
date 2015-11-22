@@ -82,8 +82,7 @@ class ValesController extends Controller
        
         switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+               return view('s_admin.registrarVale');
                 break;
             case 1:
                return view('admin.registrarVale');
@@ -112,8 +111,7 @@ class ValesController extends Controller
     {
        switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+               return view('s_admin.consultarVales');
                 break;
             case 1:
                 return view('admin.consultarVales');
@@ -126,7 +124,7 @@ class ValesController extends Controller
     
     public function obtenerVales()
     {
-        $vales = Vale::where();
+        $vales = Vale::all();
         for ($i=0; $i <sizeof($vales); $i++) { 
 
              $distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
@@ -248,18 +246,9 @@ class ValesController extends Controller
             }   
         }
         
-        switch (Session::get('tipo')) {
-            case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
-                break;
-            case 1:
-                return redirect('registrarVale');
-                break;
-            case 2:
-                 return redirect('registrarVale');
-                break;
-        }   
+
+        return redirect('registrarVale');
+                
       
     }
     public function obtenerUltimoVale(){
@@ -323,19 +312,9 @@ class ValesController extends Controller
             
             
 
-        switch (Session::get('tipo')) {
-            case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
-                break;
-            case 1:
-                return redirect('consultarVales');
-                break;
-            case 2:
+     
                  return redirect('consultarVales');
-                break;
-        }   
-      
+
     }
     
 

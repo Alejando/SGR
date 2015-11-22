@@ -54,8 +54,7 @@ class CuentasController extends Controller
     
         switch (Session::get('tipo')) {
             case 0:
-                // return redirect('');
-                //return view('superAdmin.consultarCuentasVendedor');
+                return view('s_admin.consultarCuentasVendedor');
                 break;
             case 1:
                 return view('admin.consultarCuentasVendedor');
@@ -78,8 +77,8 @@ class CuentasController extends Controller
         $cuenta = Cuenta::find($id);
         switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+             
+            return view('s_admin.editarCuentaVendedor',compact('cuenta'));
                 break;
             case 1:
                 return view('admin.editarCuentaVendedor',compact('cuenta'));
@@ -133,8 +132,7 @@ class CuentasController extends Controller
         }
        switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return view('admin.consultarCuentasVendedor');
+              return redirect('consultarCuentasVendedor');
                 break;
             case 1:
                 return redirect('consultarCuentasVendedor');
@@ -180,12 +178,12 @@ class CuentasController extends Controller
                     Session::flash('class','danger');
                 }
             }
-       return view('admin.crearCuenta');
+       return view('s_admin.crearCuenta');
     }
 
     public function consultarCuentas()
     {
-        return view('admin.consultarCuentas');
+        return view('s_admin.consultarCuentas');
 
     }
 
@@ -212,7 +210,7 @@ class CuentasController extends Controller
     public function editarCuenta($id)
     {
         $cuenta = Cuenta::find($id);
-        return view('admin.editarCuenta',compact('cuenta'));      
+        return view('s_admin.editarCuenta',compact('cuenta'));      
     }
 
     public function actualizarCuenta(Request $request,$id)

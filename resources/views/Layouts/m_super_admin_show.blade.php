@@ -44,17 +44,17 @@
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li>
-						<a class="" href="crearVale">
+						<a class="" href="../crearVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Vales
 						</a>
 					</li>
 					<li>
-						<a class="" href="registrarVale">
+						<a class="" href="../registrarVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Registro de ventas
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarVales">
+						<a class="" href="../consultarVales">
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Vales
 						</a>
 					</li>
@@ -66,12 +66,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-2">
 					<li>
-						<a class="" href="crearDistribuidor">
+						<a class="" href="../crearDistribuidor">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Distribuidor
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarDistribuidores">
+						<a class="" href="../consultarDistribuidores">
 							<span class="glyphicon glyphicon-share-alt"></span> Ver distribuidores
 						</a>
 					</li>
@@ -88,12 +88,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-3">
 					<li>
-						<a class="" href="crearCliente">
+						<a class="" href="../crearCliente">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Cliente
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarClientes">
+						<a class="" href="../consultarClientes">
 							<span class="glyphicon glyphicon-share-alt"></span> Ver Clientes
 						</a>
 					</li>
@@ -105,12 +105,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-4">
 					<li>
-						<a class="" href="crearPromocion">
+						<a class="" href="../crearPromocion">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Promoción
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarPromociones">
+						<a class="" href="../consultarPromociones">
 							<span class="glyphicon glyphicon-share-alt"></span> Ver Promociones
 						</a>
 					</li>
@@ -122,12 +122,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-5">
 					<li>
-						<a class="" href="crearComision">
+						<a class="" href="../crearComision">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Comisión
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarComisiones">
+						<a class="" href="../consultarComisiones">
 							<span class="glyphicon glyphicon-share-alt"></span> Ver Comisiones
 						</a>
 					</li>
@@ -139,12 +139,12 @@
 				</a>
 				<ul class="children collapse" id="sub-item-6">
 					<li>
-						<a class="" href="crearCuenta">
+						<a class="" href="../crearCuenta">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Cuenta
 						</a>
 					</li>
 					<li>
-						<a class="" href="consultarCuentas">
+						<a class="" href="../consultarCuentas">
 							<span class="glyphicon glyphicon-share-alt"></span> Ver Usuarios
 						</a>
 					</li>
@@ -156,7 +156,7 @@
 				</a>
 				<ul class="children collapse" id="sub-item-7">
 					<li>
-						<a class="" href="#">
+						<a class="" href="../consultarMovimientos">
 							<span class="glyphicon glyphicon-share-alt"></span> Ver movimientos
 						</a>
 					</li>
@@ -166,7 +166,7 @@
 			
 			<li role="presentation" class="divider"></li>
 
-			<li><a href="logout"><span class="glyphicon glyphicon-user"></span> Cerrar Sesión</a></li>
+			<li><a href="../logout"><span class="glyphicon glyphicon-user"></span> Cerrar Sesión</a></li>
 		</ul>
 	</div><!--/.sidebar-->
 		

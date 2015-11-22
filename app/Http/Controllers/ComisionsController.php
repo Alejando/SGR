@@ -86,8 +86,7 @@ class ComisionsController extends Controller
     
         switch (Session::get('tipo')) {
             case 0:
-                // return redirect('');
-                //return view('superAdmin.consultarCuentasVendedor');
+               return view('s_admin.consultarComisiones');
                 break;
             case 1:
                 return view('admin.consultarComisiones');
@@ -112,11 +111,10 @@ class ComisionsController extends Controller
         $comision = Comision::find($id);
         switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+              return view('s_admin.consultarComisiones');
                 break;
             case 1:
-                return view('admin.editarComision',compact('comision'));
+                return view('admin.consultarComisiones');
                 break;
             
         }        
@@ -200,7 +198,15 @@ class ComisionsController extends Controller
             }
         }
 
-       return redirect('consultarComisiones');
+       switch (Session::get('tipo')) {
+            case 0:
+              return redirect('s_admin.consultarComisiones');
+                break;
+            case 1:
+                return redirect('admin.consultarComisiones');
+                break;
+            
+        }        
        
     }
 }

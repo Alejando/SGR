@@ -3,11 +3,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Example 2</title>
-<<<<<<< HEAD
-  
-=======
+
     <link href="css/pdf.css"  rel="stylesheet">
->>>>>>> origin/master
+
   </head>
   <body>
 
