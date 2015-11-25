@@ -18,8 +18,12 @@ Route::get('logout','LoginController@logout');
 //--------------------> RUTAS REPORTES <--------------------//
 //----------------------------------------------------------//
 Route::get('pdf', 'PdfController@invoice');
+<<<<<<< HEAD
 Route::get('R1', 'PdfController@reporte_1');
 
+=======
+Route::get('reporteCobranzaPDF', 'PdfController@reporteCobranzaPDF');
+>>>>>>> origin/master
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {
 
@@ -101,6 +105,7 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('verDistribuidor/{id}', 'DistribuidorsController@verDistribuidor');
 
 	Route::get('reporteCobranza', 'DistribuidorsController@reporteCobranza');
+	Route::get('emitirReporteCobranza', 'DistribuidorsController@emitirReporteCobranza');
 });
 
 Route::get('prueba', function()

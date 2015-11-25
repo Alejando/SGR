@@ -192,6 +192,8 @@
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/bootstrap-table.js"></script>
+	<script src="js/bootstrap-table-export.js"></script>
+	
 	<script src="js/tipoPromocion.js"></script>	
 	<script src="js/jquery.PrintArea.js"></script>
 

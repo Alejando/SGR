@@ -9,6 +9,8 @@ use App\Distribuidor;
 use Session;
 use App\Movimiento;
 use Carbon\Carbon;
+use App\Vale;
+use App\Cliente;
 class DistribuidorsController extends Controller
 {
     
@@ -255,14 +257,48 @@ class DistribuidorsController extends Controller
         }  
     }
 
-    public function emitirReporteCobranza()
+    public function emitirReporteCobranza(Request $request)
+
     {   
+        $id=$request->input('id');
+        $fecha=$request->input('fecha');
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
 
-        $id=2;
-         $vales=Vale::where('id_distribuidor',$id)->whereBetween('fecha_inicio_pago',[$fechaInicio,$fechaFin]);
+        for ($i=0; $i <sizeof($vales); $i++) { 
 
+            
+             $importe=$vales[$i]->cantidad;
+             $saldoAnterior=$vales[$i]->deuda_actual;
+             $pagosRealizados=$vales[$i]->pagos_realizados+1;
+             $numeroPagos=$vales[$i]->numero_pagos;
+             $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+             $saldoActual=$saldoAnterior-$abono;
+             $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
+            $vales[$i]->id_cliente=$nombreCliente;
+            $vales[$i]->cantidad="$".$importe.".00";
+            $vales[$i]->numero_pagos="$".$saldoAnterior.".00";
+            $vales[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
+            $vales[$i]->cantidad_limite="$".$abono.".00";
+            $vales[$i]->deuda_actual="$".$saldoActual.".00";
+            
+         }
+        return $vales;
     }
 
+
+
+    public function calcularPago($cantidad,$tPagos,$nPago){
+        $pagos=$cantidad/$tPagos;
+        $pago=intval($pagos);  
+        $pagoFinal=$cantidad-($pago*($tPagos-1));  
+
+        if($nPago==$tPagos){
+            return $pagoFinal;
+        }
+        else{
+            return $pago;
+        }
+    }
 
 }
