@@ -18,12 +18,12 @@ Route::get('logout','LoginController@logout');
 //--------------------> RUTAS REPORTES <--------------------//
 //----------------------------------------------------------//
 Route::get('pdf', 'PdfController@invoice');
-<<<<<<< HEAD
+
 Route::get('R1', 'PdfController@reporte_1');
 
-=======
+
 Route::get('reporteCobranzaPDF', 'PdfController@reporteCobranzaPDF');
->>>>>>> origin/master
+
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {
 

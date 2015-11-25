@@ -30,7 +30,7 @@ class PdfController extends Controller
         return $pdf->stream('invoice');
     }
 
-<<<<<<< HEAD
+
     public function getData() 
     {
         $data =  [
@@ -42,12 +42,8 @@ class PdfController extends Controller
         return $data;
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
     public function reporteR2($id,$fechaInicio,$fechaFin){
-=======
+
     public function reporteCobranzaPDF(Request $request){
        $id=$request->input('id');
         $fecha=$request->input('fecha');
@@ -156,7 +152,7 @@ class PdfController extends Controller
     }
 
 
-<<<<<<< HEAD
+
     public function reporte_1()
     {
         $data = $this->getData();
@@ -168,6 +164,4 @@ class PdfController extends Controller
         return $pdf->stream('reporte_1');
     }
 
-=======
->>>>>>> origin/master
 }
