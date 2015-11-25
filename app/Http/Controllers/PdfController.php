@@ -11,6 +11,7 @@ use App\Vale;
 use App\Cliente;
 use Carbon\Carbon;
 use App\DistribuidorsController;
+use App\Comision;
 class PdfController extends Controller
 {
     /**
@@ -48,7 +49,8 @@ class PdfController extends Controller
        $id=$request->input('id');
         $fecha=$request->input('fecha');
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
-
+        $saldoTotal=0;
+        $saldoComision;
         for ($i=0; $i <sizeof($vales); $i++) { 
             
              $importe=$vales[$i]->cantidad;
@@ -56,6 +58,7 @@ class PdfController extends Controller
              $pagosRealizados=$vales[$i]->pagos_realizados+1;
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+             $saldoTotal+=$abono;
              $saldoActual=$saldoAnterior-$abono;
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
@@ -67,7 +70,9 @@ class PdfController extends Controller
             $vales[$i]->deuda_actual="$".$saldoActual.".00";
             
          }
-
+        $comision=$this->calcularComision($saldoTotal);
+        $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
+        $saldoComision=$saldoTotal-$saldoDistribuidor;
         $datas = $vales;
         $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
         $fechaHoy = Carbon::today();
@@ -75,7 +80,7 @@ class PdfController extends Controller
         $fechaLimite=$this->CalcularFechaLimite($fecha);
         $periodo=$this->calcularPeriodo($fecha);
 
-        $view =  \View::make('reporte_2', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo'))->render();
+        $view =  \View::make('reporte_2', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_2');
@@ -149,6 +154,11 @@ class PdfController extends Controller
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         
         return $meses[$mes-1];
+    }
+    public function calcularComision($total){
+        $porcentaje;
+        $comision=Comision::where('cantidad_inicial','<',$total)->get();
+        return $comision[0]->porcentaje;
     }
 
 

@@ -1,5 +1,5 @@
 var idDistribuidor;
- var $table = $('#table');
+var $table = $('#table');
 $(function() {
 
 
@@ -19,7 +19,7 @@ $(function() {
 function mostrarTabla(){
 $table.bootstrapTable('removeAll');
  
-	var fecha=$('#fecha').val();
+	
 		//alert(fecha);
 	$.ajax({
 		type: "GET",
@@ -39,11 +39,8 @@ $table.bootstrapTable('removeAll');
 }
 
 function mostrarPDF(){
-
-	$.ajax({
-		type: "GET",
- 		url: "reporteCobranzaPDF",
-		data: {fecha:fecha, id:idDistribuidor}
-	});
+	var fecha=$('#fecha').val();
+	url='reporteCobranzaPDF?fecha='+fecha+'&id='+idDistribuidor;
+    window.open(url, '_blank');
 	
 }

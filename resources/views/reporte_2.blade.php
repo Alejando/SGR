@@ -66,13 +66,13 @@
           <tr>
             <td colspan="2"></td>
             <td colspan="4">Total</td>
-            <td>3.091.00</td>
+            <td>${{$saldoTotal}}.00</td>
             <td></td>
           </tr>
           <tr>
             <td colspan="2"></td>
-            <td colspan="4">Comision 11.00% Total a pagar</td>
-            <td>2,751.00</td>
+            <td colspan="4">Comision {{$comision}}% Total a pagar</td>
+            <td>${{$saldoComision}}.00</td>
             <td></td>
           </tr>
         </tfoot>
