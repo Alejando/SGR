@@ -14,7 +14,7 @@ Route::get('sesion', 'LoginController@mostrarLogin');
 Route::post('login','LoginController@login');
 Route::get('logout','LoginController@logout');
 Route::get('pdf', 'PdfController@invoice');
-
+Route::get('reporteCobranzaPDF', 'PdfController@reporteCobranzaPDF');
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {
 
@@ -96,4 +96,5 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('verDistribuidor/{id}', 'DistribuidorsController@verDistribuidor');
 
 	Route::get('reporteCobranza', 'DistribuidorsController@reporteCobranza');
+	Route::get('emitirReporteCobranza', 'DistribuidorsController@emitirReporteCobranza');
 });
