@@ -40,7 +40,6 @@ class PdfController extends Controller
         return $data;
     }
 
-<<<<<<< HEAD
     public function reporteR2($id,$fechaInicio,$fechaFin){
 
         $vales=Vale::where('id_distribuidor',$id)->whereBetween('fecha_inicio_pago',[$fechaInicio,$fechaFin]);
@@ -65,7 +64,16 @@ class PdfController extends Controller
 
     }
 
-=======
-    
->>>>>>> origin/master
+
+    public function reporte_1()
+    {
+        $data = $this->getData();
+        $date = date('Y-m-d');
+        $invoice = "2222";
+        $view =  \View::make('reportes/reporte_1', compact('data', 'date', 'invoice'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('reporte_1');
+    }
+
 }

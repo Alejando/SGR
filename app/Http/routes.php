@@ -13,7 +13,12 @@ Route::get('/','LoginController@mostrarLogin');
 Route::get('sesion', 'LoginController@mostrarLogin');
 Route::post('login','LoginController@login');
 Route::get('logout','LoginController@logout');
+
+//----------------------------------------------------------//
+//--------------------> RUTAS REPORTES <--------------------//
+//----------------------------------------------------------//
 Route::get('pdf', 'PdfController@invoice');
+Route::get('R1', 'PdfController@reporte_1');
 
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {
@@ -93,4 +98,35 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('editarDistribuidor/{id}', 'DistribuidorsController@editarDistribuidor');
 	Route::post('actualizarDistribuidor/{id}', 'DistribuidorsController@actualizarDistribuidor');
 	Route::get('verDistribuidor/{id}', 'DistribuidorsController@verDistribuidor');
+});
+
+Route::get('prueba', function()
+{
+	//--------------------------------------------------------------------------------------------------
+	//Pruebas para la relacion de 1 - * de pagos y distribuidores (Aprobada)
+	$calle_distribuidor = Pago::find(1)->distribuidor->calle;
+	$pagos = Distribuidor::find(1)->pagos;
+
+	//Pruebas para la relacion de 1 - * de pagos y cuenta (Aprobada)
+	$nombre_cuenta = Pago::find(1)->cuenta->nombre;
+	$pagos_cuenta = Cuenta::find(1)->pagos;
+
+	//Pruebas para la relacion de 1 - * de vales y cuenta (Aprobada)
+	$usuario_cuenta = Vale::find(80)->cuenta->usuario;
+	$vales_cuenta = Cuenta::find(2)->vales;
+
+	//Pruebas para la relacion de 1 - * de vales y distribuidor (Aprobada)
+	$vales_distribuidor = Distribuidor::find(1)->vales;
+	$colonia_distribuidor = Vale::find(80)->distribuidor->colonia;
+
+	//Pruebas para la relacion de 1 - * de vales y clientes (Aprobada)
+	$vales_cliente = Cliente::find(1)->vales;
+	$telefono_cliente = Vale::find(80)->cliente->nombre;
+
+	//Pruebas para la relacion de 1 - * de vales y promociones (Aprobada)
+	//$vales_promocion = Promocion::find(33)->vales;
+	//$fecha_termino = Vale::find(80)->promocion->fecha_termino;
+	
+	
+	return ("Holi--->".$telefono_cliente);
 });

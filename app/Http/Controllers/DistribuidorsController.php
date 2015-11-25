@@ -44,20 +44,32 @@ class DistribuidorsController extends Controller
         $distribuidor->limite_credito = $request->input('limite_credito');
         $distribuidor->limite_vale = $request->input('limite_vale');
        
-        $fileFoto = $request->file('foto');
-        $nombreFoto='FOTO_'.$distribuidor->nombre.'.'.$fileFoto->getClientOriginalExtension();
-        $distribuidor->foto=$nombreFoto;
-      
+        
+
         $fileFirma = $request->file('firma');
-        $nombreFirma='FIRMA_'.$distribuidor->nombre.'.'.$fileFirma->getClientOriginalExtension();
-        $distribuidor->firma=$nombreFirma;
-        ;
+        if($fileFirma)
+        {
+            $nombreFirma='FIRMA_'.$distribuidor->nombre.'.'.$fileFirma->getClientOriginalExtension();
+            $distribuidor->firma=$nombreFirma;
+            \Storage::disk('local')->put($nombreFirma,  \File::get($fileFirma));  
+        }else{
+            $distribuidor->firma='firma_default.jpg';
+        }
+        
+        
+        $fileFoto = $request->file('foto');
+        if($fileFoto)
+        {
+            $nombreFoto='FOTO_'.$distribuidor->nombre.'.'.$fileFoto->getClientOriginalExtension();
+            $distribuidor->foto=$nombreFoto;
+            \Storage::disk('local')->put($nombreFoto,  \File::get($fileFoto));
+        }else{
+            $distribuidor->foto='foto_default.jpg';
+        }
         
        
 
         if($distribuidor->save()){
-            \Storage::disk('local')->put($nombreFoto,  \File::get($fileFoto));
-            \Storage::disk('local')->put($nombreFirma,  \File::get($fileFirma));
             Session::flash('message','Guardado Correctamente');
             Session::flash('class','success');
         }else{

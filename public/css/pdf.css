@@ -15,6 +15,11 @@ table tbody tr td {
     text-align: center;
 }
 
+tfoot
+{
+	text-align: right;
+}
+
 .invisible {
     border: 0px solid blue;
     text-align: center;
@@ -27,11 +32,6 @@ table tbody tr td {
 
 #cliente{
  width: 300px; 
-}
-
-tfoot
-{
-	text-align: right;
 }
 
 .medio{
