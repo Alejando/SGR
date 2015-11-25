@@ -27,7 +27,7 @@ Route::group(['middleware' => 'mixto'], function () {
 	Route::get('buscarVale', 'ValesController@buscarVale');
 	Route::post('ventaVale', 'ValesController@ventaVale' );
 	Route::get('consultarVales', 'ValesController@consultarVales' );
-
+	
 	Route::get('consultarPromociones', 'PromocionsController@consultarPromociones' );
 	Route::get('buscarPromocion', 'PromocionsController@buscarPromocion');
 	Route::get('fechaPago', 'PromocionsController@fechaPago');
@@ -45,9 +45,7 @@ Route::group(['middleware' => 'mixto'], function () {
 	Route::get('buscarCliente', 'ClientesController@buscarCliente');
 	Route::get('buscarIdCliente', 'ClientesController@buscarIdCliente');
 });
-Route::group(['middleware' => 'admin'], function () {
 
-});
 
 Route::group(['middleware' => 'vendedor'], function () {
 	Route::get('obtenerValesV', 'ValesController@obtenerValesV' );
@@ -59,6 +57,9 @@ Route::group(['middleware' => 'super_admin'], function () {
 	Route::get('obtenerCuentas', 'CuentasController@obtenerCuentas' );
 	Route::get('editarCuenta/{id}', 'CuentasController@editarCuenta');
 	Route::post('actualizarCuenta/{id}', 'CuentasController@actualizarCuenta');
+
+	Route::get('consultarMovimientos', 'MovimientosController@consultarMovimientos');
+	Route::get('obtenerMovimientos', 'MovimientosController@obtenerMovimientos');
 });
 
 Route::group(['middleware' => 'super_y_admin'], function () {
@@ -98,6 +99,8 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('editarDistribuidor/{id}', 'DistribuidorsController@editarDistribuidor');
 	Route::post('actualizarDistribuidor/{id}', 'DistribuidorsController@actualizarDistribuidor');
 	Route::get('verDistribuidor/{id}', 'DistribuidorsController@verDistribuidor');
+
+	Route::get('reporteCobranza', 'DistribuidorsController@reporteCobranza');
 });
 
 Route::get('prueba', function()

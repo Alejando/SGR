@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Distribuidor;
 use App\Vale;
 use App\Cliente;
+use App\Movimiento;
 use App\Vales_has_promociones;
 use Carbon\Carbon;
 use Session;
@@ -81,8 +82,7 @@ class ValesController extends Controller
        
         switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+               return view('s_admin.registrarVale');
                 break;
             case 1:
                return view('admin.registrarVale');
@@ -111,8 +111,7 @@ class ValesController extends Controller
     {
        switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+               return view('s_admin.consultarVales');
                 break;
             case 1:
                 return view('admin.consultarVales');
@@ -247,18 +246,9 @@ class ValesController extends Controller
             }   
         }
         
-        switch (Session::get('tipo')) {
-            case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
-                break;
-            case 1:
-                return redirect('registrarVale');
-                break;
-            case 2:
-                 return redirect('registrarVale');
-                break;
-        }   
+
+        return redirect('registrarVale');
+                
       
     }
     public function obtenerUltimoVale(){
@@ -271,6 +261,7 @@ class ValesController extends Controller
     public function modificarVale(Request $request){
         
         $vale = Vale::find($request->input('id_vale'));
+        $valeMovimiento=(string)$vale;
         $folio = $request->input('folio');
         $serie = $request->input('serie');
         $fechaVenta = $request->input('fecha_venta');
@@ -302,8 +293,17 @@ class ValesController extends Controller
         $vale->motivo_cancelacion=$motivoCancelacion;
         
         if($vale->save()){
+            $movimiento= new Movimiento;
+            $movimiento->id_cuenta=Session::get('id');
+            $movimiento->fecha=Carbon::today();
+            $movimiento->estado_anterior=$valeMovimiento;
+            $movimiento->estado_actual=(string)Vale::find($request->input('id_vale'));
+            $movimiento->tipo=1; // 1:vales 2:cuentas 3:pagos 4:distribuidores 5:comisiones
+            $movimiento->save();
+
             Session::flash('message',' Vale actualizado exitoso!');
             Session::flash('class','success');
+
         }
         else{
             Session::flash('message','Error al guardar el vale en la base de datos');
@@ -312,19 +312,9 @@ class ValesController extends Controller
             
             
 
-        switch (Session::get('tipo')) {
-            case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
-                break;
-            case 1:
-                return redirect('consultarVales');
-                break;
-            case 2:
+     
                  return redirect('consultarVales');
-                break;
-        }   
-      
+
     }
     
 

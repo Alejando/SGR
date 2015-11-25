@@ -19,8 +19,8 @@ class filtro_super_y_admin
         
         if(( $tipo != "0" ) && ( $tipo != "1" ))
         {
-            Session::flash('message','Tu tipo es: '.$tipo);
-            Session::flash('class','success');
+           // Session::flash('message','Tu tipo es: '.$tipo);
+            //Session::flash('class','success');
             return redirect('sesion');
         }
         return $next($request);

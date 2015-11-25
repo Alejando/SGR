@@ -1,4 +1,4 @@
-@extends ('m_admin')
+@extends ('Layouts.m_super_admin')
 
 @section ('titulo') Crear promoción
 @stop

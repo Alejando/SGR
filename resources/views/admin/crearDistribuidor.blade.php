@@ -1,6 +1,6 @@
 @extends ('m_admin')
 
-@section ('titulo') pagina 2
+@section ('titulo') Crear distribuidor
 @stop
 
 @section ('contenido')

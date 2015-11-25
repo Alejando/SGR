@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Comision;
 use Session;
 use Redirect;
+use App\Movimiento;
+use Carbon\Carbon;
 
 
 class ComisionsController extends Controller
@@ -84,8 +86,7 @@ class ComisionsController extends Controller
     
         switch (Session::get('tipo')) {
             case 0:
-                // return redirect('');
-                //return view('superAdmin.consultarCuentasVendedor');
+               return view('s_admin.consultarComisiones');
                 break;
             case 1:
                 return view('admin.consultarComisiones');
@@ -110,11 +111,10 @@ class ComisionsController extends Controller
         $comision = Comision::find($id);
         switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+              return view('s_admin.consultarComisiones');
                 break;
             case 1:
-                return view('admin.editarComision',compact('comision'));
+                return view('admin.consultarComisiones');
                 break;
             
         }        
@@ -123,6 +123,7 @@ class ComisionsController extends Controller
     public function actualizarComision(Request $request,$id)
     {
         $comisionEditada = Comision::find($id);
+        $comisionMovimiento=(string)$comisionEditada;
         $comisionEditada->cantidad_inicial = $request->input('cantidad_inicial');
         $comisionEditada->cantidad_final = $request->input('cantidad_final');
         $comisionEditada->porcentaje = $request->input('porcentaje');
@@ -179,6 +180,13 @@ class ComisionsController extends Controller
                         {
                             if($comisionEditada->save())
                             {
+                                $movimiento= new Movimiento;
+                                $movimiento->id_cuenta=Session::get('id');
+                                $movimiento->fecha=Carbon::today();
+                                $movimiento->estado_anterior=$comisionMovimiento;
+                                $movimiento->estado_actual=(string)Comision::find($id);
+                                $movimiento->tipo=5; // 1:vales 2:cuentas 3:pagos 4:distribuidores 5:comisiones
+                                $movimiento->save();
                                 Session::flash('message','Guardado Correctamente');
                                 Session::flash('class','success');
                             }else{
@@ -190,7 +198,15 @@ class ComisionsController extends Controller
             }
         }
 
-       return redirect('consultarComisiones');
+       switch (Session::get('tipo')) {
+            case 0:
+              return redirect('s_admin.consultarComisiones');
+                break;
+            case 1:
+                return redirect('admin.consultarComisiones');
+                break;
+            
+        }        
        
     }
 }

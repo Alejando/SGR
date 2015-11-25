@@ -14,8 +14,7 @@ class ClientesController extends Controller
     {   
        switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+              return view('s_admin.crearCliente');
                 break;
             case 1:
                 return view('admin.crearCliente');
@@ -53,8 +52,7 @@ class ClientesController extends Controller
         }
        switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+               return view('s_admin.crearCliente');
                 break;
             case 1:
                 return view('admin.crearCliente');
@@ -69,8 +67,7 @@ class ClientesController extends Controller
     {
         switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+               return view('s_admin.consultarClientes');
                 break;
             case 1:
                 return view('admin.consultarClientes');
@@ -97,8 +94,7 @@ class ClientesController extends Controller
         $cliente = Cliente::find($id);
         switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+              return view('s_admin.editarCliente',compact('cliente'));
                 break;
             case 1:
                 return view('admin.editarCliente',compact('cliente'));
@@ -134,14 +130,13 @@ class ClientesController extends Controller
         }
        switch (Session::get('tipo')) {
             case 0:
-               // return redirect('');
-                //return ("Eres un super administrador");
+                 return redirect('s_admin.consultarClientes');
                 break;
             case 1:
-                return redirect('consultarClientes');
+                return redirect('admin.consultarClientes');
                 break;
             case 2:
-                 return redirect('consultarClientes');
+                 return redirect('vendedor.consultarClientes');
                 break;
         }  
     }
