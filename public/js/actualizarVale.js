@@ -60,6 +60,7 @@ $(function() {
 		if(BoolFechaPromo==0){
 			inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'/>';
 		}
+		inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
 		$("#ocultos").html(inputOcultos);
 		if(confirma==1){
 			return true;
@@ -121,18 +122,18 @@ function mostrarPromocion(){
 		    	BoolFechaPromo=1;
 		    	inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'/>';
 		    	inputOcultos+='<input type="hidden" name="id_promocion" value='+data[i].id_promocion+'/>';
-		    	inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
+		    	
 		     }
 		     if(data[i].tipo_promocion==2 ){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 6 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
 			 	nPagosGlobal=6;
-			 	inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
+			 	
 			 	
 			 }
 		     if(data[i].tipo_promocion==3){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 8 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
 			 	nPagosGlobal=8;
-			 	inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
+			 	
 			 }
 		};
 		//Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quinsenas" 3="Pague en  8 quinsenas"
@@ -251,7 +252,7 @@ function datosVale(){
 function cambiarTipoFecha(fecha){
 	var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 	var anio = fecha.substring(0,4);
-	var mes =parseInt(fecha.substring(5, 7))-1;
+	var mes =fecha.substring(5, 7);
 	var dia = fecha.substring(8);
 	return " "+dia+"-"+mes+"-"+anio;
 }

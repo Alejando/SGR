@@ -19,10 +19,9 @@ Route::get('logout','LoginController@logout');
 //----------------------------------------------------------//
 Route::get('pdf', 'PdfController@invoice');
 
-Route::get('R1', 'PdfController@reporte_1');
 
-
-Route::get('reporteCobranzaPDF', 'PdfController@reporteCobranzaPDF');
+Route::get('reporte_2', 'PdfController@reporte_2');
+Route::get('reporte_1', 'PdfController@reporte_1');
 
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {

@@ -28,6 +28,12 @@ $(function(){
 	 }
 	function problemas(data){
 		alert("error al buscar ultimo vale");
+		
 	}
+	$('#form').submit(function(){
+		//alert($("#folio_inicio").val());
+		inputOcultos+='<input type="hidden" name="folio_inicio" value='+$("#folio_inicio").val()+'>';
+		$('#oculto').html(inputOcultos);
+	});
 
   });

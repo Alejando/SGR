@@ -66,7 +66,7 @@ class ValesController extends Controller
                     Session::flash('class','success');
             }
             else{
-                 Session::flash('message','Folio repetido, el ultimo folio es: '.$auxV->last()->folio);
+                 Session::flash('message','Folio repetido, el ultimo folio es: '.$ultimo);
                 Session::flash('class','danger');
             }
         }
@@ -148,10 +148,14 @@ class ValesController extends Controller
         return $vales;
     }
     
-    public function obtenerValesV()
+    public function obtenerValesV(Request $request )
     {
+        $fecha=$request->input('fecha');
+        if(is_null($fecha)){
+            $fecha=Carbon::today();
+        }
        $cuenta=Session::get('id');
-        $vales = Vale::where('id_cuenta',$cuenta)->where('fecha_venta',Carbon::today())->get();
+        $vales = Vale::where('id_cuenta',$cuenta)->where('fecha_venta',$fecha)->get();
        for ($i=0; $i <sizeof($vales); $i++) { 
              $vales[$i]->id_distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
              if($vales[$i]->estatus==0){
@@ -167,6 +171,17 @@ class ValesController extends Controller
         }    
         return $vales;
     }
+    public function obtenerValesVendedorReporte(Request $request )
+    {
+        $fecha=$request->input('fecha');
+        if(is_null($fecha)){
+            $fecha=Carbon::today();
+        }
+       $cuenta=Session::get('id');
+        $vales = Vale::where('id_cuenta',$cuenta)->where('fecha_venta',$fecha)->get();
+        return $vales;
+    }
+    
     public function ventaVale(Request $request){
         
         $vale = Vale::find($request->input('id_vale'));

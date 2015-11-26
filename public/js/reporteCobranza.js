@@ -18,7 +18,7 @@ $(function() {
 
 function mostrarTabla(){
 $table.bootstrapTable('removeAll');
- 
+ var fecha=$('#fecha').val();
 	
 		//alert(fecha);
 	$.ajax({
@@ -40,7 +40,7 @@ $table.bootstrapTable('removeAll');
 
 function mostrarPDF(){
 	var fecha=$('#fecha').val();
-	url='reporteCobranzaPDF?fecha='+fecha+'&id='+idDistribuidor;
+	url='reporte_2?fecha='+fecha+'&id='+idDistribuidor;
     window.open(url, '_blank');
 	
 }

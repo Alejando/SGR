@@ -148,6 +148,7 @@ class CuentasController extends Controller
      public function guardarCuenta(Request $request)
     {
         $cuenta = new Cuenta;
+      
         $cuenta->tipo = $request->input('tipo');
         $cuenta->nombre = strtoupper($request->input('nombre'));
         $cuenta->telefono = $request->input('telefono');
@@ -164,13 +165,13 @@ class CuentasController extends Controller
         }else
             {
                 if($cuenta->save()){
-                    $movimiento= new Movimiento;
+                   /* $movimiento= new Movimiento;
                     $movimiento->id_cuenta=Session::get('id');
                     $movimiento->fecha=Carbon::today();
                     $movimiento->estado_anterior=$CuentaMovimiento;
-                    $movimiento->estado_actual=Cuenta::find($id);
+                    $movimiento->estado_actual=Cuenta::find($cuenta->id_cuenta);
                     $movimiento->tipo=2; // 1:vales 2:cuentas 3:pagos 4:distribuidores 
-                    $movimiento->save();
+                    $movimiento->save();*/
                     Session::flash('message','Guardado Correctamente');
                     Session::flash('class','success');
                 }else{

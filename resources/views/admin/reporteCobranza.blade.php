@@ -34,7 +34,7 @@
 					</div>	
 				</div>
 				</br>
-			</br>
+				</br>
 				<div class="panel-body">
 					<table  id="table" data-toggle="table" data-pagination="true"   >
 					    <thead>

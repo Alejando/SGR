@@ -21,7 +21,7 @@
 	                @endif
 					<div class="col-md-6">
 						<label><strong>Nota: </strong> Sólo se pueden crear vales de la misma serie</label>
-						<form class="form" role="form" method="POST" action="guardarVale" >
+						<form id="form"class="form" role="form" method="POST" action="guardarVale" >
  					    	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						
 							<div class="form-group ">

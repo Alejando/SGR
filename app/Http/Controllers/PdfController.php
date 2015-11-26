@@ -43,10 +43,9 @@ class PdfController extends Controller
         return $data;
     }
 
-    public function reporteR2($id,$fechaInicio,$fechaFin){
 
-    public function reporteCobranzaPDF(Request $request){
-       $id=$request->input('id');
+    public function reporte_2(Request $request){
+        $id=$request->input('id');
         $fecha=$request->input('fecha');
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
         $saldoTotal=0;
@@ -80,13 +79,12 @@ class PdfController extends Controller
         $fechaLimite=$this->CalcularFechaLimite($fecha);
         $periodo=$this->calcularPeriodo($fecha);
 
-        $view =  \View::make('reporte_2', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision'))->render();
+        $view =  \View::make('reportes/reporte_2', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_2');
 
     }
->>>>>>> origin/master
 
     public function calcularPago($cantidad,$tPagos,$nPago){
         $pagos=$cantidad/$tPagos;
@@ -133,6 +131,21 @@ class PdfController extends Controller
             }  
         }
     }
+     public function CalcularFechaLimiteCorta($fecha){
+       $fechaCarbon=Carbon::parse($fecha);
+        // 10 nomviembre- 24 Novimebre-> 04 Diciembre
+            // 25 novimebre-09 Diciembre -> 18 Diciembre
+        if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
+            return "04-".($fechaCarbon->month+1)."-".$fechaCarbon->year;       
+        }
+        else{
+            if($fechaCarbon->day<=9){
+                return "18-".($fechaCarbon->month)."-".$fechaCarbon->year;                
+            }else{
+                return "18-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+            }  
+        }
+    }
     public function CalcularFechaEntrega($fecha){
        $fechaCarbon=Carbon::parse($fecha);
         // 10 nomviembre- 24 Novimebre-> 27 Novimebre
@@ -163,15 +176,48 @@ class PdfController extends Controller
 
 
 
-    public function reporte_1()
+    public function reporte_1(Request $request)
     {
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('reportes/reporte_1', compact('data', 'date', 'invoice'))->render();
+        $id=$request->input('id');
+        $fecha=$request->input('fecha');
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
+        $saldoTotal=0;
+        $saldoComision;
+        for ($i=0; $i <sizeof($vales); $i++) { 
+            
+             $importe=$vales[$i]->cantidad;
+             $saldoAnterior=$vales[$i]->deuda_actual;
+             $pagosRealizados=$vales[$i]->pagos_realizados+1;
+             $numeroPagos=$vales[$i]->numero_pagos;
+             $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+             $saldoTotal+=$abono;
+             $saldoActual=$saldoAnterior-$abono;
+             $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
+
+            $vales[$i]->id_vale=$vales[$i]->id_cliente;
+            $vales[$i]->id_cliente=$nombreCliente;
+            $vales[$i]->cantidad="$".$importe.".00";
+            $vales[$i]->numero_pagos="$".$saldoAnterior.".00";
+            $vales[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
+            $vales[$i]->cantidad_limite="$".$abono.".00";
+            $vales[$i]->deuda_actual="$".$saldoActual.".00";
+            
+         }
+        $comision=$this->calcularComision($saldoTotal);
+        $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
+        $saldoComision=$saldoTotal-$saldoDistribuidor;
+        $datas = $vales;
+        $distribuidor=Distribuidor::find($id)->nombre;
+        $fechaHoy = Carbon::today()->toDateString();
+        $fechaEntrega=$this->CalcularFechaEntrega($fecha);
+        $fechaLimite=$this->CalcularFechaLimiteCorta($fecha);
+        $periodo=$this->calcularPeriodo($fecha);
+
+        $view =  \View::make('reportes/reporte_1', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_1');
+
     }
 
 }
