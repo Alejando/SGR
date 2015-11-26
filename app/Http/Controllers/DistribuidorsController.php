@@ -90,10 +90,10 @@ class DistribuidorsController extends Controller
         }
        switch (Session::get('tipo')) {
             case 0:
-               return redirect('s_admin.crearDistribuidor');
+               return redirect('crearDistribuidor');
                 break;
             case 1:
-                 return redirect('admin.crearDistribuidor');
+                 return redirect('crearDistribuidor');
                 break;
         }  
     }
