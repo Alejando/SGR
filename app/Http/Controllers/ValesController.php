@@ -174,7 +174,7 @@ class ValesController extends Controller
     public function obtenerValesVendedorReporte(Request $request )
     {
         $fecha=$request->input('fecha');
-        if(is_null($fecha)){
+        if($fecha==""){
             $fecha=Carbon::today();
         }
        $cuenta=Session::get('id');
@@ -190,7 +190,7 @@ class ValesController extends Controller
         $idCliente = $request->input('id_cliente');
         $nombre = strtoupper($request->input('nombre'));
         $cuenta = Session::get('id');
-        $fechaVenta = Carbon::today(); 
+        $fechaVenta = $request->input('fecha_venta');
         $numeroPagos = $request->input('numero_pagos');
         $folioVenta = $request->input('folio_venta');
         $cantidad = $request->input('cantidad');

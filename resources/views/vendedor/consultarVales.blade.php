@@ -25,7 +25,7 @@
 						<div class="col-lg-1">
 							<div class="form-group">
 								<label>--</label>
-								<p  id="pdf"class="btn btn-primary" onclick="imprimir()"> imprimir </p>
+								<p  class="btn btn-primary" onclick="imprimir()"> imprimir </p>
 							</div>	
 						</div>	
 					</div>

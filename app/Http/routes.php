@@ -52,6 +52,8 @@ Route::group(['middleware' => 'mixto'], function () {
 
 Route::group(['middleware' => 'vendedor'], function () {
 	Route::get('obtenerValesV', 'ValesController@obtenerValesV' );
+	Route::get('obtenerValesVendedorReporte', 'ValesController@obtenerValesVendedorReporte' );
+	
 });
 Route::group(['middleware' => 'super_admin'], function () {
 	Route::get('crearCuenta', 'CuentasController@crearCuenta');

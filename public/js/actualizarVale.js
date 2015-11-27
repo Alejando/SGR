@@ -15,7 +15,10 @@ $(function() {
 
 	mostrarPromocion();
     $("#cantidad").focusout(function(){
-    	fechaInicioPago=$('#fecha').val();
+    	if(BoolFechaPromo!=1){
+    		fechaInicioPago=$('#fecha').val();
+    	}
+    	
     	var cantidad=$("#cantidad").val(); // obtenemos cantidad del vale
     	importe=cantidad;
     	var pagos=cantidad/nPagosGlobal;
@@ -35,11 +38,6 @@ $(function() {
 		$('#pagosTicket').html(pagos)
 	})
 
-	
-
-    $( "#imprimir" ).click(function() {
-
-	});
 
 	$('#nombreCliente').autocomplete({
     source: 'buscarCliente',
@@ -50,9 +48,10 @@ $(function() {
 	  }
 	});
 	$('#form').submit(function(){
+
 		$('#pFecha').html("Fecha: "+cambiarTipoFecha(fechaInicioPago));
   		$('#pDistribuidor').html("Distribuidor: "+distribuidor);
-  		$('#pCliente').html("Cliente: "+cliente);
+  		$('#pCliente').html("Cliente: "+$('#nombreCliente').val());
   		$('#pImporte').html("Importe: $"+importe+".00");
   		$('#ticket').show();
   		$('#ticket').printArea();
@@ -61,6 +60,7 @@ $(function() {
 			inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'/>';
 		}
 		inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
+		inputOcultos+='<input type="hidden" name="fecha_venta" value="'+$('#fecha').val()+'"/>';
 		$("#ocultos").html(inputOcultos);
 		if(confirma==1){
 			return true;
@@ -122,7 +122,6 @@ function mostrarPromocion(){
 		    	BoolFechaPromo=1;
 		    	inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'/>';
 		    	inputOcultos+='<input type="hidden" name="id_promocion" value='+data[i].id_promocion+'/>';
-		    	
 		     }
 		     if(data[i].tipo_promocion==2 ){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 6 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
