@@ -198,15 +198,9 @@ class ComisionsController extends Controller
             }
         }
 
-       switch (Session::get('tipo')) {
-            case 0:
-              return redirect('s_admin.consultarComisiones');
-                break;
-            case 1:
-                return redirect('admin.consultarComisiones');
-                break;
-            
-        }        
+       
+              return redirect('consultarComisiones');
+                
        
     }
 }

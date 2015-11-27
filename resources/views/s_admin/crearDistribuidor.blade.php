@@ -44,7 +44,7 @@
 									</div>
 									<div class="form-group">
 										<label>Celular</label>
-										<input type="tel"  name="celular" class="form-control" required>
+										<input type="tel"  name="celular" class="form-control">
 									</div>	
 								</div>		
 								<div class="col-md-6">
@@ -54,7 +54,7 @@
 									</div>
 									<div class="form-group">	
 										<label>Número interior</label>
-										<input type="text"  name="numero_interior" class="form-control" required>
+										<input type="text"  name="numero_interior" class="form-control" >
 									</div>
 									<div class="form-group">	
 										<label>Estado</label>

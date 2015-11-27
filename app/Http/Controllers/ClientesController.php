@@ -130,13 +130,13 @@ class ClientesController extends Controller
         }
        switch (Session::get('tipo')) {
             case 0:
-                 return redirect('s_admin.consultarClientes');
+                 return redirect('consultarClientes');
                 break;
             case 1:
-                return redirect('admin.consultarClientes');
+                return redirect('consultarClientes');
                 break;
             case 2:
-                 return redirect('vendedor.consultarClientes');
+                 return redirect('consultarClientes');
                 break;
         }  
     }

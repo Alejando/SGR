@@ -41,7 +41,7 @@
 			<li ><h4>{{Session::get('nombre')}}</h4></li>
 			<li role="presentation" class="divider"></li>
 			<li class="parent ">
-				<a href="" >
+				<a data-toggle="collapse" href="#sub-item-1">
 					<span class="glyphicon glyphicon-list"></span> Vales <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-1">
@@ -58,8 +58,8 @@
 				</ul>
 			</li>
 			<li class="parent ">
-				<a href="#">
-					<span class="glyphicon glyphicon-list"></span> Clientes <span data-toggle="collapse" href="#sub-item-3" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				<a data-toggle="collapse" href="#sub-item-3">
+					<span class="glyphicon glyphicon-list" href="#sub-item-3"></span> Clientes <span data-toggle="collapse" href="#sub-item-3" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-3">
 					<li>
@@ -75,8 +75,8 @@
 				</ul>
 			</li>
 			<li class="parent ">
-				<a href="#">
-					<span class="glyphicon glyphicon-list"></span> Promociones <span data-toggle="collapse" href="#sub-item-4" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				<a data-toggle="collapse" href="#sub-item-4">
+					<span class="glyphicon glyphicon-list" href="#sub-item-4"></span> Promociones <span data-toggle="collapse" href="#sub-item-4" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-4">
 					<li>

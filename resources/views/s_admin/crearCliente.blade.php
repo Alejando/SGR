@@ -25,7 +25,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Teléfono</label>
-									<input type="text"  name="telefono" class="form-control" required>
+									<input type="text"  name="telefono" class="form-control" >
 								</div>
 								<div class="form-group">
 									<label>Número de elector</label>
@@ -48,7 +48,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Celular</label>
-									<input type="text"  name="celular" class="form-control" required>
+									<input type="text"  name="celular" class="form-control" >
 								</div>
 								<div class="form-group">
 									<label>Calle</label>

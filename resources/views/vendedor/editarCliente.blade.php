@@ -71,26 +71,7 @@
 								</div>	
 							</div>	
 						</div>
-						<div class="col-md-6">
-							<label>Referencias del cliente</label>
 							
-								<div class="form-group">
-									<label>Nombre referencia 1</label>
-									<input type="text" value="{{ $cliente->nombre_referencia_1 }}"  name="nombre_referencia_1" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Teléfono referencia 1</label>
-									<input type="text" value="{{ $cliente->telefono_referencia_1 }}" name="telefono_referencia_1" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Nombre referencia 2</label>
-									<input type="text"  value="{{ $cliente->nombre_referencia_2 }}" name="nombre_referencia_2" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Teléfono referencia 2</label>
-									<input type="text" value="{{ $cliente->telefono_referencia_2 }}" name="telefono_referencia_2" class="form-control" required>
-								</div>
-						</div>	
 							
 							<div class="col-md-12">
 								<div class="pull-right">

@@ -45,7 +45,7 @@
 									</div>
 									<div class="form-group">
 										<label>Celular</label>
-										<input type="tel" value="{{ $distribuidor->celular }}" name="celular" class="form-control" required>
+										<input type="tel" value="{{ $distribuidor->celular }}" name="celular" class="form-control" >
 									</div>	
 								</div>		
 								<div class="col-md-6">
@@ -55,7 +55,7 @@
 									</div>
 									<div class="form-group">	
 										<label>Número interior</label>
-										<input type="text" value="{{ $distribuidor->numero_interior }}" name="numero_interior" class="form-control" required>
+										<input type="text" value="{{ $distribuidor->numero_interior }}" name="numero_interior" class="form-control" >
 									</div>
 									<div class="form-group">	
 										<label>Estado</label>
