@@ -1,6 +1,6 @@
 @extends ('Layouts.m_admin_show')
 
-@section ('titulo') Editar Cuenta Vendedor
+@section ('titulo') Editar Comisión
 @stop
 
 @section ('contenido')

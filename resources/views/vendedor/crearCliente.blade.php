@@ -25,7 +25,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Teléfono</label>
-									<input type="text"  name="telefono" class="form-control" required>
+									<input type="text"  name="telefono" class="form-control" >
 								</div>
 								<div class="form-group">
 									<label>Número de elector</label>
@@ -48,7 +48,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Celular</label>
-									<input type="text"  name="celular" class="form-control" required>
+									<input type="text"  name="celular" class="form-control" >
 								</div>
 								<div class="form-group">
 									<label>Calle</label>
@@ -68,27 +68,7 @@
 								</div>	
 							</div>	
 						</div>
-						<div class="col-md-6">
-							<label>Referencias del cliente</label>
-							<form class="form" role="form" method="POST" action="guardarDistribuidor" enctype="multipart/form-data">
-     					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-								<div class="form-group">
-									<label>Nombre referencia 1</label>
-									<input type="text"  name="nombre_referencia_1" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Teléfono referencia 1</label>
-									<input type="text"  name="telefono_referencia_1" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Nombre referencia 2</label>
-									<input type="text"  name="nombre_referencia_2" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Teléfono referencia 2</label>
-									<input type="text"  name="telefono_referencia_2" class="form-control" required>
-								</div>
-						</div>	
+							
 							
 							<div class="col-md-12">
 								<div class="pull-right">

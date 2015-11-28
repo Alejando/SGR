@@ -25,7 +25,7 @@ class ComisionsController extends Controller
         $comisionNueva->cantidad_inicial = $request->input('cantidad_inicial');
         $comisionNueva->cantidad_final = $request->input('cantidad_final');
         $comisionNueva->porcentaje = $request->input('porcentaje');
-
+        $Repetida = false; 
         $comisiones = Comision::all();
          foreach ($comisiones as $comision)
             {
@@ -111,10 +111,10 @@ class ComisionsController extends Controller
         $comision = Comision::find($id);
         switch (Session::get('tipo')) {
             case 0:
-              return view('s_admin.consultarComisiones');
+              return view('s_admin.editarComision',compact('comision'));
                 break;
             case 1:
-                return view('admin.consultarComisiones');
+                return view('admin.editarComision',compact('comision'));
                 break;
             
         }        
@@ -198,15 +198,9 @@ class ComisionsController extends Controller
             }
         }
 
-       switch (Session::get('tipo')) {
-            case 0:
-              return redirect('s_admin.consultarComisiones');
-                break;
-            case 1:
-                return redirect('admin.consultarComisiones');
-                break;
-            
-        }        
+       
+              return redirect('consultarComisiones');
+                
        
     }
 }

@@ -37,6 +37,7 @@ class PromocionsController extends Controller
         $promocionNueva->tipo_promocion = $request->input('tipo_promocion');
         $promocionNueva->fecha_creacion = $request->input('fecha_creacion');
         $promocionNueva->fecha_termino = $request->input('fecha_termino');
+        $Repetida = false; 
         if($request->input('fecha_inicio') != NULL)
         {
             $promocionNueva->fecha_inicio = $request->input('fecha_inicio');
@@ -141,14 +142,9 @@ class PromocionsController extends Controller
 
                     }
                 }
-      switch (Session::get('tipo')) {
-            case 0:
-                return redirect('s_admin.crearPromocion');
-                break;
-            case 1:
-                 return redirect('admin.crearPromocion');
-                break;
-        }   
+      
+                 return redirect('crearPromocion');
+        
     }
     
     public function buscarPromocion(){
