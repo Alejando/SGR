@@ -19,28 +19,28 @@
 							<form class="form" role="form" method="POST" action="guardarCliente" enctype="multipart/form-data">
      					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<div class="form-group">
-									<label>Nombre</label>
+									<label>Nombre *</label>
 									<input type="text"  name="nombre" class="form-control" required>
 								</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>Teléfono</label>
+									<label>Teléfono *</label>
 									<input type="text"  name="telefono" class="form-control" >
 								</div>
 								<div class="form-group">
-									<label>Número de elector</label>
+									<label>Número de elector *</label>
 									<input type="number"  name="numero_elector" class="form-control" required>
 								</div>	
 								<div class="form-group">
-									<label>Número exterior</label>
-									<input type="text"  name="numero_exterior" class="form-control" >
+									<label>Número exterior *</label>
+									<input type="text"  name="numero_exterior" class="form-control" required>
 								</div>		
 								<div class="form-group">	
-									<label>Colonia</label>
+									<label>Colonia *</label>
 									<input type="text"  name="colonia" class="form-control" required>
 								</div>
 								<div class="form-group">	
-									<label>Estado</label>
+									<label>Estado *</label>
 									<input type="text"  name="estado" class="form-control" required>
 								</div>
 									
@@ -51,7 +51,7 @@
 									<input type="text"  name="celular" class="form-control" >
 								</div>
 								<div class="form-group">
-									<label>Calle</label>
+									<label>Calle *</label>
 									<input type="text"  name="calle" class="form-control" required>
 								</div>	
 								<div class="form-group">
@@ -59,11 +59,11 @@
 									<input type="text"  name="numero_interior" class="form-control" >
 								</div>		
 								<div class="form-group">	
-									<label>Municipio</label>
+									<label>Municipio *</label>
 									<input type="text"  name="municipio" class="form-control" required>
 								</div>
 								<div class="form-group">	
-									<label>Código Postal</label>
+									<label>Código Postal *</label>
 									<input type="number"  name="codigo_postal" class="form-control" required>
 								</div>	
 							</div>	

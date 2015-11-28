@@ -21,26 +21,26 @@
      					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 							
 								<div class="form-group">
-									<label>Nombre</label>
+									<label>Nombre *</label>
 									<input type="text"  value="{{ $distribuidor->nombre }}" name="nombre" class="form-control validate" required>
 								</div>
 								
 								<div class="col-md-6">
 									
 									<div class="form-group">
-										<label>Calle</label>
+										<label>Calle *</label>
 										<input type="text" value="{{ $distribuidor->calle }}" name="calle" class="form-control" required>
 									</div>	
 									<div class="form-group">
-										<label>Número exterior</label>
-										<input type="text"  value="{{ $distribuidor->numero_exterior }}" name="numero_exterior" class="form-control" >
+										<label>Número exterior *</label>
+										<input type="text"  value="{{ $distribuidor->numero_exterior }}" name="numero_exterior" class="form-control" required>
 									</div>		
 									<div class="form-group">	
-										<label>Municipio</label>
+										<label>Municipio *</label>
 										<input type="text"  value="{{ $distribuidor->municipio }}" name="municipio" class="form-control" required>
 									</div>
 									<div class="form-group">	
-										<label>Código Postal</label>
+										<label>Código Postal *</label>
 										<input type="text"  value="{{ $distribuidor->codigo_postal }}" name="codigo_postal" class="form-control" required>
 									</div>
 									<div class="form-group">
@@ -50,7 +50,7 @@
 								</div>		
 								<div class="col-md-6">
 									<div class="form-group">	
-										<label>Colonia</label>
+										<label>Colonia *</label>
 										<input type="text" value="{{ $distribuidor->colonia }}" name="colonia" class="form-control" required>
 									</div>
 									<div class="form-group">	
@@ -58,7 +58,7 @@
 										<input type="text" value="{{ $distribuidor->numero_interior }}" name="numero_interior" class="form-control" >
 									</div>
 									<div class="form-group">	
-										<label>Estado</label>
+										<label>Estado *</label>
 										<input type="text" value="{{ $distribuidor->estado }}" name="estado" class="form-control" required>
 									</div>	
 				
@@ -77,35 +77,35 @@
 							<div class="col-md-6">
 								<label>Datos de Aval</label>
 								<div class="form-group">
-									<label class="control-label">Nombre de Aval</label>
+									<label class="control-label">Nombre de Aval *</label>
 									<input type="text" value="{{ $distribuidor->nombre_aval }}" name="nombre_aval" class="form-control" required>
 								</div>
 								<div class="col-md-6">
 									
 									<div class="form-group">
-										<label>Calle</label>
+										<label>Calle *</label>
 										<input type="text" value="{{ $distribuidor->calle_aval }}" name="calle_aval" class="form-control" required>
 									</div>	
 									<div class="form-group">
-										<label>Número exterior</label>
-										<input type="text" value="{{ $distribuidor->numero_exterior_aval }}" name="numero_exterior_aval" class="form-control" >
+										<label>Número exterior *</label>
+										<input type="text" value="{{ $distribuidor->numero_exterior_aval }}" name="numero_exterior_aval" class="form-control" required>
 									</div>		
 									<div class="form-group">	
-										<label>Municipio</label>
+										<label>Municipio *</label>
 										<input type="text" value="{{ $distribuidor->municipio_aval }}" name="municipio_aval" class="form-control" required>
 									</div>
 									<div class="form-group">	
-										<label>Código Postal</label>
+										<label>Código Postal *</label>
 										<input type="text" value="{{ $distribuidor->codigo_postal_aval }}" name="codigo_postal_aval" class="form-control" required>
 									</div>
 									<div class="form-group ">
 										<label class="control-label">Celular</label>
-										<input type="text" value="{{ $distribuidor->celular_aval }}" name="celular_aval" class="form-control" pattern="[0-9]{10}" required>
+										<input type="text" value="{{ $distribuidor->celular_aval }}" name="celular_aval" class="form-control" pattern="[0-9]{10}">
 									</div>	
 								</div>		
 								<div class="col-md-6">
 									<div class="form-group">	
-										<label>Colonia</label>
+										<label>Colonia *</label>
 										<input type="text" value="{{ $distribuidor->colonia_aval }}" name="colonia_aval" class="form-control" required>
 									</div>
 									<div class="form-group">	
@@ -113,7 +113,7 @@
 										<input type="text" value="{{ $distribuidor->numero_interior_aval }}" name="numero_interior_aval" class="form-control" >
 									</div>
 									<div class="form-group">	
-										<label>Estado</label>
+										<label>Estado *</label>
 										<input type="text" value="{{ $distribuidor->estado_aval }}" name="estado_aval" class="form-control" required>
 									</div>	
 				
@@ -132,11 +132,11 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="form-group">
-										<label>Limite de credito para distribuidor</label>
+										<label>Limite de credito para distribuidor *</label>
 										<input type="number" value="{{ $distribuidor->limite_credito }}" name="limite_credito" class="form-control" required>
 									</div>
 									<div class="form-group">
-										<label>Limite de credito para vales</label>
+										<label>Limite de credito para vales *</label>
 										<input type="number" value="{{ $distribuidor->limite_vale }}" name="limite_vale" class="form-control" required>
 									</div>
 									<div class="form-group">

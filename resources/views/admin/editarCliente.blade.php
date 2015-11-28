@@ -22,7 +22,7 @@
 							<form class="form" role="form" method="POST" action="{{URL::to('actualizarCliente/').'/'.$cliente->id_cliente}}" enctype="multipart/form-data">
      					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<div class="form-group">
-									<label>Nombre</label>
+									<label>Nombre *</label>
 									<input type="text" value="{{ $cliente->nombre }}"  name="nombre" class="form-control" required>
 								</div>
 							<div class="col-md-6">
@@ -31,19 +31,19 @@
 									<input type="text" value="{{ $cliente->telefono }}" name="telefono" class="form-control">
 								</div>
 								<div class="form-group">
-									<label>Número de elector</label>
+									<label>Número de elector *</label>
 									<input type="number" value="{{ $cliente->numero_elector }}" name="numero_elector" class="form-control" required>
 								</div>	
 								<div class="form-group">
-									<label>Número exterior</label>
-									<input type="text" value="{{ $cliente->numero_exterior }}"  name="numero_exterior" class="form-control" >
+									<label>Número exterior *</label>
+									<input type="text" value="{{ $cliente->numero_exterior }}"  name="numero_exterior" class="form-control" required>
 								</div>		
 								<div class="form-group">	
-									<label>Colonia</label>
+									<label>Colonia *</label>
 									<input type="text"  value="{{ $cliente->colonia }}" name="colonia" class="form-control" required>
 								</div>
 								<div class="form-group">	
-									<label>Estado</label>
+									<label>Estado *</label>
 									<input type="text" value="{{ $cliente->estado }}" name="estado" class="form-control" required>
 								</div>
 									
@@ -54,7 +54,7 @@
 									<input type="text"  value="{{ $cliente->celular }}" name="celular" class="form-control">
 								</div>
 								<div class="form-group">
-									<label>Calle</label>
+									<label>Calle *</label>
 									<input type="text" value="{{ $cliente->calle }}"  name="calle" class="form-control" required>
 								</div>	
 								<div class="form-group">
@@ -62,11 +62,11 @@
 									<input type="text"  value="{{ $cliente->numero_interior }}" name="numero_interior" class="form-control" >
 								</div>		
 								<div class="form-group">	
-									<label>Municipio</label>
+									<label>Municipio *</label>
 									<input type="text" value="{{ $cliente->municipio }}" name="municipio" class="form-control" required>
 								</div>
 								<div class="form-group">	
-									<label>Código Postal</label>
+									<label>Código Postal *</label>
 									<input type="number"  value="{{ $cliente->codigo_postal }}" name="codigo_postal" class="form-control" required>
 								</div>	
 							</div>	
