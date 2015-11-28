@@ -1,4 +1,6 @@
 var $table = $('#table');
+var Fecha = new Date(); //variable
+var fechaHoy=('0' + Fecha.getDate()).slice(-2) + "-" + ('0' + (Fecha.getMonth() + 1)).slice(-2) + "-" +Fecha.getFullYear(); 
 function mostrarTabla(){
 $table.bootstrapTable('removeAll');
  var fecha=$('#fecha').val();
@@ -57,5 +59,8 @@ function imprimir(){
 	$('#ticket').show();
 	$('#ticket').printArea();
 	$('#ticket').hide();
+
 }
 	
+
+

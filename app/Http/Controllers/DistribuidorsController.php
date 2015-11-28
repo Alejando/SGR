@@ -258,11 +258,13 @@ class DistribuidorsController extends Controller
     }
 
     public function emitirReporteCobranza(Request $request)
-
     {   
         $id=$request->input('id');
         $fecha=$request->input('fecha');
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
+        if($fecha==""){
+            $fecha=Carbon::today();
+        }
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
 
         for ($i=0; $i <sizeof($vales); $i++) { 
 
@@ -286,7 +288,26 @@ class DistribuidorsController extends Controller
         return $vales;
     }
 
+     public function calcularFechaCorte($fecha){
+        $fechaCarbon=Carbon::parse($fecha);
+        // 10 nomviembre- 24 Novimebre-> 27 Novimebre
+            // 25 novimebre-09 Diciembre -> 12 Diciembre
+        if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
+           $fechaCarbon->day=24;
+           return $fechaCarbon->toDateString();
+        }
+        else{
+            if($fechaCarbon->day<=9){
+                $fechaCarbon->day=9;
+                return $fechaCarbon->toDateString();           
+            }else{
+                $fechaCarbon->day=9;
+                $fechaCarbon->month++;
+                return $fechaCarbon->toDateString();
+            }  
+        }
 
+    }
 
     public function calcularPago($cantidad,$tPagos,$nPago){
         $pagos=$cantidad/$tPagos;
@@ -301,4 +322,46 @@ class DistribuidorsController extends Controller
         }
     }
 
+    public function emitirReporteDudores(Request $request)
+    {   
+
+       $fecha=$request->input('fecha');
+        if($fecha==""){
+            $fecha=Carbon::today();
+        }
+        $distribuidores=Distribuidor::all()
+
+
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        $saldoTotal=0;
+        $saldoComision;
+        for ($i=0; $i <sizeof($vales); $i++) { 
+            
+             $importe=$vales[$i]->cantidad;
+             $saldoAnterior=$vales[$i]->deuda_actual;
+             $pagosRealizados=$vales[$i]->pagos_realizados+1;
+             $numeroPagos=$vales[$i]->numero_pagos;
+             $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+             $saldoTotal+=$abono;
+             $saldoActual=$saldoAnterior-$abono;
+             $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
+
+            $vales[$i]->id_cliente=$nombreCliente;
+            $vales[$i]->cantidad="$".$importe.".00";
+            $vales[$i]->numero_pagos="$".$saldoAnterior.".00";
+            $vales[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
+            $vales[$i]->cantidad_limite="$".$abono.".00";
+            $vales[$i]->deuda_actual="$".$saldoActual.".00";
+            
+         }
+        $comision=$this->calcularComision($saldoTotal);
+        $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
+        $saldoComision=$saldoTotal-$saldoDistribuidor;
+        
+    }
+     public function calcularComision($total){
+        $porcentaje;
+        $comision=Comision::where('cantidad_inicial','<',$total)->get();
+        return $comision[0]->porcentaje;
+    }
 }

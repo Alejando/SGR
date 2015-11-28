@@ -47,7 +47,10 @@ class PdfController extends Controller
     public function reporte_2(Request $request){
         $id=$request->input('id');
         $fecha=$request->input('fecha');
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
+        if($fecha==""){
+            $fecha=Carbon::today();
+        }
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoComision;
         for ($i=0; $i <sizeof($vales); $i++) { 
@@ -98,7 +101,26 @@ class PdfController extends Controller
             return $pago;
         }
     }
+    public function calcularFechaCorte($fecha){
+        $fechaCarbon=Carbon::parse($fecha);
+        // 10 nomviembre- 24 Novimebre-> 27 Novimebre
+            // 25 novimebre-09 Diciembre -> 12 Diciembre
+        if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
+           $fechaCarbon->day=24;
+           return $fechaCarbon->toDateString();
+        }
+        else{
+            if($fechaCarbon->day<=9){
+                $fechaCarbon->day=9;
+                return $fechaCarbon->toDateString();           
+            }else{
+                $fechaCarbon->day=9;
+                $fechaCarbon->month++;
+                return $fechaCarbon->toDateString();
+            }  
+        }
 
+    }
     public function calcularPeriodo($fecha){
             // 10 nomviembre- 24 Novimebre
             // 25 novimebre-09 Diciembre
@@ -180,7 +202,7 @@ class PdfController extends Controller
     {
         $id=$request->input('id');
         $fecha=$request->input('fecha');
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoComision;
         for ($i=0; $i <sizeof($vales); $i++) { 
