@@ -2,7 +2,9 @@
 
 @section ('titulo') Consultar vales
 @stop
-
+@section ('css') 
+	<link href="css/reporteVendedor.css"  rel="stylesheet">
+@stop
 @section ('contenido')
   
 			<div class="col-lg-12">
@@ -53,12 +55,15 @@
 			<h5 class="titulo">Pasaje Hidalgo #218 Col.Centro </h5>
 			<h5 class="titulo">CP. 99000 Fresnillo, zacatecas</h5>
 			<h4 class="titulo">Corte de Ventas </h4>
-			<p>--------------------------------------</p>
+			
 			<p class="texto" id="pFecha">Fecha: Juanito</p>
-			<p>#Distri  vale  FVenta  Importe  Pagos</p>
-			<p>-------  ----  ------  -------  -----</p>
+			
 			<div id="vales"></div>
-			<p>-------  ----  ------  -------  -----</p>
+
+			<br>
+			<br>
+			<hr>
+				
 		</div>
 @stop
 

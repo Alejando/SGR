@@ -25,7 +25,8 @@ $table.bootstrapTable('removeAll');
 
 function imprimir(){
 	var vales=" ";
-	 var fecha;
+	var fecha;
+	var total = 0;
 	 
 	 fecha=$('#fecha').val();
 
@@ -42,11 +43,14 @@ function imprimir(){
 	function llegada(data){
 		//alert(data);
 		
-		
+		vales+="<table class='tabla_ticket'><tr class='ticket'><td align='center'>Dis</td><td align='center'>Vale</td><td align='center'>Folio</td><td align='center'>Importe</td><td align='center'>Pagos</td></tr>";
 		 
 		for (var i = 0; i < data.length; i++) {
-			vales+="<p class='texto'>    "+data[i].id_distribuidor+"    "+data[i].serie+""+data[i].folio+"   "+data[i].folio_venta+"    "+data[i].cantidad+"   "+data[i].numero_pagos+"</p>";
+			total+=parseInt(data[i].cantidad);
+			vales+="<tr class='ticket'><td align='center'>"+data[i].id_distribuidor+"</td><td align='center'>"+data[i].serie+""+data[i].folio+"</td><td align='center'>"+data[i].folio_venta+"</td><td align='center'>$"+data[i].cantidad+".00</td><td align='center'>"+data[i].numero_pagos+"</td></tr>";
 		}
+
+		vales+="<tr class='ticket'><td colspan='3' class='total' align='right'>Total: </td><td class='importe' align='center'>$"+total+".00</td><td></td></tr></table>";
 		$('#vales').html(vales);
 	}
 	function problemas(data){
