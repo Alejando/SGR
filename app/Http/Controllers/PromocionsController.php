@@ -148,7 +148,7 @@ class PromocionsController extends Controller
     }
     
     public function buscarPromocion(){
-        $promocions= Promocion::all();
+        $promocions= Promocion::where('estatus',0)->get();
         $fechaHoy=Carbon::today();           
         $results = array();
         foreach ($promocions as $promocion)//2015-12-27
@@ -237,9 +237,10 @@ class PromocionsController extends Controller
                 break;
         }   
     }
-    function obtenerPromociones(){
+    public function obtenerPromociones(){
         
-        $promocion = Promocion::where('fecha_termino','>=',Carbon::parse(Carbon::today()))->get();
+        $this->terminarPrmociones();
+        $promocion = Promocion::where('fecha_termino','>=',Carbon::parse(Carbon::today()))->where('estatus','<',2)->get();
         for ($i=0; $i <sizeof($promocion); $i++) {        
                 if($promocion[$i]->fecha_inicio=="0000-00-00"){
                     $promocion[$i]->fecha_inicio="No aplica";
@@ -250,11 +251,40 @@ class PromocionsController extends Controller
                 if($promocion[$i]->tipo_promocion==1){
                     $promocion[$i]->tipo_promocion="Comienza a pagar en...";
                 }
-                $promocion[$i]->acciones='<a type="button" class="btn btn-primary margin" href="editarPromocion/'. $promocion[$i]->id_promocion.'">Actualizar</a>'; 
+                if($promocion[$i]->estatus==0){
+                    $promocion[$i]->acciones='<a type="button" class="btn btn-danger margin" href="editarEstatusPromocion/'. $promocion[$i]->id_promocion.'">Desactivar</a><a type="button" class="btn btn-primary margin" href="editarPromocion/'. $promocion[$i]->id_promocion.'">Actualizar</a>'; 
+                }
+                if($promocion[$i]->estatus==1){
+                    $promocion[$i]->acciones='<a type="button" class="btn btn-success margin" href="editarEstatusPromocion/'. $promocion[$i]->id_promocion.'">Activar</a><a type="button" class="btn btn-primary margin" href="editarPromocion/'. $promocion[$i]->id_promocion.'">Actualizar</a>'; 
+                }
+                
         }    
         return $promocion;
     }
+    public function terminarPrmociones(){
+        $promociones=Promocion::where('estatus','<',2)->get();
+        for ($i=0; $i <sizeof($promociones); $i++) {
+            $fecha=Carbon::today();
+            $fechaTermino=Carbon::parse($promociones[$i]->fecha_termino);
+            if($fecha>$fechaTermino){
+                $promociones[$i]->estatus=2;
+                $promociones[$i]->save();
+            }
+        }
+    }
+    public function editarEstatusPromocion($id){
+        // tipos de estatus 0=activa, 1=desactivada 2=Vencida(Ya termino la promoción)
+        $promocion= Promocion::find($id);
+        if($promocion->estatus==0){
+            $promocion->estatus=1;
+        }
+        else{
+            $promocion->estatus=0;
+        }
+        $promocion->save();
+        return redirect('consultarPromociones');
 
+    }
     public function editarPromocion($id)
     {
         $promocion = Promocion::find($id);

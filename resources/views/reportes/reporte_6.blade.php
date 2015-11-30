@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Reporte 2</title>
+    <title>Reporte 6</title>
 
     <link href="css/pdf.css"  rel="stylesheet">
 
@@ -19,11 +19,11 @@
         </tr>
         <tr>
           <!--td class="medio invisible">B1 -logo </td-->
-          <td class="medio invisible" id="subtitulo">Reporte de cobranza</td> 
+          <td class="medio invisible" id="subtitulo">Reporte de pago de distribuidoras</td> 
           <td class="medio invisible"></td>
         </tr>
         <tr>
-          <td class="medio invisible" colspan="3" id="distribuidor">Distribuidor: {{$distribuidor}}</td>
+          <td class="medio invisible" colspan="3" id="distribuidor"></td>
           <!--td class="medio invisible">C2</td> 
           <td class="medio invisible">C4</td-->
         </tr>
@@ -37,45 +37,30 @@
       <table>
         <thead id="encabezado">
           <tr>
-            <th id="cliente" >Cliente</th>
-            <th>Vale</th>
-            <th>Folio Venta</th>
-            <th>Importe</th>
-            <th>Saldo Anterior</th>
-            <th>Pagos</th>
-            <th>Abono</th>
-            <th>Saldo Actual</th>
+            <th id="cliente" >Nombre</th>
+            <th>Pago sin Comision </th>
+            <th>Comisión</th>
+            <th>Pago con Comisión</th>
           </tr>
         </thead>
         <tbody>
+
          @foreach ($datas as $data)
           <tr>
-            <td>{{$data->id_cliente}}</td>
-            <td>{{$data->folio}}</td>
-            <td>{{$data->folio_venta}}</td>
-            <td>{{$data->cantidad}}</td>
-            <td>{{$data->numero_pagos}}</td>
-            <td>{{$data->pagos_realizados}}</td>
-            <td>{{$data->cantidad_limite}}</td>
-            <td>{{$data->deuda_actual}}</td>
+            <td>{{$data->nombre}}</td>
+            <td>{{$data->id_comision}}</td>
+            <td>{{$data->telefono}}</td>
+            <td>{{$data->celular}}</td>
           </tr>
 
            @endforeach
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="3">Totales</td>
-            <td >${{$saldoImporte}}.00</td>
-            <td >${{$saldoAnteriorTotal}}.00</td>
+            <td >Total</td>
+            <td >${{$SaldoTotalSinComision}}.00</td>
             <td></td>
-            <td>${{$saldoTotal}}.00</td>
-            <td>${{$saldoActualTotal}}.00</td>
-          </tr>
-          <tr>
-            <td colspan="2"></td>
-            <td colspan="4">Comision {{$comision}}% Total a pagar</td>
-            <td>${{$saldoComision}}.00</td>
-            <td></td>
+            <td>${{$SaldoTotalConComision}}.00</td>
           </tr>
         </tfoot>
       </table>

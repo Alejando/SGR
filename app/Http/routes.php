@@ -18,10 +18,11 @@ Route::get('logout','LoginController@logout');
 //--------------------> RUTAS REPORTES <--------------------//
 //----------------------------------------------------------//
 Route::get('pdf', 'PdfController@invoice');
-
-
+Route::get('reporte_8', 'PdfController@reporte_8');
+Route::get('reporte_6', 'PdfController@reporte_6');
 Route::get('reporte_2', 'PdfController@reporte_2');
 Route::get('reporte_1', 'PdfController@reporte_1');
+
 
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {
@@ -96,6 +97,8 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
 	Route::get('editarPromocion/{id}', 'PromocionsController@editarPromocion');
 	Route::post('actualizarPromocion/{id}', 'PromocionsController@actualizarPromocion');
+	Route::get('editarEstatusPromocion/{id}', 'PromocionsController@editarEstatusPromocion');
+	
 
 	Route::get('crearDistribuidor', 'DistribuidorsController@crearDistribuidor');
 	Route::post('guardarDistribuidor', 'DistribuidorsController@guardarDistribuidor');
@@ -107,6 +110,10 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 
 	Route::get('reporteCobranza', 'DistribuidorsController@reporteCobranza');
 	Route::get('emitirReporteCobranza', 'DistribuidorsController@emitirReporteCobranza');
+	Route::get('reporteDeudores', 'DistribuidorsController@reporteDeudores');
+	Route::get('emitirReporteDeudores', 'DistribuidorsController@emitirReporteDeudores');
+	Route::get('reporteHistorico', 'DistribuidorsController@reporteHistorico');
+	Route::get('emitirReporteHistorico', 'DistribuidorsController@emitirReporteHistorico');
 });
 
 Route::get('prueba', function()

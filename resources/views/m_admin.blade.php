@@ -91,12 +91,12 @@
 						</a>
 					</li>
 					<li>
-						<a class="" href="">
+						<a class="" href="reporteDeudores">
 							<span class="glyphicon glyphicon-share-alt"></span> Deudores
 						</a>
 					</li>
 					<li>
-						<a class="" href="">
+						<a class="" href="reporteHistorico">
 							<span class="glyphicon glyphicon-share-alt"></span> Historico
 						</a>
 					</li>
