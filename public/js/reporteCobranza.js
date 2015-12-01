@@ -44,3 +44,10 @@ function mostrarPDF(){
     window.open(url, '_blank');
 	
 }
+
+function mostrarExcel(){
+	var fecha=$('#fecha').val();
+	url='reporte_2_excel?fecha='+fecha+'&id='+idDistribuidor;
+    window.open(url, '_blank');
+	
+}

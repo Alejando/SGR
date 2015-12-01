@@ -31,6 +31,12 @@
 							<label>--</label>
 							<p  id="pdf"class="btn btn-primary" onclick="mostrarPDF()"> Mostrar PDF </p>
 						</div>	
+					</div>
+					<div class="col-lg-1">
+						<div class="form-group">
+							<label>--</label>
+							<p  id="pdf"class="btn btn-primary" onclick="mostrarExcel()">Mostrar Excel </p>
+						</div>	
 					</div>	
 				</div>
 				</br>

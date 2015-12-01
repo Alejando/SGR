@@ -273,13 +273,15 @@ class PdfController extends Controller
         return $pdf->stream('reporte_6.pdf');
     }
 
-    public function reporte_8(Request $request){
+    public function reporte_8(Request $request)
+    {
         $id=$request->input('id');
         $saldoTotal=0;
         $saldoTotalActual=0;
         $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->get();
 
-        for ($i=0; $i <sizeof($vales); $i++) { 
+        for ($i=0; $i <sizeof($vales); $i++) 
+        { 
 
             
              $importe=$vales[$i]->cantidad;
@@ -305,15 +307,7 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_8.pdf');
-        }
-
     }
 
-<<<<<<< HEAD
-    
-
 }
-=======
-
-
->>>>>>> origin/master
+    

@@ -25,11 +25,15 @@ class ExcelController extends Controller
         }
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
+        $saldoImporte=0;
+        $saldoAnteriorTotal=0;
         $saldoComision;
         for ($i=0; $i <sizeof($vales); $i++) { 
             
              $importe=$vales[$i]->cantidad;
+             $saldoImporte+=$importe;
              $saldoAnterior=$vales[$i]->deuda_actual;
+             $saldoAnteriorTotal+=$saldoAnterior;
              $pagosRealizados=$vales[$i]->pagos_realizados+1;
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
@@ -38,11 +42,11 @@ class ExcelController extends Controller
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_cliente=$nombreCliente;
-            $vales[$i]->cantidad="$".$importe.".00";
-            $vales[$i]->numero_pagos="$".$saldoAnterior.".00";
+            $vales[$i]->cantidad=$importe.".00";
+            $vales[$i]->numero_pagos=$saldoAnterior.".00";
             $vales[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
-            $vales[$i]->cantidad_limite="$".$abono.".00";
-            $vales[$i]->deuda_actual="$".$saldoActual.".00";
+            $vales[$i]->cantidad_limite=$abono.".00";
+            $vales[$i]->deuda_actual=$saldoActual.".00";
             
          }
         $comision=$this->calcularComision($saldoTotal);
@@ -50,14 +54,15 @@ class ExcelController extends Controller
         $saldoComision=$saldoTotal-$saldoDistribuidor;
         $datas = $vales;
         $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
-        $fechaHoy = Carbon::today();
+        $fechaHoy = Carbon::now();
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
         $fechaLimite=$this->CalcularFechaLimite($fecha);
         $periodo=$this->calcularPeriodo($fecha);
+        $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
 
-        Excel::create('Reporte_Cobranza', function($excel) use ($datas, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision ) {
-            $excel->sheet('Reporte_Cobranza', function($sheet) use ($datas, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision ) {
-                $sheet->loadView('reportes.reporte_2_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("distribuidor", $distribuidor)->with("fechaEntrega", $fechaEntrega)->with("fechaLimite", $fechaLimite)->with("periodo", $periodo)->with("comision", $comision)->with("saldoTotal", $saldoTotal)->with("saldoComision", $saldoComision);
+        Excel::create('Reporte_Cobranza', function($excel) use ($datas, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
+            $excel->sheet('Reporte_Cobranza', function($sheet) use ($datas, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
+                $sheet->loadView('reportes.reporte_2_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("distribuidor", $distribuidor)->with("fechaEntrega", $fechaEntrega)->with("fechaLimite", $fechaLimite)->with("periodo", $periodo)->with("comision", $comision)->with("saldoTotal", $saldoTotal)->with("saldoComision", $saldoComision)->with("saldoAnteriorTotal", $saldoAnteriorTotal)->with("saldoImporte", $saldoImporte)->with("saldoActualTotal", $saldoActualTotal);
             });
         })->export('xls');
     }

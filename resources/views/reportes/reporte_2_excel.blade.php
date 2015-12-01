@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Reporte 2</title>
 
-    <!--link href="css/pdf.css"  rel="stylesheet"-->
+    <link href="css/reporte_2_excel.css"  rel="stylesheet"-->
 
   </head>
   <body>
@@ -13,28 +13,25 @@
 
       <table>
         <tr>
-          <td class="medio invisible" id="logo"><img height="60" width="100" src="img/logoGR.jpg"></td>
+          <td><b>ZAPATERIA EL GRAN REMATE</b></td>
         </tr>
         <tr>
-          <td class="medio invisible" id="titulo">ZAPATERIA EL GRAN REMATE</td>
-        </tr>
-        <tr>   
-          <td class="medio invisible" id="fecha">Fecha:{{$fechaHoy}}</td>
+          <td><b>Reporte de cobranza</b></td>    
         </tr>
         <tr>
-          <td class="medio invisible" id="subtitulo">Reporte de cobranza</td> 
+          <td><b>Fecha:</b>{{$fechaHoy}}</td>
         </tr>
         <tr>
-          <td class="medio invisible" id="distribuidor">Distribuidor: {{$distribuidor}}</td>
+          <td><b>Distribuidor:</b> {{$distribuidor}}</td>
         </tr>
         <tr>
-          <td class="medio invisible" id="fechaReporte">Fecha de reporte: {{$fechaEntrega}}</td>
+          <td><b>Fecha de reporte: </b>{{$fechaEntrega}}</td>
         </tr>
         <tr>  
-          <td class="medio invisible" id="periodo">Periodo: {{$periodo}}</td>
+          <td><b>Periodo: </b>{{$periodo}}</td>
         </tr>
         <tr>   
-          <td class="medio invisible" id="fechaLimite">Fecha límite de pago: {{$fechaLimite}}</td>
+          <td><b>Fecha límite de pago: </b>{{$fechaLimite}}</td>
         </tr>
       </table>
       <br>
@@ -42,13 +39,13 @@
         <thead id="encabezado">
           <tr>
             <th id="cliente" >Cliente</th>
-            <th>Vale</th>
-            <th>Folio Venta</th>
-            <th>Importe</th>
-            <th>Saldo Anterior</th>
-            <th>Pagos</th>
-            <th>Abono</th>
-            <th>Saldo Actual</th>
+            <th class="campo">Vale</th>
+            <th class="campo">Folio Venta</th>
+            <th class="campo">Importe</th>
+            <th class="campo">Saldo Anterior</th>
+            <th class="campo">Pagos</th>
+            <th class="campo">Abono</th>
+            <th class="campo">Saldo Actual</th>
           </tr>
         </thead>
         <tbody>
@@ -68,15 +65,18 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="2"></td>
-            <td colspan="4">Total</td>
-            <td>${{$saldoTotal}}.00</td>
             <td></td>
+            <td colspan="2"><b>Totales</b></td>
+            <td >{{$saldoImporte}}.00</td>
+            <td >{{$saldoAnteriorTotal}}.00</td>
+            <td></td>
+            <td>{{$saldoTotal}}.00</td>
+            <td>{{$saldoActualTotal}}.00</td>
           </tr>
           <tr>
             <td colspan="2"></td>
-            <td colspan="4">Comision {{$comision}}% Total a pagar</td>
-            <td>${{$saldoComision}}.00</td>
+            <td colspan="4"><b>Comision {{$comision}}% Total a pagar</b></td>
+            <td>{{$saldoComision}}.00</td>
             <td></td>
           </tr>
         </tfoot>
