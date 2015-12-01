@@ -4,46 +4,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Example 2</title>
 
-    <link href="css/pdf.css"  rel="stylesheet">
+    <!--link href="css/pdf.css"  rel="stylesheet"-->
 
   </head>
   <body>
 
     <main>
-      <!--div id="details" class="clearfix">
-        <div id="invoice">
-          <h1>INVOICE {{ $invoice }}</h1>
-          <div class="date">Date of Invoice: {{ $date }}</div>
-        </div>
-      </div-->
-    <!--table>
-        <tr>
-          <td class="medio invisible" id="logo" rowspan="2"><img height="60" width="100" src="img/logoGR.jpg"></td>
-          <td class="medio invisible" id="titulo">A2 - ZAPATERIA EL GRAN REMATE</td> 
-          <td class="medio invisible">A3 - lunes, 17 de agosto de 2015 6:22 pm</td>
-        </tr>
-        <tr>
-          <td class="medio invisible">B1 -logo </td>
-          <td class="medio invisible" id="subtitulo">B2 - Reporte de cobranza</td> 
-          <td class="medio invisible">B3</td>
-        </tr>
-        <tr>
-          <td class="medio invisible" colspan="3" id="distribuidor">C1 - Distribuidor: 7 ORTA JUAREZ MA. JULIA</td>
-          <td class="medio invisible">C2</td> 
-          <td class="medio invisible">C4</td>
-        </tr>
-        <tr>
-          <td class="medio invisible">D1 - Fecha de reporte: 10-05-2015</td>
-          <td class="medio invisible">D2 - Periodo: del 25-abril-2015 al 09-mayo-2015</td> 
-          <td class="medio invisible">D4 - Fecha límite de pago: 18-mayo-2015</td>
-        </tr>
-      </table-->
 
       <table>
         <tr>
           <td class="medio invisible" id="logo" rowspan="2"><img height="60" width="100" src="img/logoGR.jpg"></td>
           <td class="medio invisible" id="titulo">ZAPATERIA EL GRAN REMATE</td> 
-          <td class="medio invisible" id="fecha">{{$fecha}}</td>
+          <td class="medio invisible" id="fecha"></td>
         </tr>
         <tr>
           <!--td class="medio invisible">B1 -logo </td-->
@@ -51,14 +23,14 @@
           <td class="medio invisible"></td>
         </tr>
         <tr>
-          <td class="medio invisible" colspan="3" id="distribuidor">Distribuidor: {{$distribuidor}}</td>
+          <td class="medio invisible" colspan="3" id="distribuidor">Distribuidor: </td>
           <!--td class="medio invisible">C2</td> 
           <td class="medio invisible">C4</td-->
         </tr>
         <tr>
-          <td class="medio invisible" id="fechaReporte">Fecha de reporte: {{$fechaReporte}}</td>
-          <td class="medio invisible" id="periodo">Periodo: {{$peridodo}}</td> 
-          <td class="medio invisible" id="fechaLimite">Fecha límite de pago: {{$fechaLimite}}</td>
+          <td class="medio invisible" id="fechaReporte">Fecha de reporte: </td>
+          <td class="medio invisible" id="periodo">Periodo: </td> 
+          <td class="medio invisible" id="fechaLimite">Fecha límite de pago: </td>
         </tr>
       </table>
       <br>
@@ -122,32 +94,5 @@
           </tr>
         </tfoot>
       </table>
-
-      <!--table>
-        <thead>
-          <tr>
-            <th class="no">Nombre</th>
-            <th class="desc">DESCRIPTION*</th>
-            <th class="unit">UNIT PRICE</th>
-            <th class="total">TOTAL*</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="no">{{ $data['quantity'] }}</td>
-            <td class="desc">{{ $data['description'] }}</td>
-            <td class="unit">{{ $data['price'] }}</td>
-            <td class="total">{{ $data['total'] }} </td>
-          </tr>
-
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"></td>
-            <td >TOTAL</td>
-            <td>$6,500.00</td>
-          </tr>
-        </tfoot>
-      </table-->
   </body>
 </html>

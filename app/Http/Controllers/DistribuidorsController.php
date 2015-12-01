@@ -11,6 +11,8 @@ use App\Movimiento;
 use Carbon\Carbon;
 use App\Vale;
 use App\Cliente;
+use Maatwebsite\Excel\Facades\Excel;
+
 class DistribuidorsController extends Controller
 {
     
@@ -257,6 +259,8 @@ class DistribuidorsController extends Controller
         }  
     }
 
+
+
     public function emitirReporteCobranza(Request $request)
     {   
         $id=$request->input('id');
@@ -329,7 +333,7 @@ class DistribuidorsController extends Controller
         if($fecha==""){
             $fecha=Carbon::today();
         }
-        $distribuidores=Distribuidor::all()
+        $distribuidores=Distribuidor::all();
 
 
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
@@ -364,4 +368,5 @@ class DistribuidorsController extends Controller
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
         return $comision[0]->porcentaje;
     }
+    
 }

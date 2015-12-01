@@ -139,3 +139,7 @@ Route::get('prueba', function()
 	
 	return ("Holi--->".$telefono_cliente);
 });
+
+
+Route::get('reporteCobranzaExcel', 'DistribuidorsController@reporteCobranzaExcel');
+Route::get('reporte_2_excel', 'ExcelController@reporte_2_excel');

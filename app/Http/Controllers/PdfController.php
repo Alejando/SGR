@@ -12,36 +12,10 @@ use App\Cliente;
 use Carbon\Carbon;
 use App\DistribuidorsController;
 use App\Comision;
+
+
 class PdfController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    public function invoice() 
-    {
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('invoice', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
-    }
-
-
-    public function getData() 
-    {
-        $data =  [
-            'quantity'      => '1' ,
-            'description'   => 'some ramdom text',
-            'price'   => '500',
-            'total'     => '500'
-        ];
-        return $data;
-    }
 
 
     public function reporte_2(Request $request){
@@ -197,7 +171,6 @@ class PdfController extends Controller
     }
 
 
-
     public function reporte_1(Request $request)
     {
         $id=$request->input('id');
@@ -241,5 +214,7 @@ class PdfController extends Controller
         return $pdf->stream('reporte_1');
 
     }
+
+    
 
 }
