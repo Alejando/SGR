@@ -68,13 +68,13 @@ class Carbon extends DateTime
      * @var array
      */
     protected static $days = array(
-        self::SUNDAY => 'Sunday',
-        self::MONDAY => 'Monday',
-        self::TUESDAY => 'Tuesday',
-        self::WEDNESDAY => 'Wednesday',
-        self::THURSDAY => 'Thursday',
-        self::FRIDAY => 'Friday',
-        self::SATURDAY => 'Saturday',
+        self::SUNDAY => 'Domingo',
+        self::MONDAY => 'Lunes',
+        self::TUESDAY => 'Martes',
+        self::WEDNESDAY => 'Miércoles',
+        self::THURSDAY => 'Jueves',
+        self::FRIDAY => 'viernes',
+        self::SATURDAY => 'Sábado',
     );
 
     /**

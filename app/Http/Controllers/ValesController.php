@@ -122,9 +122,61 @@ class ValesController extends Controller
         }         
     }
     
-    public function obtenerVales()
+    public function obtenerVales(Request $request)
     {
-        $vales = Vale::all();
+        $limite=$request->input('limit');
+           if(is_null($limite)){
+                $distribuidor=$request->input('distribuidor');
+                if($distribuidor=="0"){
+                    $fechaInicio=$request->input('fecha_inicio');
+                    if($fechaInicio=="0"){
+                        $fechaTermino=$request->input('fecha_termino');
+                        if($fechaTermino=="0"){
+                           $vales = Vale::take(30)->get();
+                           
+                        }else{
+                             //buscar vales con fecha termino
+                             $vales = Vale::where('fecha_inicio_pago','<',$fechaTermino)->get();
+                        }
+                    }else{
+                        $fechaTermino=$request->input('fecha_termino');
+                        if($fechaTermino=="0"){
+                            $vales = Vale::where('fecha_inicio_pago','>',$fechaInicio)->get();
+                            
+                        }else{
+                           //buscar vales con fecha inicio y fecha termino
+                           $vales = Vale::where('fecha_inicio_pago','>',$fechaInicio)->where('fecha_inicio_pago','<',$fechaTermino)->get();
+                        }
+                    }
+
+                }else{
+                    $fechaInicio=$request->input('fecha_inicio');
+                    if($fechaInicio=="0"){
+                        $fechaTermino=$request->input('fecha_termino');
+                        if($fechaTermino=="0"){
+                            $vales = Vale::where('id_distribuidor',$distribuidor)->get();
+                            
+                        }else{
+                             //buscar vales con fecha termino y distribuidor
+                          $vales = Vale::where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','<',$fechaTermino)->get();
+                        }
+                    }else{
+                        $fechaTermino=$request->input('fecha_termino');
+                        if($fechaTermino=="0"){
+                                    //buscar vales con fecha inicio y distribuidor
+                           $vales = Vale::where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','>',$fechaInicio)->get();
+                            
+                        }else{
+                           //buscar con los tres valores
+                            $vales = Vale::where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','>',$fechaInicio)->where('fecha_inicio_pago','<',$fechaTermino)->get();
+                        }
+                    }
+                }
+           }
+           else{
+             $vales = Vale::take(30)->get();
+           }
+      
         for ($i=0; $i <sizeof($vales); $i++) { 
 
              $distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
