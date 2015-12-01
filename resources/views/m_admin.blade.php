@@ -104,9 +104,27 @@
 			</li>
 			<li class="parent ">
 				<a data-toggle="collapse" href="#sub-item-4">
-					<span class="glyphicon glyphicon-list"></span> Clientes <span data-toggle="collapse" href="#sub-item-3" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+					<span class="glyphicon glyphicon-list"></span> Pagos de reportes <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
 				<ul class="children collapse" id="sub-item-4">
+					<li>
+						<a class="" href="generarPagos">
+							<span class="glyphicon glyphicon-share-alt"></span> Generar pagos
+						</a>
+					</li>
+					<li>
+						<a class="" href="consultarPagos">
+							<span class="glyphicon glyphicon-share-alt"></span> Consultar pagos
+						</a>
+					</li>
+					
+				</ul>
+			</li>
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-item-5">
+					<span class="glyphicon glyphicon-list"></span> Clientes <span data-toggle="collapse" href="#sub-item-3" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				</a>
+				<ul class="children collapse" id="sub-item-5">
 					<li>
 						<a class="" href="crearCliente">
 							<span class="glyphicon glyphicon-share-alt"></span> Alta Cliente
@@ -120,10 +138,10 @@
 				</ul>
 			</li>
 			<li class="parent "> 
-				<a data-toggle="collapse" href="#sub-item-5">
+				<a data-toggle="collapse" href="#sub-item-6">
 					<span class="glyphicon glyphicon-list"></span> Promociones <span data-toggle="collapse" href="#sub-item-4" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
-				<ul class="children collapse" id="sub-item-5">
+				<ul class="children collapse" id="sub-item-6">
 					<li>
 						<a class="" href="crearPromocion">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Promoción
@@ -137,10 +155,10 @@
 				</ul>
 			</li>
 			<li class="parent "> 
-				<a data-toggle="collapse" href="#sub-item-6">
+				<a data-toggle="collapse" href="#sub-item-7">
 					<span class="glyphicon glyphicon-list"></span> Comisiones <span data-toggle="collapse" href="#sub-item-5" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
-				<ul class="children collapse" id="sub-item-6">
+				<ul class="children collapse" id="sub-item-7">
 					<li>
 						<a class="" href="crearComision">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Comisión
@@ -154,10 +172,10 @@
 				</ul>
 			</li>
 			<li class="parent ">
-				<a data-toggle="collapse" href="#sub-item-7">
+				<a data-toggle="collapse" href="#sub-item-8">
 					<span class="glyphicon glyphicon-list"></span> Cuentas <span data-toggle="collapse" href="#sub-item-6" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
 				</a>
-				<ul class="children collapse" id="sub-item-7">
+				<ul class="children collapse" id="sub-item-8">
 					<li>
 						<a class="" href="crearCuentaVendedor">
 							<span class="glyphicon glyphicon-share-alt"></span> Crear Cuenta

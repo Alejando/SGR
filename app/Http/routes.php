@@ -114,6 +114,10 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('emitirReporteDeudores', 'DistribuidorsController@emitirReporteDeudores');
 	Route::get('reporteHistorico', 'DistribuidorsController@reporteHistorico');
 	Route::get('emitirReporteHistorico', 'DistribuidorsController@emitirReporteHistorico');
+
+	Route::get('consultarPagos','PagosController@consultarPagos');
+	Route::get('generarPagos','PagosController@generarPagos');
+	Route::get('crearPagos','PagosController@crearPagos');
 });
 
 Route::get('prueba', function()

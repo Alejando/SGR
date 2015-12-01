@@ -341,7 +341,7 @@ class ValesController extends Controller
         $cantidad = $request->input('cantidad');
         $numeroPagos = $request->input('numero_pagos');
         $folioVenta = $request->input('folio_venta');
-        $estatus = $request->input('id_estatus');
+        $estatus = $request->input('estatus');
         $motivoCancelacion = $request->input('motivo_cancelacion');
        
         $vale->folio=$folio;
@@ -358,29 +358,36 @@ class ValesController extends Controller
         $vale->folio_venta=$folioVenta;
         $vale->estatus=$estatus;
         $vale->motivo_cancelacion=$motivoCancelacion;
-        
-        if($vale->save()){
-            $movimiento= new Movimiento;
-            $movimiento->id_cuenta=Session::get('id');
-            $movimiento->fecha=Carbon::today();
-            $movimiento->estado_anterior=$valeMovimiento;
-            $movimiento->estado_actual=(string)Vale::find($request->input('id_vale'));
-            $movimiento->tipo=1; // 1:vales 2:cuentas 3:pagos 4:distribuidores 5:comisiones
-            $movimiento->save();
-
-            Session::flash('message',' Vale actualizado exitoso!');
-            Session::flash('class','success');
-
-        }
-        else{
-            Session::flash('message','Error al guardar el vale en la base de datos');
-            Session::flash('class','danger');
-        }
+         $auxVale= Vale::where('serie',$serie)->where('folio',$folio)->get();  
+         if(sizeof($auxVale)==0){
+             Session::flash('message',' Ya existe Vale!');
+                Session::flash('class','danger');
+                 return redirect('consultarVales');
+         }else{
+             if($vale->save()){
+                $movimiento= new Movimiento;
+                $movimiento->id_cuenta=Session::get('id');
+                $movimiento->fecha=Carbon::today();
+                $movimiento->estado_anterior=$valeMovimiento;
+                $movimiento->estado_actual=(string)Vale::find($request->input('id_vale'));
+                $movimiento->tipo=1; // 1:vales 2:cuentas 3:pagos 4:distribuidores 5:comisiones
+                $movimiento->save();
+                Session::flash('message',' Vale actualizado exitoso!');
+                Session::flash('class','success');
+                 return redirect('consultarVales');
+            }
+            else{
+                Session::flash('message','Error al guardar el vale en la base de datos');
+                Session::flash('class','danger');
+                 return redirect('consultarVales');
+            }
+         }
+       
             
             
 
      
-                 return redirect('consultarVales');
+                
 
     }
     

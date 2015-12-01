@@ -11,10 +11,12 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Crear Distribuidores</div>
 					<div class="panel-body">
-						 @if(Session::has('message'))
-		                    <div class="alert alert-{{ Session::get('class') }}">{{ Session::get('message')}}</div>
-		                
-		                @endif
+						@if(Session::has('message'))
+							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+								    <button type="button" class="close" data-dismiss="alert">&times;</button>
+								    <strong> {{ Session::get('message')}} </strong>
+							</div>
+						@endif
 						<div class="col-md-6">
 							<label>Datos Distribuidor</label>
 							<form class="form" role="form" method="POST" action="{{URL::to('actualizarDistribuidor/').'/'.$distribuidor->id_distribuidor}}" enctype="multipart/form-data">

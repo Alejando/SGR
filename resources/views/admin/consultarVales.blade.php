@@ -9,6 +9,12 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Consultar Vales</div>
 			<div class="panel-body">
+				@if(Session::has('message'))
+							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+								    <button type="button" class="close" data-dismiss="alert">&times;</button>
+								    <strong> {{ Session::get('message')}} </strong>
+							</div>
+						@endif
 				<div class="col-lg-12">
 					<div class="col-lg-4">
 						<div class="form-group">

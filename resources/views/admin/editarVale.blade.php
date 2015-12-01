@@ -83,7 +83,7 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nombre Vendedor</label>
-										<input type="hidden"  value="{{$vale->id_cuenta}}"  name="id_distribuidor" id="id_cuenta"/>
+										<input type="hidden"  value="{{$vale->id_cuenta}}"  name="id_cuenta" id="id_cuenta"/>
 										<input type="text"  id="nombreCuenta"  name="nombre_cuenta" class="form-control" >
 									</div>	
 								</div>

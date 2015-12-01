@@ -10,13 +10,12 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Editar Clientes</div>
 					<div class="panel-body">
-						 @if(Session::has('message'))
-						<div class="alert alert-{{ Session::get('class') }} alert-dismissable">
-						    <button type="button" class="close" data-dismiss="alert">&times;</button>
-						    <strong> {{ Session::get('message')}} </strong>
-					    </div>
-						 	                
-		                @endif
+						@if(Session::has('message'))
+							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+								    <button type="button" class="close" data-dismiss="alert">&times;</button>
+								    <strong> {{ Session::get('message')}} </strong>
+							</div>
+						@endif
 						<div class="col-md-6">
 							<label>Datos Cliente</label>
 							<form class="form" role="form" method="POST" action="{{URL::to('actualizarCliente/').'/'.$cliente->id_cliente}}" enctype="multipart/form-data">

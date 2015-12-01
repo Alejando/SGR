@@ -168,6 +168,7 @@ class PdfController extends Controller
         
         return $meses[$mes-1];
     }
+    
     public function calcularComision($total){
         $porcentaje;
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
