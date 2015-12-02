@@ -154,3 +154,5 @@ Route::get('prueba', function()
 
 Route::get('reporteCobranzaExcel', 'DistribuidorsController@reporteCobranzaExcel');
 Route::get('reporte_2_excel', 'ExcelController@reporte_2_excel');
+Route::get('reporte_6_excel', 'ExcelController@reporte_6_excel');
+Route::get('reporte_8_excel', 'ExcelController@reporte_8_excel');

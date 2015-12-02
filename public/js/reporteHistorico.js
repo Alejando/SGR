@@ -41,3 +41,10 @@ function mostrarPDF(){
     window.open(url, '_blank');
 	
 }
+
+function mostrarExcel(){
+	//alert("Holi");
+	url='reporte_8_excel?id='+idDistribuidor;
+   	window.open(url, '_blank');
+	
+}

@@ -16,14 +16,18 @@
 					</div>
 					<div class="col-lg-1">
 						<div class="form-group">
-							<label>--</label>
+							<br>
 							<p  id="consultar" class="btn btn-primary" onclick="mostrarTabla()"> Consultar </p>
 						</div>	
 					</div>	
 					<div class="col-lg-1">
-						<div class="form-group">
-							<label>--</label>
-							<p  id="pdf"class="btn btn-primary" onclick="mostrarPDF()"> Mostrar PDF </p>
+						<div class="btn-group">
+							<br>
+							<button data-toggle="dropdown" class="btn btn-warning ">Exportar <span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a onclick="mostrarPDF()">PDF</a></li>
+									<li><a onclick="mostrarExcel()" class="font-bold">Excel</a></li>
+								</ul>
 						</div>	
 					</div>	
 				</div>

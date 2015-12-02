@@ -67,6 +67,97 @@ class ExcelController extends Controller
         })->export('xls');
     }
 
+    public function reporte_6_excel(Request $request){
+         $fecha=$request->input('fecha');
+        if($fecha==""){
+            $fecha=Carbon::today();
+        }
+        $resultado = array();
+        $SaldoTotalConComision=0;
+        $SaldoTotalSinComision=0;
+        $distribuidores=Distribuidor::all();
+        for($j=sizeof($distribuidores)-1; $j >=0; $j--) { 
+            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+            $saldoTotal=0;
+          if (count($vales)==0) {
+                unset($distribuidores[$j]);
+
+            }else{
+                for ($i=0; $i <sizeof($vales); $i++) { 
+                
+                 $importe=$vales[$i]->cantidad;
+                 $saldoAnterior=$vales[$i]->deuda_actual;
+                 $pagosRealizados=$vales[$i]->pagos_realizados+1;
+                 $numeroPagos=$vales[$i]->numero_pagos;
+                 $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+                 $saldoTotal+=$abono;
+                
+                }
+
+                if($saldoTotal>0){
+                    $comision=$this->calcularComision($saldoTotal);
+                    $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
+                    $saldoComision=$saldoTotal-$saldoDistribuidor;
+                    $SaldoTotalSinComision+=$saldoTotal;
+                    $SaldoTotalConComision+=$saldoComision;
+                    $distribuidores[$j]->id_comision =$saldoTotal;
+                    $distribuidores[$j]->telefono=$comision; 
+                    $distribuidores[$j]->celular =$saldoComision;
+                }
+            }
+            
+        }
+       $datas=$distribuidores;
+        $fechaHoy = Carbon::now();
+        $fechaEntrega=$this->CalcularFechaEntrega($fecha);
+        $fechaLimite=$this->CalcularFechaLimite($fecha);
+        $periodo=$this->calcularPeriodo($fecha);
+
+        Excel::create('Reporte_Pago', function($excel) use ($datas, $fechaHoy, $fechaEntrega, $fechaLimite, $periodo, $SaldoTotalSinComision, $SaldoTotalConComision) {
+            $excel->sheet('Reporte_Pago', function($sheet) use ($datas, $fechaHoy, $fechaEntrega, $fechaLimite, $periodo, $SaldoTotalSinComision, $SaldoTotalConComision) {
+                $sheet->loadView('reportes.reporte_6_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("fechaEntrega", $fechaEntrega)->with("fechaLimite", $fechaLimite)->with("periodo", $periodo)->with("SaldoTotalSinComision", $SaldoTotalSinComision)->with("SaldoTotalConComision", $SaldoTotalConComision);
+            });
+        })->export('xls');
+
+    }
+
+    public function reporte_8_excel(Request $request)
+    {
+        $id=$request->input('id');
+        $saldoTotal=0;
+        $saldoTotalActual=0;
+        $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->get();
+
+        for ($i=0; $i <sizeof($vales); $i++) 
+        { 
+
+            
+             $importe=$vales[$i]->cantidad;
+             $saldoAnterior=$vales[$i]->deuda_actual;
+             $pagosRealizados=$vales[$i]->pagos_realizados;
+             $numeroPagos=$vales[$i]->numero_pagos;
+             $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+             $saldoActual=$saldoAnterior-$abono;
+             $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
+             $saldoTotalActual+=$saldoAnterior;
+             $saldoTotal+=$importe;
+            $vales[$i]->id_cliente=$nombreCliente;
+            $vales[$i]->cantidad=$importe.".00";
+            $vales[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
+            $vales[$i]->deuda_actual=$saldoAnterior.".00";
+            
+         }
+        $datas = $vales;
+        $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
+        $fechaHoy = Carbon::now();
+
+        Excel::create('Reporte_Historico', function($excel) use ($datas, $fechaHoy, $distribuidor, $saldoTotal, $saldoTotalActual) {
+            $excel->sheet('Reporte_Historico', function($sheet) use ($datas, $fechaHoy, $distribuidor, $saldoTotal, $saldoTotalActual) {
+                $sheet->loadView('reportes.reporte_8_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("distribuidor", $distribuidor)->with("saldoTotal", $saldoTotal)->with("saldoTotalActual", $saldoTotalActual);
+            });
+        })->export('xls');
+    }
+
     public function calcularPago($cantidad,$tPagos,$nPago){
         $pagos=$cantidad/$tPagos;
         $pago=intval($pagos);  
