@@ -327,19 +327,19 @@ class DistribuidorsController extends Controller
         }
     }
 
-    public function reporteDeudores()
+    public function reporteDistribuidores()
     {   
          switch (Session::get('tipo')) {
             case 0:
-               return view('s_admin.reporteDeudores');
+               return view('s_admin.reporteDistribuidores');
                 break;
             case 1:
-                 return view('admin.reporteDeudores');
+                 return view('admin.reporteDistribuidores');
                 break;
         }  
     }
 
-    public function emitirReporteDeudores(Request $request)
+    public function emitirReporteDistribuidores(Request $request)
     {   
 
        $fecha=$request->input('fecha');

@@ -110,14 +110,15 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 
 	Route::get('reporteCobranza', 'DistribuidorsController@reporteCobranza');
 	Route::get('emitirReporteCobranza', 'DistribuidorsController@emitirReporteCobranza');
-	Route::get('reporteDeudores', 'DistribuidorsController@reporteDeudores');
-	Route::get('emitirReporteDeudores', 'DistribuidorsController@emitirReporteDeudores');
+	Route::get('reporteDistribuidores', 'DistribuidorsController@reporteDistribuidores');
+	Route::get('emitirReporteDistribuidores', 'DistribuidorsController@emitirReporteDistribuidores');
 	Route::get('reporteHistorico', 'DistribuidorsController@reporteHistorico');
 	Route::get('emitirReporteHistorico', 'DistribuidorsController@emitirReporteHistorico');
 
 	Route::get('consultarPagos','PagosController@consultarPagos');
 	Route::get('generarPagos','PagosController@generarPagos');
 	Route::get('crearPagos','PagosController@crearPagos');
+	Route::get('obtenerPagos','PagosController@obtenerPagos');
 });
 
 Route::get('prueba', function()

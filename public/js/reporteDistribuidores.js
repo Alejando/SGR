@@ -9,7 +9,7 @@ $table.bootstrapTable('removeAll');
 	$.ajax({
 		type: "GET",
 		dataType: "json",
- 		url: "emitirReporteDeudores",
+ 		url: "emitirReporteDistribuidores",
 		data: {fecha:fecha},
 		success: llegada,
 		error: problemas

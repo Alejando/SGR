@@ -38,9 +38,47 @@ class PagosController extends Controller
         } 
     }
     public function obtenerPagos(){
-    	
+    	$pagos= Pago::where('estatus','<',2)->get();
+        for ($i=0; $i <sizeof($pagos); $i++) 
+        {
+            if($pagos[$i]->comision>0){
+                $comision=calcularComisionActual($pagos[$i]->fecha_limite,$pagos[$i]->comision);
+            }else{
+                $comision=0;
+            }
+            $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
+            $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
+
+            $pagos[$i]->comision=$comision;
+            $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
+            if( $pagos[$i]->estado==0){
+               $pagos[$i]->estado='<p style="background-color: green;">Esperando pago.</p>';
+            }
+             if( $pagos[$i]->estado==1){
+               $pagos[$i]->estado='<p style="background-color: Red;">Pago Desfasado</p>';
+            }
+            $pago[$i]->acciones='<a type="button" class="btn btn-primary margin" href="">Abonar</a> <a type="button" class="btn btn-success margin" href="">Pagar</a>';
+
+         }
+        
+        return $pagos;
     }
 
+    public function CalcularFechaLimiteCorta($fecha){
+       $fechaCarbon=Carbon::parse($fecha);
+        // 10 nomviembre- 24 Novimebre-> 04 Diciembre
+            // 25 novimebre-09 Diciembre -> 18 Diciembre
+        if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
+            return "04-".($fechaCarbon->month+1)."-".$fechaCarbon->year;       
+        }
+        else{
+            if($fechaCarbon->day<=9){
+                return "18-".($fechaCarbon->month)."-".$fechaCarbon->year;                
+            }else{
+                return "18-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+            }  
+        }
+    }
     public function crearPagos(Request $request)
     {   
         $id=$request->input('id');
@@ -66,19 +104,35 @@ class PagosController extends Controller
 	                
 	            }
 	            if($saldoTotal>0){
-	                $comision=$this->calcularComision($saldoTotal);
-	                $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
-	                $saldoComision=$saldoTotal-$saldoDistribuidor;
+	                 $comision=$this->calcularComision($saldoTotal);
+            
 	            	$pagoAux= Pago::where('$id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha));
-	            	 if (count($pagoAux)==0) {
+	            	 
+                     if (count($pagoAux)==0) {
 		                $pago=new Pago;
 						$pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
 						$pago->cantidad=$saldoTotal;
 						$pago->fecha_creacion=$this->calcularFechaCorte($fecha);
-						$pago->estado=0;// 0:pendiente  1:desfasado 2:pagado
+						$pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
+                        $pago->comision=$comision;
 						$pago->id_cuenta=Session::get('id');
 						$pago->save();
-		            }             
+		            }else{
+                        if($pagoAux[0]->estatus==1){
+                            $pago=new Pago;
+                            $pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
+                            $pago->cantidad=$saldoTotal;
+                            $pago->fecha_creacion=$this->calcularFechaCorte($fecha);
+                            $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
+                            $pago->comision=0;
+                            $pago->abono=$pagoAux[0]->abono;
+                            $pago->id_cuenta=Session::get('id');
+                            $pago->save();
+                            $pagoAux[0]->estatus=3;
+                            $pagoAux->save();
+                        }
+                    }         
+
 
 	            }
 	            
@@ -96,21 +150,32 @@ class PagosController extends Controller
 	                 $saldoTotal+=$abono;
 	                
 	            }
-	            
-                $comision=$this->calcularComision($saldoTotal);
-                $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
-                $saldoComision=$saldoTotal-$saldoDistribuidor;
             	
             	$pagoAux= Pago::where('$id_distribuidor',$id)->where('fecha_creacion',$this->calcularFechaCorte($fecha));
+                 $comision=$this->calcularComision($saldoTotal);
             	 if (count($pagoAux)==0) {
 	                $pago=new Pago;
 					$pago->id_distribuidor=$id;
 					$pago->cantidad=$saldoTotal;
 					$pago->fecha_creacion=$this->calcularFechaCorte($fecha);
 					$pago->estado=0; // 0:pendiente  1:desfasado 2:pagado
+                    $pago->comision=$comision;
 					$pago->id_cuenta=Session::get('id');
 					$pago->save();
-	            }              
+	            }
+                else{
+                        if($pagoAux[0]->estatus==1){
+                            $pago=new Pago;
+                            $pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
+                            $pago->cantidad=$saldoTotal;
+                            $pago->fecha_creacion=$this->calcularFechaCorte($fecha);
+                            $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado
+                            $pago->comision=0;
+                            $pago->abono=$pagoAux[0]->abono;
+                            $pago->id_cuenta=Session::get('id');
+                            $pago->save();
+                        }
+                    }              
         	
         }
         return redirect('consultarPagos');
@@ -154,6 +219,23 @@ class PagosController extends Controller
         else{
             return $pago;
         }
+    }
+
+    public function calcularComisionActual($fecha,$cantidad){
+        $fechaCarbon=Carbon::parse($fecha);
+        // 10 nomviembre- 24 Novimebre-> 04 Diciembre
+            // 25 novimebre-09 Diciembre -> 18 Diciembre
+        
+        if($fechaCarbon->day==5 || $fechaCarbon->day==19){
+            $comision=$comision-2;
+        }
+        if($fechaCarbon->day==6 || $fechaCarbon->day==20){
+            $comision=$comision-2;
+        }
+        if(($fechaCarbon->day>7 && $fechaCarbon->day<19) || ($fechaCarbon->day>21 && $fechaCarbon->day<5)){
+            $comision=0;
+        }
+
     }
 
     public function calcularComision($total){

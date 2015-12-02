@@ -91,8 +91,8 @@
 						</a>
 					</li>
 					<li>
-						<a class="" href="reporteDeudores">
-							<span class="glyphicon glyphicon-share-alt"></span> Deudores
+						<a class="" href="reporteDistribuidores">
+							<span class="glyphicon glyphicon-share-alt"></span> Pago de distribuidores
 						</a>
 					</li>
 					<li>

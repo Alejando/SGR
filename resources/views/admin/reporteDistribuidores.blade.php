@@ -1,12 +1,12 @@
 @extends ('m_admin')
 
-@section ('titulo') Consultar Clientes
+@section ('titulo') Reporte de pago
 @stop
 
 @section ('contenido')
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Reporte Deudores</div>
+			<div class="panel-heading">Reporte de pago de distribuidores</div>
 			<div class="col-lg-12">
 					<div class="col-lg-4">
 						<div class="form-group">
@@ -44,5 +44,5 @@
 		</div>
 	</div>
 @stop
-@section ('js') <script src="js/reporteDeudores.js"></script>
+@section ('js') <script src="js/reporteDistribuidores.js"></script>
 @stop
