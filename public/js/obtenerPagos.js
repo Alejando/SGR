@@ -1,7 +1,7 @@
 
 function obtenerId(){
-	alert($(this).attr("values"));
-	console.log(this.value);
+	alert($(this).attr("value"));
+	console.log(this);
 }
 
 function pagar(){

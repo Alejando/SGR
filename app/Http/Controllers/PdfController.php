@@ -12,6 +12,8 @@ use App\Cliente;
 use Carbon\Carbon;
 use App\DistribuidorsController;
 use App\Comision;
+use App\Pago;
+use App\Cuenta;
 
 
 class PdfController extends Controller
@@ -264,7 +266,7 @@ class PdfController extends Controller
             }
             
         }
-       $datas=$distribuidores;
+         $datas=$distribuidores;
         $fechaHoy = Carbon::now();
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
         $fechaLimite=$this->CalcularFechaLimite($fecha);
@@ -311,6 +313,45 @@ class PdfController extends Controller
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_8.pdf');
     }
+     public function reporte_7(){
 
+        $pagos= Pago::where('estado','<',2)->get();
+        $saldoTotal=0;  
+        $saldoTotalAbono=0;
+        for ($i=0; $i <sizeof($pagos); $i++) 
+        {
+             $saldoTotal+= $pagos[$i]->cantidad;
+               $saldoTotalAbono+= $pagos[$i]->abono;
+            $pagos[$i]->id_distribuidor=Distribuidor::find($pagos[$i]->id_distribuidor)->nombre;
+            $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
+           
+          
+            $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
+            $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
+            $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
+            $pagos[$i]->comision=$pagos[$i]->comision."%";
+            if( $pagos[$i]->estado==0){
+               $pagos[$i]->estado='Esperando pago...';
+            }
+             if( $pagos[$i]->estado==1){
+               $pagos[$i]->estado='Pago Desfasado';
+            }
+            
+
+         }
+          $datas = $pagos;
+          $fechaHoy = Carbon::now();
+        
+       $view =  \View::make('reportes/reporte_7', compact('datas','saldoTotal','saldoTotalAbono','fechaHoy'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('reporte_7.pdf');
+
+
+     }
+     public function modificarFechas($fecha){
+        $fechaCarbon=Carbon::parse($fecha);
+        return $fechaCarbon->day."-".$fechaCarbon->month."-".$fechaCarbon->year;
+    }
 }
     

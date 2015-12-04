@@ -19,6 +19,7 @@ Route::get('logout','LoginController@logout');
 //----------------------------------------------------------//
 Route::get('pdf', 'PdfController@invoice');
 Route::get('reporte_8', 'PdfController@reporte_8');
+Route::get('reporte_7', 'PdfController@reporte_7');
 Route::get('reporte_6', 'PdfController@reporte_6');
 Route::get('reporte_2', 'PdfController@reporte_2');
 Route::get('reporte_1', 'PdfController@reporte_1');
