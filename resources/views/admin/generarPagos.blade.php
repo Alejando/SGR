@@ -55,7 +55,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-small btn-danger" data-dismiss="modal">Cancelar</button>
-                 <a class="btn btn-small btn-success" onclick="generar()">Eliminar</a>
+                 <a class="btn btn-small btn-success" href="consultarPagos" onclick="generar()">Generar</a>
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -63,7 +63,7 @@
 
 @stop
 
-@stop
+
 @section ('js') 
 <script src="js/generarPagos.js"></script>
 @stop

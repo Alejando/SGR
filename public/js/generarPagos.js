@@ -12,15 +12,16 @@ $(function() {
 });
 
 function generar(){
-if($('#id_distribuidor').val()=""){
+if($('#id_distribuidor').val()==""){
 	idDistribuidor=0;
 }
  var fecha=$('#fecha').val();
- alert("si se pudo");
+ //alert("si se pudo");
 	$.ajax({
 		type: "GET",
 		dataType: "json",
  		url: "crearPagos",
 		data: {fecha:fecha, id:idDistribuidor}
 	});
+	
 }

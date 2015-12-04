@@ -164,7 +164,10 @@ class PdfController extends Controller
 
 
     public function meses($mes){
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        if($mes==13){
+            $mes=1;
+        }
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre","nulo");
         
         return $meses[$mes-1];
     }

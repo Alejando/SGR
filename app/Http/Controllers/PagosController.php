@@ -9,6 +9,9 @@ use App\Distribuidor;
 use App\Vale;
 use App\Cliente;
 use App\Movimiento;
+use App\Comision;
+use App\Cuenta;
+use App\Pago;
 use App\Vales_has_promociones;
 use Carbon\Carbon;
 use Session;
@@ -37,27 +40,27 @@ class PagosController extends Controller
             break; 
         } 
     }
+    public function modificarFechas($fecha){
+        $fechaCarbon=Carbon::parse($fecha);
+        return $fechaCarbon->day."-".$fechaCarbon->month."-".$fechaCarbon->year;
+    }
     public function obtenerPagos(){
-    	$pagos= Pago::where('estatus','<',2)->get();
+    	$pagos= Pago::where('estado','<',2)->get();
         for ($i=0; $i <sizeof($pagos); $i++) 
         {
-            if($pagos[$i]->comision>0){
-                $comision=calcularComisionActual($pagos[$i]->fecha_limite,$pagos[$i]->comision);
-            }else{
-                $comision=0;
-            }
             $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
+            $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
+            $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
             $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
-
-            $pagos[$i]->comision=$comision;
             $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
+            $pagos[$i]->comision=$pagos[$i]->comision."%";
             if( $pagos[$i]->estado==0){
                $pagos[$i]->estado='<p style="background-color: green;">Esperando pago.</p>';
             }
              if( $pagos[$i]->estado==1){
                $pagos[$i]->estado='<p style="background-color: Red;">Pago Desfasado</p>';
             }
-            $pago[$i]->acciones='<a type="button" class="btn btn-primary margin" href="">Abonar</a> <a type="button" class="btn btn-success margin" href="">Pagar</a>';
+            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin" value="'.$pagos[$i]->id_pago.'" data-target="#abono" onclick="obtenerId()" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  name="'.$pagos[$i]->id_pago.'" data-target="#pago" href="#">Pagar</a>';
 
          }
         
@@ -106,10 +109,10 @@ class PagosController extends Controller
 	            if($saldoTotal>0){
 	                 $comision=$this->calcularComision($saldoTotal);
             
-	            	$pagoAux= Pago::where('$id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha));
+	            	$pagoAux= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
 	            	 
                      if (count($pagoAux)==0) {
-		                $pago=new Pago;
+		                $pago = new Pago;
 						$pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
 						$pago->cantidad=$saldoTotal;
 						$pago->fecha_creacion=$this->calcularFechaCorte($fecha);
@@ -133,11 +136,11 @@ class PagosController extends Controller
                         }
                     }         
 
-
 	            }
 	            
 	        }
-        }else{
+        }
+        else{
         	$vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
 	            $saldoTotal=0;
 	            for ($i=0; $i <sizeof($vales); $i++) { 
@@ -178,7 +181,7 @@ class PagosController extends Controller
                     }              
         	
         }
-        return redirect('consultarPagos');
+        return 'consultarPagos';
     }
     
     public function calcularFechaCorte($fecha){
@@ -235,7 +238,7 @@ class PagosController extends Controller
         if(($fechaCarbon->day>7 && $fechaCarbon->day<19) || ($fechaCarbon->day>21 && $fechaCarbon->day<5)){
             $comision=0;
         }
-
+        return $comision;
     }
 
     public function calcularComision($total){
