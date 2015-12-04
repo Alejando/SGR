@@ -29,3 +29,10 @@ function mostrarPDF(){
     window.open(url, '_blank');
 	
 }
+
+function mostrarExcel(){
+	var fecha=$('#fecha').val();
+	url='reporte_6_excel?fecha='+fecha;
+    window.open(url, '_blank');
+	
+}
