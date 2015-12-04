@@ -1,6 +1,7 @@
 
-function obtenerId(){
-	alert($(this).attr("values"));
+function obtenerId(id){
+	alert(id);
+	//alert($(this).attr("values"));
 	console.log(this.value);
 }
 

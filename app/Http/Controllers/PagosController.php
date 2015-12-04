@@ -50,6 +50,7 @@ class PagosController extends Controller
         {
             $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
             $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
+            $pagos[$i]->abono='$'.$pagos[$i]->abono.".00";
             $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
             $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
             $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
@@ -60,7 +61,7 @@ class PagosController extends Controller
              if( $pagos[$i]->estado==1){
                $pagos[$i]->estado='<p style="background-color: Red;">Pago Desfasado</p>';
             }
-            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin" value="'.$pagos[$i]->id_pago.'" data-target="#abono" onclick="obtenerId()" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  name="'.$pagos[$i]->id_pago.'" data-target="#pago" href="#">Pagar</a>';
+            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin" value="'.$pagos[$i]->id_pago.'" data-target="#abono" onclick="obtenerId('.$pagos[$i]->id_pago.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  name="'.$pagos[$i]->id_pago.'" data-target="#pago" href="#">Pagar</a>';
 
          }
         

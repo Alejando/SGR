@@ -11,10 +11,10 @@
 				<table data-toggle="table" data-url="obtenerPagos"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 				    <thead>
 				    <tr>
-
 				        <th data-field="id_pago" data-sortable="true">Id</th>
 				        <th data-field="id_distribuidor" data-halign="center"data-sortable="true">Distribuidor</th>
 				        <th data-field="cantidad"   data-halign="center"data-sortable="true">Cantidad</th>
+                <th data-field="abono"   data-halign="center"data-sortable="true">Abono</th>
 				        <th data-field="fecha_creacion"  data-halign="center"data-sortable="true">Fecha corte</th>
 				        <th data-field="fecha_limite"   data-halign="center"data-sortable="true">Fecha limite</th>
 				        <th data-field="comision"   data-halign="center"data-sortable="true">Comisión actual</th>
@@ -37,7 +37,9 @@
           </div>
           <div class="modal-body">
             <p>¿Cuanto desea abonar?</p>
+            <div class="form-group">
             <input type="text" id="nuevoAbono"/>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-small btn-danger" data-dismiss="modal">Cancelar</button>
