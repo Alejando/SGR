@@ -27,19 +27,20 @@
 		</div>
 	</div>
 
-	
-	<div class="modal fade" id="abono" >
-      <div class="modal-dialog">
-        <div class="modal-content">
+
+	<div class="modal fade" id="abono">
+      <div class="modal-dialog ">
+        <div class="modal-content abono">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Alerta!</h4>
           </div>
+          
           <div class="modal-body">
             <p>¿Cuanto desea abonar?</p>
-            <div class="form-group">
-            <input type="text" id="nuevoAbono"/>
-            </div>
+          
+            <input type="number" id="nuevoAbono" class="texto"/>
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-small btn-danger" data-dismiss="modal">Cancelar</button>
@@ -48,9 +49,10 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
     <div class="modal fade" id="pago">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content abono">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Alerta!</h4>
@@ -66,6 +68,9 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+@stop
+@section ('css')
+<link href="css/modal.css"  rel="stylesheet">
 @stop
 
 @section ('js') 
