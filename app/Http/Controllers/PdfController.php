@@ -57,7 +57,7 @@ class PdfController extends Controller
         $saldoComision=$saldoTotal-$saldoDistribuidor;
         $datas = $vales;
         $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
-        $fechaHoy = Carbon::now();
+        $fechaHoy = modificarFechasCarbon::now();
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
         $fechaLimite=$this->CalcularFechaLimite($fecha);
         $periodo=$this->calcularPeriodo($fecha);
@@ -208,17 +208,17 @@ class PdfController extends Controller
             $vales[$i]->deuda_actual="$".$saldoActual.".00";
             
          }
+         
         $comision=$this->calcularComision($saldoTotal);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
-        $datas = $vales;
+        $data = $vales;
         $distribuidor=Distribuidor::find($id)->nombre;
-        $fechaHoy = Carbon::today()->toDateString();
+        $fechaHoy = $this->modificarFechas(Carbon::today()->toDateString());
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
         $fechaLimite=$this->CalcularFechaLimiteCorta($fecha);
         $periodo=$this->calcularPeriodo($fecha);
-
-        $view =  \View::make('reportes/reporte_1', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision'))->render();
+        $view =  \View::make('reportes/reporte_1', compact('data', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_1.pdf');
@@ -325,7 +325,7 @@ class PdfController extends Controller
             $pagos[$i]->cantidad_comision='$'.$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
             $pagos[$i]->id_distribuidor=Distribuidor::find($pagos[$i]->id_distribuidor)->nombre;
             $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
-             $pagos[$i]->abono='$'.$pagos[$i]->abono.".00";
+            $pagos[$i]->abono='$'.$pagos[$i]->abono.".00";
             $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
             $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
             $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;

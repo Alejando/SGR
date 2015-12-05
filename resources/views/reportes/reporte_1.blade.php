@@ -6,7 +6,10 @@
     <link href="css/reporte_1.css"  rel="stylesheet">
   </head>
   <body>
-  	@foreach ($datas as $data)
+  	@for ($i = 0; $i < sizeof($data); $i++)
+
+  	@if($i%2==0)
+	  		
 	<table>
 	    <tr>
 	      <td colspan="9" class="mitad">A1</td>
@@ -37,18 +40,18 @@
 	      <td>B5</td>
 	      <td colspan="2">B6</td>
 	      <!--td>B7</td-->
-	      <td colspan="2">{{$data->folio}}</td>
+	      <td colspan="2">{{$data[$i]->folio}}</td>
 	      <!--td>B9</td-->
 	      <td>x</td>
 	      <td colspan="2">B1</td>
 	      <!--td>B2</td-->
-	      <td colspan="2">B3</td>
+	      <td colspan="2">{{$fechaHoy}}</td>
 	      <!--td>B4</td-->
 	      <td>B5</td>
 	      <td colspan="2">B6</td>
-	      <!--td>B7</td-->
-	      <td colspan="2">B8</td>
-	      <!--td>B9</td-->
+	      <!--td>B7</td-->@if($i+1 < sizeof($data))
+	      <td colspan="2">{{($data[$i+1]->folio)}}</td>
+	      <!--td>B9</td-->@endif
 	    </tr>
 
 	    <tr>
@@ -79,7 +82,7 @@
 	      <td>C9</td-->
 	    </tr>
 	    <tr>
-	      <td colspan="2">{{$data->id_distribuidor}}</td>
+	      <td colspan="2">{{$data[$i]->id_distribuidor}}</td>
 	      <!--td>D2</td-->
 	      <td colspan="7">{{$distribuidor}}</td>
 	      <!--td>D4</td>
@@ -88,10 +91,10 @@
 	      <td>D7</td>
 	      <td>D8</td>
 	      <td>D9</td-->
-	      <td>x</td>
-	      <td colspan="2">D1</td>
+	      <td>x</td>@if($i+1< sizeof($data))
+	      <td colspan="2">{{$data[$i+1]->id_distribuidor}}</td>
 	      <!--td>D2</td-->
-	      <td colspan="7">D3</td>
+	      <td colspan="7">{{$distribuidor}}</td>@endif
 	      <!--td>D4</td>
 	      <td>D5</td>
 	      <td>D6</td>
@@ -121,19 +124,19 @@
 	      <td>E9</td-->
 	    </tr>
 	    <tr>
-	      <td colspan="2">{{$data->id_vale}}</td>
+	      <td colspan="2">{{$data[$i]->id_vale}}</td>
 	      <!--td>F2</td-->
-	      <td colspan="7">{{$data->id_cliente}}</td>
+	      <td colspan="7">{{$data[$i]->id_cliente}}</td>
 	      <!--td>F4</td>
 	      <td>F5</td>
 	      <td>F6</td>
 	      <td>F7</td>
 	      <td>F8</td>
 	      <td>F9</td-->
-	      <td>x</td>
-	      <td colspan="2">F1</td>
+	      <td>x</td>@if($i+1< sizeof($data))
+	       <td colspan="2">{{$data[$i+1]->id_vale}}</td>
 	      <!--td>F2</td-->
-	      <td colspan="7">F3</td>
+	      <td colspan="7">{{$data[$i+1]->id_cliente}}</td>@endif
 	      <!--td>F4</td>
 	      <td>F5</td>
 	      <td>F6</td>
@@ -153,7 +156,7 @@
 	      <td>G4</td>
 	      <td>G5</td>
 	      <td>G6</td-->
-	      <td colspan="3">G7</td>
+	      <td colspan="3">{{$data[$i]->numero_pagos}}</td>
 	      <!--td>G8</td>
 	      <td>G9</td-->
 	      <td>x</td>
@@ -162,8 +165,8 @@
 	      <td>G3</td>
 	      <td>G4</td>
 	      <td>G5</td>
-	      <td>G6</td-->
-	      <td colspan="3">{{$data->numero_pagos}}</td>
+	      <td>G6</td-->@if($i+1< sizeof($data))
+	      <td colspan="3">{{$data[$i+1]->numero_pagos}}</td>@endif
 	      <!--td>G8</td>
 	      <td>G9</td-->
 	    </tr>
@@ -184,12 +187,12 @@
 	      <td>H4</td>
 	      <td>H5</td>
 	      <td>H6</td-->
-	      <td colspan="3">H7</td>
+	      <td colspan="3">$0.00</td>
 	      <!--td>H8</td>
 	      <td>H9</td-->
 	    </tr>
 	    <tr>
-	      <td colspan="6">Pago: {{$data->pagos_realizados}}</td>
+	      <td colspan="6">Pago: {{$data[$i]->pagos_realizados}}</td>
 	      <!--td>I2</td>
 	      <td>I3</td>
 	      <td>I4</td>
@@ -198,8 +201,8 @@
 	      <td colspan="3">I7</td>
 	      <!--td>I8</td>
 	      <td>I9</td-->
-	      <td>x</td>
-	      <td colspan="6">I1</td>
+	      <td>x</td>@if($i+1< sizeof($data))
+	     <td colspan="6">Pago: {{$data[$i+1]->pagos_realizados}}</td>@endif
 	      <!--td>I2</td>
 	      <td>I3</td>
 	      <td>I4</td>
@@ -216,7 +219,7 @@
 	      <td>J4</td>
 	      <td>J5</td>
 	      <td>J6</td-->
-	      <td colspan="3">{{$data->numero_pagos}}</td>
+	      <td colspan="3">{{$data[$i]->numero_pagos}}</td>
 	      <!--td>J8</td>
 	      <td>J9</td-->
 	      <td>x</td>
@@ -225,8 +228,8 @@
 	      <td>J3</td>
 	      <td>J4</td>
 	      <td>J5</td>
-	      <td>J6</td-->
-	      <td colspan="3">J7</td>
+	      <td>J6</td-->@if($i+1< sizeof($data))
+	      <td colspan="3">{{$data[$i+1]->numero_pagos}}</td>@endif
 	      <!--td>J8</td>
 	      <td>J9</td-->
 	    </tr>
@@ -255,20 +258,20 @@
 	      <td colspan="3">{{$fechaLimite}}</td>
 	      <!--td>L2</td>
 	      <td>L3</td-->
-	      <td colspan="3">{{$data->cantidad_limite}}</td>
+	      <td colspan="3">{{$data[$i]->cantidad_limite}}</td>
 	      <!--td>L5</td>
 	      <td>L6</td-->
-	      <td colspan="3">{{$data->deuda_actual}}</td>
+	      <td colspan="3">{{$data[$i]->deuda_actual}}</td>
 	      <!--td>L8</td>
 	      <td>L9</td-->
-	      <td>x</td>
-	      <td colspan="3">L1</td>
+	      <td>x</td>@if($i+1< sizeof($data))
+	      <td colspan="3">{{$fechaLimite}}</td>
 	      <!--td>L2</td>
 	      <td>L3</td-->
-	      <td colspan="3">L4</td>
+	      <td colspan="3">{{$data[$i+1]->cantidad_limite}}</td>
 	      <!--td>L5</td>
 	      <td>L6</td-->
-	      <td colspan="3">L7</td>
+	      <td colspan="3">{{$data[$i+1]->deuda_actual}}</td>@endif
 	      <!--td>L8</td>
 	      <td>L9</td-->
 	    </tr>
@@ -294,7 +297,7 @@
 	      <td>M9</td-->
 	    </tr>
 	</table>
-	@endforeach
-
+	@endif
+	@endfor
   </body>
 </html>

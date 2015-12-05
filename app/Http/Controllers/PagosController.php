@@ -82,7 +82,7 @@ class PagosController extends Controller
         $abono=$request->input('abono');
         $pago=Pago::find($id);
         $pago->abono+=$abono;
-        if($pago->abono>=pagoComision($pago->cantidad,$pago->comision)){
+        if($pago->abono>=$this->pagoComision($pago->cantidad,$pago->comision)){
             $pago->estado=2;
         }
        
@@ -332,7 +332,6 @@ class PagosController extends Controller
                 $pagos[$i]->estado=$this->nuevoEstado($pagos[$i]->fecha_creacion,$pagos[$i]->id_distribuidor);
                 $pagos[$i]->save();
             }
-           
-         }
+        }
     }
 }
