@@ -12,6 +12,8 @@ use App\Cliente;
 use Carbon\Carbon;
 use App\DistribuidorsController;
 use App\Comision;
+use App\Pago;
+use App\Cuenta;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
@@ -156,6 +158,55 @@ class ExcelController extends Controller
                 $sheet->loadView('reportes.reporte_8_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("distribuidor", $distribuidor)->with("saldoTotal", $saldoTotal)->with("saldoTotalActual", $saldoTotalActual);
             });
         })->export('xls');
+    }
+
+    public function reporte_7_excel(){
+
+        $pagos= Pago::where('estado','<',2)->get();
+        $saldoTotal=0;  
+        $saldoTotalAbono=0;
+        for ($i=0; $i <sizeof($pagos); $i++) 
+        {
+            $saldoTotal+= $pagos[$i]->cantidad;
+            $saldoTotalAbono+= $pagos[$i]->abono;
+            $pagos[$i]->cantidad_comision=$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
+            $pagos[$i]->id_distribuidor=Distribuidor::find($pagos[$i]->id_distribuidor)->nombre;
+            $pagos[$i]->cantidad=$pagos[$i]->cantidad.".00";
+            $pagos[$i]->abono=$pagos[$i]->abono.".00";
+            $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
+            $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
+            $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
+            $pagos[$i]->comision=$pagos[$i]->comision."%";
+            if( $pagos[$i]->estado==0){
+               $pagos[$i]->estado='Esperando pago...';
+            }
+             if( $pagos[$i]->estado==1){
+               $pagos[$i]->estado='Pago Desfasado';
+            }
+            
+
+         }
+          $datas = $pagos;
+          $fechaHoy = Carbon::now();
+
+        Excel::create('Reporte_Deudores', function($excel) use ($datas, $fechaHoy, $saldoTotal, $saldoTotalAbono) {
+            $excel->sheet('Reporte_Deudores', function($sheet) use ($datas, $fechaHoy, $saldoTotal, $saldoTotalAbono) {
+                $sheet->loadView('reportes.reporte_7_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("saldoTotal", $saldoTotal)->with("saldoTotalAbono", $saldoTotalAbono);
+            });
+        })->export('xls');
+
+
+     }
+
+     public function pagoComision($cantidad,$comision){
+        $saldoComision=intval(($cantidad*$comision)/100); 
+        $saldoTotal=$cantidad-$saldoComision;
+        return $saldoTotal;
+
+    }
+     public function modificarFechas($fecha){
+        $fechaCarbon=Carbon::parse($fecha);
+        return $fechaCarbon->day."-".$fechaCarbon->month."-".$fechaCarbon->year;
     }
 
     public function calcularPago($cantidad,$tPagos,$nPago){
