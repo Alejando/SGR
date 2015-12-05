@@ -41,16 +41,22 @@ class MovimientosController extends Controller
               
              
           }
+          $movimientos[$i]->estado_anterior=$this->movimientoBonito( $movimientos[$i]->estado_anterior);
+           $movimientos[$i]->estado_actual=$this->movimientoBonito( $movimientos[$i]->estado_actual);
         }    
         return $movimientos;
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function movimientoBonito($movimiento){
+      
+        $movimiento=str_replace('"','',$movimiento);
+        $movimiento=str_replace('{','',$movimiento);
+        $movimiento=str_replace('}','',$movimiento);
+      $inicio=strpos($movimiento,'created_at');
+      $movimiento=iconv_substr($movimiento,0,$inicio);
+        $movimiento=str_replace(',',' | ',$movimiento);
+           return $movimiento;
+    }
     public function consultarMovimientos()
     {
         return view('s_admin.consultarMovimientos');

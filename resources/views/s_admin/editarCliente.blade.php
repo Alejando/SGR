@@ -1,4 +1,4 @@
-@extends ('Layouts.m_admin_show')
+@extends ('Layouts.m_super_admin_show')
 
 @section ('titulo') Editar Cliente
 @stop
@@ -10,13 +10,12 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Editar Clientes</div>
 					<div class="panel-body">
-						 @if(Session::has('message'))
-						<div class="alert alert-{{ Session::get('class') }} alert-dismissable">
-						    <button type="button" class="close" data-dismiss="alert">&times;</button>
-						    <strong> {{ Session::get('message')}} </strong>
-					    </div>
-						 	                
-		                @endif
+						@if(Session::has('message'))
+							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+								    <button type="button" class="close" data-dismiss="alert">&times;</button>
+								    <strong> {{ Session::get('message')}} </strong>
+							</div>
+						@endif
 						<div class="col-md-6">
 							<label>Datos Cliente</label>
 							<form class="form" role="form" method="POST" action="{{URL::to('actualizarCliente/').'/'.$cliente->id_cliente}}" enctype="multipart/form-data">
@@ -50,8 +49,8 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>Celular *</label>
-									<input type="text"  value="{{ $cliente->celular }}" name="celular" class="form-control" >
+									<label>Celular</label>
+									<input type="text"  value="{{ $cliente->celular }}" name="celular" class="form-control">
 								</div>
 								<div class="form-group">
 									<label>Calle *</label>
@@ -71,7 +70,7 @@
 								</div>	
 							</div>	
 						</div>
-							
+						
 							
 							<div class="col-md-12">
 								<div class="pull-right">

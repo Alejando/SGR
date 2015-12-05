@@ -1,8 +1,17 @@
 var $id=0;
 
-function obtenerId(id){
+function obtenerId(id,distribuidor, cantidad, can_letra, periodo, fechaHoy){
 	$id=id;
+	$('#pBueno').html("Bueno por: $"+cantidad+".00");
+	$('#pTexto').html("Recibi de: "+distribuidor+" la cantidad de: $"+cantidad+".00 ("+can_letra+") por el concepto de pago de ventas por vales referente al periodo "+periodo);
+	$('#pFecha').html(fechaHoy);
+	$('#pDistribuidor').html(distribuidor);
 	
+	//alert(distribuidor);
+	//alert(cantidad);
+	//alert(can_letra);
+	//alert(periodo);
+	//alert(fechaHoy);
 }
 function abonar(){
 	var abono=$('#nuevoAbono').val();
@@ -15,12 +24,16 @@ function abonar(){
 }
 
 function pagar(){
-
+/*
 	$.ajax({
 		type: "GET",
  		url: "liquidarPago",
 		data: {id:$id}
-	});
+	});*/
+
+	$('#ticket').show();
+	$('#ticket').printArea();
+	$('#ticket').hide();
 	
 }
 
