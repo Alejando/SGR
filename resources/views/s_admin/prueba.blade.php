@@ -1,4 +1,4 @@
-@extends ('m_admin')
+@extends ('Layouts.m_super_admin')
 
 @section ('titulo') pagina 2
 @stop

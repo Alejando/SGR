@@ -11,9 +11,11 @@
 					<div class="panel-heading">Crear Clientes</div>
 					<div class="panel-body">
 						 @if(Session::has('message'))
-		                    <div class="alert alert-{{ Session::get('class') }}">{{ Session::get('message')}}</div>
-		                
-		                @endif
+							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+								    <button type="button" class="close" data-dismiss="alert">&times;</button>
+								    <strong> {{ Session::get('message')}} </strong>
+							</div>
+						@endif
 						<div class="col-md-8">
 							<label>Datos Cliente</label>
 							<form class="form" role="form" method="POST" action="guardarCliente" enctype="multipart/form-data">
@@ -48,7 +50,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Celular</label>
-									<input type="text"  name="celular" class="form-control" >
+									<input type="text"  name="celular" class="form-control">
 								</div>
 								<div class="form-group">
 									<label>Calle *</label>

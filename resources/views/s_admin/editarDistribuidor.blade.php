@@ -11,10 +11,12 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Crear Distribuidores</div>
 					<div class="panel-body">
-						 @if(Session::has('message'))
-		                    <div class="alert alert-{{ Session::get('class') }}">{{ Session::get('message')}}</div>
-		                
-		                @endif
+						@if(Session::has('message'))
+							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+								    <button type="button" class="close" data-dismiss="alert">&times;</button>
+								    <strong> {{ Session::get('message')}} </strong>
+							</div>
+						@endif
 						<div class="col-md-6">
 							<label>Datos Distribuidor</label>
 							<form class="form" role="form" method="POST" action="{{URL::to('actualizarDistribuidor/').'/'.$distribuidor->id_distribuidor}}" enctype="multipart/form-data">
@@ -45,7 +47,7 @@
 									</div>
 									<div class="form-group">
 										<label>Celular</label>
-										<input type="tel" value="{{ $distribuidor->celular }}" name="celular" class="form-control" >
+										<input type="tel" value="{{ $distribuidor->celular }}" name="celular" class="form-control">
 									</div>	
 								</div>		
 								<div class="col-md-6">
@@ -55,7 +57,7 @@
 									</div>
 									<div class="form-group">	
 										<label>Número interior</label>
-										<input type="text" value="{{ $distribuidor->numero_interior }}" name="numero_interior" class="form-control" >
+										<input type="text" value="{{ $distribuidor->numero_interior }}" name="numero_interior" class="form-control">
 									</div>
 									<div class="form-group">	
 										<label>Estado *</label>
@@ -99,8 +101,8 @@
 										<input type="text" value="{{ $distribuidor->codigo_postal_aval }}" name="codigo_postal_aval" class="form-control" required>
 									</div>
 									<div class="form-group ">
-										<label class="control-label">Celular</label>
-										<input type="text" value="{{ $distribuidor->celular_aval }}" name="celular_aval" class="form-control" pattern="[0-9]{10}">
+										<label class="control-label">Celular *</label>
+										<input type="text" value="{{ $distribuidor->celular_aval }}" name="celular_aval" class="form-control" pattern="[0-9]{10}" required>
 									</div>	
 								</div>		
 								<div class="col-md-6">

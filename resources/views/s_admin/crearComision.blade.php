@@ -11,9 +11,11 @@
 					<div class="panel-heading">Crear Comision</div>
 					<div class="panel-body">
 						 @if(Session::has('message'))
-		                    <div class="alert alert-{{ Session::get('class') }}">{{ Session::get('message')}}</div>
-		                
-		                @endif
+							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+								    <button type="button" class="close" data-dismiss="alert">&times;</button>
+								    <strong> {{ Session::get('message')}} </strong>
+							</div>
+						@endif
 						<div class="col-md-6">
 							<label>Datos comisión</label>
 							<form class="form" role="form" method="POST" action="guardarComision" enctype="multipart/form-data">

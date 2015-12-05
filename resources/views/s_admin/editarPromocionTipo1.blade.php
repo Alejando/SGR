@@ -1,5 +1,4 @@
 @extends ('Layouts.m_super_admin_show')
-
 @section ('titulo') Editar promoción
 @stop
 

@@ -1,6 +1,6 @@
 @extends ('Layouts.m_super_admin_show')
 
-@section ('titulo') Editar Cuenta Vendedor
+@section ('titulo') Editar Comisión
 @stop
 
 @section ('contenido')
@@ -10,12 +10,11 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Editar Comisión</div>
 					<div class="panel-body">
-						 @if(Session::has('message'))
-						<div class="alert alert-{{ Session::get('class') }} alert-dismissable">
-						    <button type="button" class="close" data-dismiss="alert">&times;</button>
-						    <strong> {{ Session::get('message')}} </strong>
-					    </div>
-						 	                
+						@if(Session::has('message'))
+							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+								    <button type="button" class="close" data-dismiss="alert">&times;</button>
+								    <strong> {{ Session::get('message')}} </strong>
+							</div>          
 		                @endif
 						<div class="col-md-6">
 							<label>Datos Comisión</label>
