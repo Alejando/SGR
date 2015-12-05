@@ -51,3 +51,10 @@ function mostrarExcel(){
     window.open(url, '_blank');
 	
 }
+
+function mostrarReporte1(){
+	var fecha=$('#fecha').val();
+	url='reporte_1?fecha='+fecha+'&id='+idDistribuidor;
+    window.open(url, '_blank');
+	
+}

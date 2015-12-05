@@ -47,30 +47,54 @@ class PagosController extends Controller
     }
 
     public function obtenerPagos(){
+        $fechaHoy="'".Carbon::today()->toDateString()."'";
         $this->actualizarPagos();
     	$pagos= Pago::where('estado','<',2)->get();
         for ($i=0; $i <sizeof($pagos); $i++) 
         {
             $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
             $pagos[$i]->cantidad_comision='$'.$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
+            $nombre = "'".$pagos[$i]->id_distribuidor."'";
+            $cantidad = $pagos[$i]->cantidad;
+            $can_letra = "'".$this->num_to_letras($cantidad)."'";
+            $periodo = "'".$this->calcularPeriodo($pagos[$i]->fecha_creacion)."'";
             $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
             $pagos[$i]->abono='$'.$pagos[$i]->abono.".00";
             $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
             $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
             $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
             $pagos[$i]->comision=$pagos[$i]->comision."%";
+
             if( $pagos[$i]->estado==0){
                $pagos[$i]->estado='<p style="background-color: green;">Esperando pago.</p>';
             }
              if( $pagos[$i]->estado==1){
                $pagos[$i]->estado='<p style="background-color: Red;">Pago Desfasado</p>';
             }
-            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin"  data-target="#abono" onclick="obtenerId('.$pagos[$i]->id_pago.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  onclick="obtenerId('.$pagos[$i]->id_pago.')" data-target="#pago" href="#">Pagar</a>';
+            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin"  data-target="#abono" onclick="obtenerId('.$pagos[$i]->id_pago.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  onclick="obtenerId('. $pagos[$i]->id_pago.')" data-target="#pago" href="#">Pagar</a> <a type="button" class="btn btn-primary " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
 
          }
         
         return $pagos;
     }
+
+    public function calcularPeriodo($fecha){
+            // 10 nomviembre- 24 Novimebre
+            // 25 novimebre-09 Diciembre
+       $fechaCarbon=Carbon::parse($fecha);
+
+       if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
+            return "10-".$fechaCarbon->month."-".$fechaCarbon->year." al 24-".$fechaCarbon->month."-".$fechaCarbon->year;       
+        }
+        else{
+            if($fechaCarbon->day<=9){
+                return "25-".($fechaCarbon->month-1)."-".$fechaCarbon->year." al 09-".$fechaCarbon->month."-".$fechaCarbon->year;                
+            }else{
+                return "25-".$fechaCarbon->month."-".$fechaCarbon->year." al 09-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+            }  
+        }
+    }
+
     public function pagoComision($cantidad,$comision){
         $saldoComision=intval(($cantidad*$comision)/100); 
         $saldoTotal=$cantidad-$saldoComision;
@@ -333,5 +357,174 @@ class PagosController extends Controller
                 $pagos[$i]->save();
             }
         }
+    }
+
+
+    function num_to_letras($numero)
+{
+    $moneda = 'PESO';
+    $subfijo = 'M.N.';
+    $xarray = array(
+        0 => 'Cero'
+        , 1 => 'UN', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'
+        , 'DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISEIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'
+        , 'VEINTI', 30 => 'TREINTA', 40 => 'CUARENTA', 50 => 'CINCUENTA'
+        , 60 => 'SESENTA', 70 => 'SETENTA', 80 => 'OCHENTA', 90 => 'NOVENTA'
+        , 100 => 'CIENTO', 200 => 'DOSCIENTOS', 300 => 'TRESCIENTOS', 400 => 'CUATROCIENTOS', 500 => 'QUINIENTOS'
+        , 600 => 'SEISCIENTOS', 700 => 'SETECIENTOS', 800 => 'OCHOCIENTOS', 900 => 'NOVECIENTOS'
+    );
+ 
+    $numero = trim($numero);
+    $xpos_punto = strpos($numero, '.');
+    $xaux_int = $numero;
+    $xdecimales = '00';
+    if (!($xpos_punto === false)) {
+        if ($xpos_punto == 0) {
+            $numero = '0' . $numero;
+            $xpos_punto = strpos($numero, '.');
+        }
+        $xaux_int = substr($numero, 0, $xpos_punto); // obtengo el entero de la cifra a covertir
+        $xdecimales = substr($numero . '00', $xpos_punto + 1, 2); // obtengo los valores decimales
+    }
+ 
+    $XAUX = str_pad($xaux_int, 18, ' ', STR_PAD_LEFT); // ajusto la longitud de la cifra, para que sea divisible por centenas de miles (grupos de 6)
+    $xcadena = '';
+    for ($xz = 0; $xz < 3; $xz++) {
+        $xaux = substr($XAUX, $xz * 6, 6);
+        $xi = 0;
+        $xlimite = 6; // inicializo el contador de centenas xi y establezco el límite a 6 dígitos en la parte entera
+        $xexit = true; // bandera para controlar el ciclo del While
+        while ($xexit) {
+            if ($xi == $xlimite) { // si ya llegó al límite máximo de enteros
+                break; // termina el ciclo
+            }
+ 
+            $x3digitos = ($xlimite - $xi) * -1; // comienzo con los tres primeros digitos de la cifra, comenzando por la izquierda
+            $xaux = substr($xaux, $x3digitos, abs($x3digitos)); // obtengo la centena (los tres dígitos)
+            for ($xy = 1; $xy < 4; $xy++) { // ciclo para revisar centenas, decenas y unidades, en ese orden
+                switch ($xy) {
+                    case 1: // checa las centenas
+                        $key = (int) substr($xaux, 0, 3);
+                        if (100 > $key) { // si el grupo de tres dígitos es menor a una centena ( < 99) no hace nada y pasa a revisar las decenas
+                            /* do nothing */
+                        } else {
+                            if (TRUE === array_key_exists($key, $xarray)) {  // busco si la centena es número redondo (100, 200, 300, 400, etc..)
+                                $xseek = $xarray[$key];
+                                $xsub = $this->subfijo($xaux); // devuelve el subfijo correspondiente (Millón, Millones, Mil o nada)
+                                if (100 == $key) {
+                                    $xcadena = ' ' . $xcadena . ' CIEN ' . $xsub;
+                                } else {
+                                    $xcadena = ' ' . $xcadena . ' ' . $xseek . ' ' . $xsub;
+                                }
+                                $xy = 3; // la centena fue redonda, entonces termino el ciclo del for y ya no reviso decenas ni unidades
+                            } else { // entra aquí si la centena no fue numero redondo (101, 253, 120, 980, etc.)
+                                $key = (int) substr($xaux, 0, 1) * 100;
+                                $xseek = $xarray[$key]; // toma el primer caracter de la centena y lo multiplica por cien y lo busca en el arreglo (para que busque 100,200,300, etc)
+                                $xcadena = ' ' . $xcadena . ' ' . $xseek;
+                            } // ENDIF ($xseek)
+                        } // ENDIF (substr($xaux, 0, 3) < 100)
+                        break;
+                    case 2: // checa las decenas (con la misma lógica que las centenas)
+                        $key = (int) substr($xaux, 1, 2);
+                        if (10 > $key) {
+                            /* do nothing */
+                        } else {
+                            if (TRUE === array_key_exists($key, $xarray)) {
+                                $xseek = $xarray[$key];
+                                $xsub = $this->subfijo($xaux);
+                                if (20 == $key) {
+                                    $xcadena = ' ' . $xcadena . ' VEINTE ' . $xsub;
+                                } else {
+                                    $xcadena = ' ' . $xcadena . ' ' . $xseek . ' ' . $xsub;
+                                }
+                                $xy = 3;
+                            } else {
+                                $key = (int) substr($xaux, 1, 1) * 10;
+                                $xseek = $xarray[$key];
+                                if (20 == $key)
+                                    $xcadena = ' ' . $xcadena . ' ' . $xseek;
+                                else
+                                    $xcadena = ' ' . $xcadena . ' ' . $xseek . ' Y ';
+                            } // ENDIF ($xseek)
+                        } // ENDIF (substr($xaux, 1, 2) < 10)
+                        break;
+                    case 3: // checa las unidades
+                        $key = (int) substr($xaux, 2, 1);
+                        if (1 > $key) { // si la unidad es cero, ya no hace nada
+                            /* do nothing */
+                        } else {
+                            $xseek = $xarray[$key]; // obtengo directamente el valor de la unidad (del uno al nueve)
+                            $xsub = $this->subfijo($xaux);
+                            $xcadena = ' ' . $xcadena . ' ' . $xseek . ' ' . $xsub;
+                        } // ENDIF (substr($xaux, 2, 1) < 1)
+                        break;
+                } // END SWITCH
+            } // END FOR
+            $xi = $xi + 3;
+        } // ENDDO
+        # si la cadena obtenida termina en MILLON o BILLON, entonces le agrega al final la conjuncion DE
+        if ('ILLON' == substr(trim($xcadena), -5, 5)) {
+            $xcadena.= ' DE';
+        }
+ 
+        # si la cadena obtenida en MILLONES o BILLONES, entonces le agrega al final la conjuncion DE
+        if ('ILLONES' == substr(trim($xcadena), -7, 7)) {
+            $xcadena.= ' DE';
+        }
+ 
+        # depurar leyendas finales
+        if ('' != trim($xaux)) {
+            switch ($xz) {
+                case 0:
+                    if ('1' == trim(substr($XAUX, $xz * 6, 6))) {
+                        $xcadena.= 'UN BILLON ';
+                    } else {
+                        $xcadena.= ' BILLONES ';
+                    }
+                    break;
+                case 1:
+                    if ('1' == trim(substr($XAUX, $xz * 6, 6))) {
+                        $xcadena.= 'UN MILLON ';
+                    } else {
+                        $xcadena.= ' MILLONES ';
+                    }
+                    break;
+                case 2:
+                    if (1 > $numero) {
+                        $xcadena = "CERO {$moneda}S {$xdecimales}/100 {$subfijo}";
+                    }
+                    if ($numero >= 1 && $numero < 2) {
+                        $xcadena = "UN {$moneda} {$xdecimales}/100 {$subfijo}";
+                    }
+                    if ($numero >= 2) {
+                        $xcadena.= " {$moneda}S {$xdecimales}/100 {$subfijo}"; //
+                    }
+                    break;
+            } // endswitch ($xz)
+        } // ENDIF (trim($xaux) != "")
+ 
+        $xcadena = str_replace('VEINTI ', 'VEINTI', $xcadena); // quito el espacio para el VEINTI, para que quede: VEINTICUATRO, VEINTIUN, VEINTIDOS, etc
+        $xcadena = str_replace('  ', ' ', $xcadena); // quito espacios dobles
+        $xcadena = str_replace('UN UN', 'UN', $xcadena); // quito la duplicidad
+        $xcadena = str_replace('  ', ' ', $xcadena); // quito espacios dobles
+        $xcadena = str_replace('BILLON DE MILLONES', 'BILLON DE', $xcadena); // corrigo la leyenda
+        $xcadena = str_replace('BILLONES DE MILLONES', 'BILLONES DE', $xcadena); // corrigo la leyenda
+        $xcadena = str_replace('DE UN', 'UN', $xcadena); // corrigo la leyenda
+    } // ENDFOR ($xz)
+  
+   return trim($xcadena);
+}
+ 
+
+    function subfijo($cifras)
+    {
+        $cifras = trim($cifras);
+        $strlen = strlen($cifras);
+        $_sub = '';
+        if (4 <= $strlen && 6 >= $strlen) {
+            $_sub = 'MIL';
+        }
+     
+        return $_sub;
     }
 }

@@ -43,7 +43,7 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Limite de Credito</label>
-										<input type="text"  id="limite_vale" name="limite_vale" class="form-control" disabled/>
+										<input type="text"  id="limite_vale" name="limite_vale" class="bloqueado" disabled/>
 									</div>	
 								</div>
 								<div class="col-md-3">
@@ -57,14 +57,14 @@
 								<div class="col-md-6">
 									<div   class="form-group">
 										<label>Nombre del cliente</label>
-										<input type="text"  id="nombreCliente" name="nombre"  class="form-control " disabled required/>
+										<input type="text"  id="nombreCliente" name="nombre"  class="bloqueado" disabled required/>
 
 									</div>	
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Nombre del distribuidor</label>
-										<input type="text" id="nombreDistribuidor"  name="nombre_distribuidor" class="form-control" disabled/>
+										<input type="text" id="nombreDistribuidor"  name="nombre_distribuidor" class="bloqueado" disabled/>
 									</div>	
 								</div>
 							</div>	
@@ -73,13 +73,13 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Cantidad de venta</label>
-										<input type="number"  id="cantidad" name="cantidad" class="form-control" disabled required/>
+										<input type="number"  id="cantidad" name="cantidad" class="bloqueado" disabled required/>
 									</div>	
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Folio venta </label>
-										<input type="number"  id="folioVenta" name="folio_venta" class="form-control"  disabled required/>
+										<input type="number"  id="folioVenta" name="folio_venta" class="bloqueado"  disabled required/>
 									</div>		
 								</div>
 								
@@ -128,6 +128,9 @@
 		</div>
 
 
+@stop
+@section ('css')
+<link href="css/ventaVales.css"  rel="stylesheet">
 @stop
 
 @section ('js') <script src="js/actualizarVale.js"></script>

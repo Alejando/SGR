@@ -47,6 +47,26 @@
 		</div>
 	</div>
 
+  <div id="ticket" style="display: none">
+      <h4 class="titulo">Zapatería "El Gran Remate" </h4>
+      <h5 class="titulo">Recibo del pago de distribuidor</h5>
+      <h5 class="titulo"  id="pBueno">Bueno por: $</h5>
+      <hr>
+      <p class="texto" id="pTexto">Recibi...</p>
+      <hr>
+      <p class="titulo">Fresnillo,Zacatecas</p>
+      <p class="titulo" id="pFecha">Fecha:..</p>
+      <br>
+      <p class="titulo" >________________________________</p>
+      <p class="titulo" id="pDistribuidor">Distribuidor</p>
+      <p class="titulo" id="pDistribuidor">Firma Distribuidor</p>
+      <br>
+      <p class="titulo" >________________________________</p>
+      <p class="titulo" >ADMINISTRADOR</p>
+      <p class="titulo" id="pDistribuidor">Firma Recibe</p>
+      <br>
+    </div>
+
 
 	<div class="modal fade" id="abono">
       <div class="modal-dialog ">
@@ -87,6 +107,7 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
 
 @stop
 @section ('css')

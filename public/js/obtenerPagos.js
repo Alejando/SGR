@@ -35,3 +35,20 @@ function mostrarExcel(){
     window.open(url, '_blank');
 	
 }
+
+function imprimirComprobante(distribuidor, cantidad, can_letra, periodo, fechaHoy){
+	//var periodo = periodo;
+	//alert(distribuidor);
+	//alert(cantidad);
+	//alert(can_letra);
+	//alert(periodo);
+	//alert(fechaHoy);
+	$('#pBueno').html("Bueno por: $"+cantidad+".00");
+	$('#pTexto').html("Recibi de: "+distribuidor+" la cantidad de: $"+cantidad+".00 ("+can_letra+") por el concepto de pago de ventas por vales referente al periodo "+periodo);
+	$('#pFecha').html(fechaHoy);
+	$('#pDistribuidor').html(distribuidor);
+	$('#ticket').show();
+	$('#ticket').printArea();
+	$('#ticket').hide();
+
+}

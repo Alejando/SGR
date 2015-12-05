@@ -297,6 +297,7 @@
 	      <td>M9</td-->
 	    </tr>
 	</table>
+	<br>
 	@endif
 	@endfor
   </body>
