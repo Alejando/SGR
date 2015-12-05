@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Reporte 2</title>
 
-    <link href="css/reporte_2_excel.css"  rel="stylesheet"-->
+    <link href="css/reporte_2_excel.css"  rel="stylesheet">
 
   </head>
   <body>
