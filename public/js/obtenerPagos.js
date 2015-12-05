@@ -1,27 +1,37 @@
+var $id=0;
 
-<<<<<<< HEAD
-function obtenerId(){
-	alert($(this).attr("value"));
-	console.log(this);
-=======
 function obtenerId(id){
-	alert(id);
-	//alert($(this).attr("values"));
-	console.log(this.value);
->>>>>>> d7c41fbafb95c2cc9524194c5234e63d95dd8439
+	$id=id;
+	
+}
+function abonar(){
+	var abono=$('#nuevoAbono').val();
+	//alert($id+"=="+abono);
+	$.ajax({
+		type: "GET",
+ 		url: "abonarPago",
+		data: {id:$id, abono:abono}
+	});
 }
 
 function pagar(){
-if($('#id_distribuidor').val()==""){
-	idDistribuidor=0;
-}
- var fecha=$('#fecha').val();
- //alert("si se pudo");
+
 	$.ajax({
 		type: "GET",
-		dataType: "json",
- 		url: "crearPagos",
-		data: {fecha:fecha, id:idDistribuidor}
+ 		url: "liquidarPago",
+		data: {id:$id}
 	});
+	
+}
+
+function mostrarPDF(){	
+	url='reporte_7';
+    window.open(url, '_blank');
+	
+}
+
+function mostrarExcel(){
+	url='reporte_7_excel';
+    window.open(url, '_blank');
 	
 }

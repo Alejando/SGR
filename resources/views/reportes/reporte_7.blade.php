@@ -40,6 +40,7 @@
             <th id="cliente" >Nombre</th>
             <th>Cantidad</th>
             <th>Abono</th>
+            <th>Cantidad a pagar</th>
             <th>Fecha corte</th>
             <th>Fecha limite</th>
             <th>Comisión actual</th>
@@ -53,6 +54,7 @@
             <td>{{$data->id_distribuidor}}</td>
             <td>{{$data->cantidad}}</td>
             <td>{{$data->abono}}</td>
+            <td>{{$data->cantidad_comision}}</td>
             <td>{{$data->fecha_creacion}}</td>
             <td>{{$data->fecha_limite}}</td>
             <td>{{$data->comision}}</td>
@@ -66,6 +68,7 @@
             <td>Total</td>
             <td>${{$saldoTotal}}.00</td>
             <td>${{$saldoTotalAbono}}.00</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
