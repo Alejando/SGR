@@ -320,12 +320,12 @@ class PdfController extends Controller
         $saldoTotalAbono=0;
         for ($i=0; $i <sizeof($pagos); $i++) 
         {
-             $saldoTotal+= $pagos[$i]->cantidad;
-               $saldoTotalAbono+= $pagos[$i]->abono;
+            $saldoTotal+= $pagos[$i]->cantidad;
+            $saldoTotalAbono+= $pagos[$i]->abono;
+            $pagos[$i]->cantidad_comision='$'.$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
             $pagos[$i]->id_distribuidor=Distribuidor::find($pagos[$i]->id_distribuidor)->nombre;
             $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
-           
-          
+             $pagos[$i]->abono='$'.$pagos[$i]->abono.".00";
             $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
             $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
             $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
@@ -349,6 +349,13 @@ class PdfController extends Controller
 
 
      }
+
+     public function pagoComision($cantidad,$comision){
+        $saldoComision=intval(($cantidad*$comision)/100); 
+        $saldoTotal=$cantidad-$saldoComision;
+        return $saldoTotal;
+
+    }
      public function modificarFechas($fecha){
         $fechaCarbon=Carbon::parse($fecha);
         return $fechaCarbon->day."-".$fechaCarbon->month."-".$fechaCarbon->year;

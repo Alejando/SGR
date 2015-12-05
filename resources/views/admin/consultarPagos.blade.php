@@ -8,6 +8,25 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Consultar pagos</div>
 			<div class="panel-body">
+       @if(Session::has('message'))
+              <div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong> {{ Session::get('message')}} </strong>
+              </div>
+            @endif
+         <div class="col-md-12">
+            <div  class="pull-right">
+              <div class="btn-group">
+              <button data-toggle="dropdown" class="btn btn-warning ">Exportar <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a onclick="mostrarPDF()">PDF</a></li>
+                  <li><a onclick="mostrarExcel()" class="font-bold">Excel</a></li>
+                </ul>
+            </div>  
+            </div>  
+         </div>
+          </br>
+          </br>   
 				<table data-toggle="table" data-url="obtenerPagos"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 				    <thead>
 				    <tr>
@@ -15,6 +34,7 @@
 				        <th data-field="id_distribuidor" data-halign="center"data-sortable="true">Distribuidor</th>
 				        <th data-field="cantidad"   data-halign="center"data-sortable="true">Cantidad</th>
                 <th data-field="abono"   data-halign="center"data-sortable="true">Abono</th>
+                <th data-field="cantidad_comision"   data-halign="center"data-sortable="true">Cantidad a pagar</th>
 				        <th data-field="fecha_creacion"  data-halign="center"data-sortable="true">Fecha corte</th>
 				        <th data-field="fecha_limite"   data-halign="center"data-sortable="true">Fecha limite</th>
 				        <th data-field="comision"   data-halign="center"data-sortable="true">Comisión actual</th>
