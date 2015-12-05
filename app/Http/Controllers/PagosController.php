@@ -71,7 +71,7 @@ class PagosController extends Controller
              if( $pagos[$i]->estado==1){
                $pagos[$i]->estado='<p style="background-color: Red;">Pago Desfasado</p>';
             }
-            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin"  data-target="#abono" onclick="obtenerId('.$pagos[$i]->id_pago.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  onclick="obtenerId('. $pagos[$i]->id_pago.')" data-target="#pago" href="#">Pagar</a> <a type="button" class="btn btn-primary " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
+            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin"  data-target="#abono" onclick="obtenerId('.$pagos[$i]->id_pago.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  onclick="obtenerId('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" data-target="#pago" href="#">Pagar</a>';//' <a type="button" class="btn btn-warning " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
 
          }
         
