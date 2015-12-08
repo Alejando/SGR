@@ -57,7 +57,7 @@ class PdfController extends Controller
         $saldoComision=$saldoTotal-$saldoDistribuidor;
         $datas = $vales;
         $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
-        $fechaHoy = modificarFechasCarbon::now();
+        $fechaHoy = $this->modificarFechas(Carbon::now());
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
         $fechaLimite=$this->CalcularFechaLimite($fecha);
         $periodo=$this->calcularPeriodo($fecha);
@@ -130,6 +130,24 @@ class PdfController extends Controller
                 return "18-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year;                
             }else{
                 return "18-".$this->meses($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+            }  
+        }
+    }
+    public function CalcularFechaLimiteCliente($fecha){
+       $fechaCarbon=Carbon::parse($fecha);
+        // 10 nomviembre- 24 Novimebre-> 30 Noviembre
+            // 25 novimebre-09 Diciembre -> 15 Diciembre
+        if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
+            $fechaCarbon->day=1;
+            $fechaCarbon->addMonth();
+            $fechaCarbon->subDay();
+            return $fechaCarbon->day."-".($fechaCarbon->month)."-".$fechaCarbon->year;       
+        }
+        else{
+            if($fechaCarbon->day<=9){
+                return "15-".($fechaCarbon->month)."-".$fechaCarbon->year;                
+            }else{
+                return "15-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
             }  
         }
     }
@@ -216,7 +234,7 @@ class PdfController extends Controller
         $distribuidor=Distribuidor::find($id)->nombre;
         $fechaHoy = $this->modificarFechas(Carbon::today()->toDateString());
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
-        $fechaLimite=$this->CalcularFechaLimiteCorta($fecha);
+        $fechaLimite=$this->CalcularFechaLimiteCliente($fecha);
         $periodo=$this->calcularPeriodo($fecha);
         $view =  \View::make('reportes/reporte_1', compact('data', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision'))->render();
         $pdf = \App::make('dompdf.wrapper');

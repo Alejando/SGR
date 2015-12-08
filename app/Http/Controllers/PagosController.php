@@ -330,12 +330,12 @@ class PagosController extends Controller
         return $comision[0]->porcentaje;
     }
     public function nuevoEstado($fecha,$id){
-        $fechaLimite=Carbon::parse($this->CalcularFechaLimiteCorta($fecha));
+        $fechaLimite=Carbon::parse($this->fechaLimiteBaja($fecha));
         $fechaHoy=Carbon::today();
         // 10 nomviembre- 24 Novimebre-> 04 Diciembre
         // 25 novimebre-09 Diciembre -> 18 Diciembre
         
-        if($fechaHoy>$fechaLimite){
+        if($fechaHoy>=$fechaLimite){
             $distribuidor=Distribuidor::find($id);
             $distribuidor->estatus=1;
             $distribuidor->save();
@@ -343,6 +343,21 @@ class PagosController extends Controller
         }else{
             return 0;
 
+        }
+    }
+    public function fechaLimiteBaja($fecha){
+        $fechaCarbon=Carbon::parse($fecha);
+        // 10 nomviembre- 24 Novimebre-> 07 Diciembre
+            // 25 novimebre-09 Diciembre -> 21 Diciembre
+        if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
+            return "07-".($fechaCarbon->month+1)."-".$fechaCarbon->year;       
+        }
+        else{
+            if($fechaCarbon->day<=9){
+                return "21-".($fechaCarbon->month)."-".$fechaCarbon->year;                
+            }else{
+                return "21-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+            }  
         }
     }
     public function actualizarPagos(){
