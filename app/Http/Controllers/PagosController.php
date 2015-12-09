@@ -129,6 +129,7 @@ class PagosController extends Controller
             $distribuidor=Distribuidor::find($id);
             $distribuidor->estatus=0;
             $distribuidor->save();
+            $this->aumentarPagos($id,$pago->fecha_creacion);
             Session::flash('message','Pago registrado correctamente');
             Session::flash('class','success');
         }
@@ -137,6 +138,16 @@ class PagosController extends Controller
             Session::flash('class','danger');
         }
        
+    }
+    public function  aumentarPagos($id,$fecha){
+
+        $vales=Vale::where('id_distribuidor',$id)->where('fecha_inicio_pago','<',$fecha)->get();
+         for ($i=0; $i <sizeof($vales); $i++) 
+        {
+            $vales[$i]->pagos_realizados++;
+            $vales[$i]->save();
+        }
+
     }
 
     public function CalcularFechaLimiteCorta($fecha){
