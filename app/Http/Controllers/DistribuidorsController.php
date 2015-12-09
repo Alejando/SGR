@@ -279,7 +279,7 @@ class DistribuidorsController extends Controller
              $pagosRealizados=$vales[$i]->pagos_realizados+1;
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-             $saldoActual=$saldoAnterior-$abono;
+             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_cliente=$nombreCliente;
@@ -410,7 +410,7 @@ class DistribuidorsController extends Controller
              $pagosRealizados=$vales[$i]->pagos_realizados;
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-             $saldoActual=$saldoAnterior-$abono;
+             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_cliente=$nombreCliente;

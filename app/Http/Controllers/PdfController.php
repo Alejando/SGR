@@ -41,7 +41,7 @@ class PdfController extends Controller
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
-             $saldoActual=$saldoAnterior-$abono;
+             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_cliente=$nombreCliente;
@@ -193,9 +193,9 @@ class PdfController extends Controller
     }
     
     public function calcularComision($total){
-        $porcentaje;
+        
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
-        return $comision[0]->porcentaje;
+        return $comision[count($comision)-1]->porcentaje;
     }
 
 
@@ -214,7 +214,7 @@ class PdfController extends Controller
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
-             $saldoActual=$saldoAnterior-$abono;
+            $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_vale=$vales[$i]->id_cliente;

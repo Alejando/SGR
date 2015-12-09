@@ -311,9 +311,9 @@ class ExcelController extends Controller
         return $meses[$mes-1];
     }
     public function calcularComision($total){
-        $porcentaje;
+        
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
-        return $comision[0]->porcentaje;
+        return $comision[count($comision)-1]->porcentaje;
     }
 
 }

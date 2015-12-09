@@ -40,9 +40,10 @@
             <th id="cliente" >Cliente</th>
             <th>Vale</th>
             <th>Folio Venta</th>
+            <th>Fecha Venta</th>
+            <th>Pagos</th>
             <th>Importe</th>
             <th>Saldo Anterior</th>
-            <th>Pagos</th>
             <th>Abono</th>
             <th>Saldo Actual</th>
           </tr>
@@ -53,9 +54,10 @@
             <td>{{$data->id_cliente}}</td>
             <td>{{$data->folio}}</td>
             <td>{{$data->folio_venta}}</td>
+            <td>{{$data->fecha_venta}}</td>
+            <td>{{$data->pagos_realizados}}</td>
             <td>{{$data->cantidad}}</td>
             <td>{{$data->numero_pagos}}</td>
-            <td>{{$data->pagos_realizados}}</td>
             <td>{{$data->cantidad_limite}}</td>
             <td>{{$data->deuda_actual}}</td>
           </tr>
@@ -64,14 +66,16 @@
         </tbody>
         <tfoot>
           <tr>
+            <td></td>
+            <td></td>
             <td colspan="3">Totales</td>
             <td >${{$saldoImporte}}.00</td>
             <td >${{$saldoAnteriorTotal}}.00</td>
-            <td></td>
             <td>${{$saldoTotal}}.00</td>
             <td>${{$saldoActualTotal}}.00</td>
           </tr>
           <tr>
+            <td></td>
             <td colspan="2"></td>
             <td colspan="4">Comision {{$comision}}% Total a pagar</td>
             <td>${{$saldoComision}}.00</td>

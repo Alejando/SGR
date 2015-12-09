@@ -145,11 +145,27 @@ class PagosController extends Controller
          for ($i=0; $i <sizeof($vales); $i++) 
         {
             $vales[$i]->pagos_realizados++;
+            $saldoAnterior=$vales[$i]->deuda_actual;
+            $pagosRealizados=$vales[$i]->pagos_realizados;
+            $numeroPagos=$vales[$i]->numero_pagos;
+            $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+            $$vales[$i]->deuda_actual=$saldoAnterior-($abono*$pagosRealizados);
             $vales[$i]->save();
         }
 
     }
+    public function calcularPago($cantidad,$tPagos,$nPago){
+        $pagos=$cantidad/$tPagos;
+        $pago=intval($pagos);  
+        $pagoFinal=$cantidad-($pago*($tPagos-1));  
 
+        if($nPago==$tPagos){
+            return $pagoFinal;
+        }
+        else{
+            return $pago;
+        }
+    }
     public function CalcularFechaLimiteCorta($fecha){
        $fechaCarbon=Carbon::parse($fecha);
         // 10 nomviembre- 24 Novimebre-> 04 Diciembre
@@ -338,7 +354,7 @@ class PagosController extends Controller
     public function calcularComision($total){
         
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
-        return $comision[0]->porcentaje;
+        return $comision[count($comision)-1]->porcentaje;
     }
     public function nuevoEstado($fecha,$id){
         $fechaLimite=Carbon::parse($this->fechaLimiteBaja($fecha));
