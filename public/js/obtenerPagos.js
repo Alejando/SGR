@@ -29,18 +29,6 @@ function abonar(){
 }
 
 function pagar(){
-<<<<<<< HEAD
-	//alert("xxx");
-=======
-
-	$.ajax({
-		type: "GET",
- 		url: "liquidarPago",
-		data: {id:$id}
-	});
-
->>>>>>> origin/master
-
 	
 	$.ajax({
 		type: "GET",
