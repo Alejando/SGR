@@ -14,8 +14,8 @@ table thead tr th {
 table tbody tr td {
     border: 1px solid black;
     text-align: center;
-    border: 1px solid #666666;
-    color: #404040;
+    border: 1px solid #ffffff;
+    color: #ffffff;
 }
 
 tfoot
@@ -37,4 +37,8 @@ tfoot
 .division{
 	width: 30px;
 	
+}
+
+.texto{
+    color: #000000;
 }

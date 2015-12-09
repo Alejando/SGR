@@ -30,7 +30,7 @@
 								</div>
 								<div class="form-group">
 									<label>Porcentaje</label>
-									<input type="number"  name="porcentaje" class="form-control" required>
+									<input type="number"  step="any" name="porcentaje" class="form-control" required>
 								</div>
 						</div>
 						
