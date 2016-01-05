@@ -20,6 +20,10 @@ body {
 	color: #fff;
 }
 
+.checkbox {
+	color: #000;
+}
+
 /*This is the default .row style, stripped of margins*/
 .row {
 	margin: 0;
