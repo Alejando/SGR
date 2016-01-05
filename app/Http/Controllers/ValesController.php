@@ -289,7 +289,7 @@ class ValesController extends Controller
         $limiteCreditoDistribuidor=$vale->distribuidor->limite_credito;
         if($vale->estatus==0){
             if($vale->distribuidor->estatus==0){ //0->activo 1->desactivado
-                if($cantidad<$vale->cantidad_limite || $vale->cantidad_limite==0){
+                if($cantidad<=$vale->cantidad_limite || $vale->cantidad_limite==0){
                
                     if($saldoNuevoDistribuidor<$limiteCreditoDistribuidor){ 
                          if(is_null($idCliente)){
@@ -390,6 +390,7 @@ class ValesController extends Controller
         $vale->id_cuenta=$idCuenta;
         $vale->id_distribuidor=$idDistribuidor;
         $vale->cantidad=$cantidad;
+        $vale->deuda_actual=$cantidad;
         $vale->numero_pagos=$numeroPagos;
         $vale->folio_venta=$folioVenta;
         $vale->estatus=$estatus;
