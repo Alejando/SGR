@@ -1,0 +1,118 @@
+table {
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: sans-serif;
+    background-image: url("img/logo_tabla.jpg");
+    background-repeat: repeat-x;
+}
+
+table thead tr th {
+    border: 1px solid black;
+    text-align: center;
+    
+}
+
+
+table tbody tr td {
+    border: 1px solid black;
+    text-align: center;
+    border: 1px solid #ffffff;
+   
+ 
+}
+
+.izq_border{
+    border-left: solid #1a1a1a;
+    border-style: dotted;
+    
+}
+
+.der_border{
+    border-right: solid #1a1a1a;
+    border-style: dotted;
+    
+}
+
+.sup_border{
+    border-top: solid #1a1a1a;
+    border-style: dotted;
+   
+}
+
+.inf_border{
+    border-bottom: solid #1a1a1a;
+    border-style: dotted;
+    
+}
+
+
+.izq_linea{
+    border-left: solid #1a1a1a;
+    border-width: 1px;
+}
+
+.der_linea{
+    border-right: solid #1a1a1a;
+    border-width: 1px;
+}
+
+.sup_linea{
+    border-top: solid #1a1a1a;
+    border-width: 1px;
+}
+
+.inf_linea{
+    border-bottom: solid #1a1a1a;
+    border-width: 1px;
+}
+.negrita{
+	font-weight:bold;
+}
+
+.izq_texto{
+	text-align: left;
+}
+
+.der_texto{
+	text-align: right;
+}
+
+
+.invisible{
+	color: #ffffff;
+}
+
+tfoot
+{
+	text-align: right;
+}
+
+.mitad{
+	width: 345px;
+	height: 75px;
+
+}
+
+.espacio{
+	height: 5px;
+}
+
+
+.division{
+	width: 30px;
+	
+}
+
+.texto{
+    color: #000000;
+}
+
+.mensaje{
+    font-style: italic;
+    font-family: "Georgia", Times, serif;
+
+}
+
+.color{
+	background-color:  #ffa31a;
+}

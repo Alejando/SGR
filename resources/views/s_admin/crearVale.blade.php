@@ -57,10 +57,49 @@
 							</div>	
 						</form>
 					</div>
+					<div class="col-md-6">
+						<label><strong>Nota: </strong> Actualizar vales creados</label>
+						<form id="form"class="form" role="form" method="POST" action="cambiarVale" >
+ 					    	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						
+							<div class="form-group ">
+								<label>Nuevo distribuidor</label>
+								<input type="text"  name="id_distribuidor" id="nombreDistribuidor"class="form-control" required >
+
+							</div>
+							
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Serie</label>
+									<input type="text" id="serie" name="serie" class="form-control" >
+								</div>	
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Folio Inicio</label>
+									<input type="number"  id="folio_inicio"  class="form-control"  required>
+								</div>		
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">	
+									<label>Folio Fin</label>
+									<input type="number"  name="folio_fin" class="form-control" required>
+								</div>	
+							</div>
+							<div id="oculto"></div>
+							<div class="col-md-12">
+								<div class="pull-right">
+										<button type="reset" class="btn btn-danger ">Borrar datos</button>
+										<button type="submit" class="btn btn-success ">Enviar datos</button>
+								</div>
+							</div>	
+						</form>
+					</div>
 				</div>
 			</div><!-- /.col-->
 		</div><!-- /.row -->
 	</div><!--/.main-->
+
 @stop
 
 @section ('js') 

@@ -33,7 +33,8 @@
 								<ul class="dropdown-menu">
 									<li><a onclick="mostrarPDF()">PDF</a></li>
 									<li><a onclick="mostrarExcel()" class="font-bold">Excel</a></li>
-									<li><a onclick="mostrarReporte1()" class="font-bold">Comprobantes</a></li>
+									<li><a onclick="mostrarReporte1()" class="font-bold">Comprobantes A</a></li>
+									<li><a onclick="mostrarReporte1b()" class="font-bold">Comprobantes B</a></li>
 								</ul>
 						</div>	
 					</div>	

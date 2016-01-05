@@ -77,6 +77,34 @@ class ValesController extends Controller
        return redirect('crearVale'); 
        
     }
+    public function cambiarVale(Request $request)
+    {
+        $id_distribuidor = $request->input('id_distribuidor_a');
+        $serie = strtoupper($request->input('serie_a'));
+        $folioInicio = $request->input('folio_inicio_a');
+        $folioFin = $request->input('folio_fin_a');
+        if($folioFin>=$folioInicio){
+                      
+                for($i=$folioInicio;$i<=$folioFin;$i++){
+                    $vale = Vale::where('folio',$i)->get();
+                    $vale->id_distribuidor=$id_distribuidor;
+                    $vale->serie=$serie;
+                    $vale->cantidad_limite=Distribuidor::find($id_distribuidor)->limite_vale;
+                    $vale->fecha_creacion=Carbon::today(); 
+                    $vale->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
+                    $vale->save();
+                }
+                Session::flash('message','FoliosnActualizados  Correctamente');
+                    Session::flash('class','success');
+      
+        }
+        else{
+             Session::flash('message','Folio fin debe ser mayor a folio inicio ');
+                Session::flash('class','danger');
+        }
+       return redirect('crearVale'); 
+       
+    }
 
     public function registrarVale(){
        

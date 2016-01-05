@@ -58,3 +58,9 @@ function mostrarReporte1(){
     window.open(url, '_blank');
 	
 }
+function mostrarReporte1b(){
+	var fecha=$('#fecha').val();
+	url='reporte_1b?fecha='+fecha+'&id='+idDistribuidor;
+    window.open(url, '_blank');
+	
+}

@@ -23,7 +23,7 @@ Route::get('reporte_7', 'PdfController@reporte_7');
 Route::get('reporte_6', 'PdfController@reporte_6');
 Route::get('reporte_2', 'PdfController@reporte_2');
 Route::get('reporte_1', 'PdfController@reporte_1');
-
+Route::get('reporte_1b', 'PdfController@reporte_1b');
 
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {

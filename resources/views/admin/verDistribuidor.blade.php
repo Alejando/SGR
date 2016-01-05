@@ -20,7 +20,7 @@
 					<br>
 					<div class="col-md-12" >
 						<div class="col-md-3" >
-							<img src="archivos/{{ $distribuidor->foto }}" name="aboutme" width="140" height="140" class="img-thumbnail">
+							<img src="../archivos/{{ $distribuidor->foto }}" name="aboutme" width="140" height="140" class="img-thumbnail">
 						</div>
 						<div class="col-md-3" >
 							</br>
@@ -144,7 +144,7 @@
 								</div>
 						
 								<div class="col-md-6 pull-right">
-									<img src="archivos/{{ $distribuidor->firma }}" name="aboutme" width="140" height="140" class="img-thumbnail">
+									<img src="../archivos/{{ $distribuidor->firma }}" name="aboutme" width="140" height="140" class="img-thumbnail">
 								</div>
 							</div>
 						</div>
