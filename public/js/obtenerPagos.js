@@ -1,4 +1,4 @@
-var $id=0;
+var $id=0; //id pago
 
 function obtenerId(id,distribuidor, cantidad, can_letra, periodo, fechaHoy){
 	$id=id;

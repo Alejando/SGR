@@ -124,12 +124,12 @@ class PagosController extends Controller
         $id=$request->input('id');
         $pago=Pago::find($id);
         $pago->estado=2;
-       
+        $id_distribuidor=$pago->id_distribuidor;
         if($pago->save()){
-            $distribuidor=Distribuidor::find($id);
+            $distribuidor=Distribuidor::find($id_distribuidor);
             $distribuidor->estatus=0;
             $distribuidor->save();
-            $this->aumentarPagos($id,$pago->fecha_creacion);
+            $this->aumentarPagos($id_distribuidor,$pago->fecha_creacion);
             Session::flash('message','Pago registrado correctamente');
             Session::flash('class','success');
         }
@@ -139,21 +139,26 @@ class PagosController extends Controller
         }
        
     }
-    public function  aumentarPagos($id,$fecha){
+    public function aumentarPagos($id,$fecha){
 
-        $vales=Vale::where('id_distribuidor',$id)->where('fecha_inicio_pago','<',$fecha)->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
          for ($i=0; $i <sizeof($vales); $i++) 
         {
             $vales[$i]->pagos_realizados++;
+            $importe=$vales[$i]->cantidad;
             $saldoAnterior=$vales[$i]->deuda_actual;
             $pagosRealizados=$vales[$i]->pagos_realizados;
             $numeroPagos=$vales[$i]->numero_pagos;
             $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-            $$vales[$i]->deuda_actual=$saldoAnterior-($abono*$pagosRealizados);
+            $vales[$i]->deuda_actual=$saldoAnterior-$abono;
+            if($numeroPagos==$pagosRealizados){
+                $vales[$i]->estatus=3;
+            }
             $vales[$i]->save();
         }
 
     }
+
     public function calcularPago($cantidad,$tPagos,$nPago){
         $pagos=$cantidad/$tPagos;
         $pago=intval($pagos);  
@@ -171,13 +176,15 @@ class PagosController extends Controller
         // 10 nomviembre- 24 Novimebre-> 04 Diciembre
             // 25 novimebre-09 Diciembre -> 18 Diciembre
         if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
-            return "04-".($fechaCarbon->month+1)."-".$fechaCarbon->year;       
+            $fechaCarbon->addMonth(); 
+            return "04-".($fechaCarbon->month)."-".$fechaCarbon->year;       
         }
         else{
             if($fechaCarbon->day<=9){
                 return "18-".($fechaCarbon->month)."-".$fechaCarbon->year;                
             }else{
-                return "18-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                $fechaCarbon->addMonth(); 
+                return "18-".($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }
@@ -310,18 +317,6 @@ class PagosController extends Controller
 
     }
 
-     public function calcularPago($cantidad,$tPagos,$nPago){
-        $pagos=$cantidad/$tPagos;
-        $pago=intval($pagos);  
-        $pagoFinal=$cantidad-($pago*($tPagos-1));  
-
-        if($nPago==$tPagos){
-            return $pagoFinal;
-        }
-        else{
-            return $pago;
-        }
-    }
 
     public function calcularComisionActual($fecha,$comision){
        $fechaLimite=Carbon::parse($this->CalcularFechaLimiteCorta($fecha));

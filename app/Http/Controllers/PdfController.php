@@ -62,6 +62,7 @@ class PdfController extends Controller
         $fechaLimite=$this->CalcularFechaLimite($fecha);
         $periodo=$this->calcularPeriodo($fecha);
         $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
+        
         $view =  \View::make('reportes/reporte_2', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
@@ -156,16 +157,19 @@ class PdfController extends Controller
         // 10 nomviembre- 24 Novimebre-> 04 Diciembre
             // 25 novimebre-09 Diciembre -> 18 Diciembre
         if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
-            return "04-".($fechaCarbon->month+1)."-".$fechaCarbon->year;       
+            $fechaCarbon->addMonth(); 
+            return "04-".($fechaCarbon->month)."-".$fechaCarbon->year;       
         }
         else{
             if($fechaCarbon->day<=9){
                 return "18-".($fechaCarbon->month)."-".$fechaCarbon->year;                
             }else{
-                return "18-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                $fechaCarbon->addMonth(); 
+                return "18-".($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }
+    
     public function CalcularFechaEntrega($fecha){
        $fechaCarbon=Carbon::parse($fecha);
         // 10 nomviembre- 24 Novimebre-> 27 Novimebre

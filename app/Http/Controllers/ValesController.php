@@ -51,7 +51,7 @@ class ValesController extends Controller
             else{
                 $ultimo=$auxV->last()->folio;
             }
-            if($folioInicio>$ultimo){
+            //if($folioInicio>$ultimo){
                 for($i=$folioInicio;$i<=$folioFin;$i++){
                     $vale = new Vale;
                     $vale->id_distribuidor=$id_distribuidor;
@@ -64,11 +64,11 @@ class ValesController extends Controller
                 }
                 Session::flash('message','Guardado Correctamente');
                     Session::flash('class','success');
-            }
+         /*  }
             else{
                  Session::flash('message','Folio repetido, el ultimo folio es: '.$ultimo);
                 Session::flash('class','danger');
-            }
+            }*/
         }
         else{
              Session::flash('message','Folio fin debe ser mayor a folio inicio ');
@@ -132,7 +132,7 @@ class ValesController extends Controller
                     if($fechaInicio=="0"){
                         $fechaTermino=$request->input('fecha_termino');
                         if($fechaTermino=="0"){
-                           $vales = Vale::take(30)->get();
+                           $vales = Vale::where('estatus',1)->take(30)->get(); //consulta al inicio
                            
                         }else{
                              //buscar vales con fecha termino
@@ -174,7 +174,7 @@ class ValesController extends Controller
                 }
            }
            else{
-             $vales = Vale::take(30)->get();
+             $vales = Vale::where('estatus',1)->take(30)->get(); //consulta al inicio
            }
       
         for ($i=0; $i <sizeof($vales); $i++) { 
@@ -193,9 +193,17 @@ class ValesController extends Controller
                 $vales[$i]->estatus='<p  style="background-color: green;">Ocupado</p>';
              }
              if($vales[$i]->estatus==2){
-                $vales[$i]->estatus='<p  style="background-color: red;">cancelado</p>';
+                $vales[$i]->estatus='<p  style="background-color: red;">Cancelado</p>';
              }
-              $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>';    
+             if($vales[$i]->estatus==3){
+                $vales[$i]->estatus='<p  style="background-color: brown;">Pagado</p>';
+                $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin">No disponible</a>'; 
+             }
+             else{
+               
+                $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>'; 
+             }
+   
         }    
         return $vales;
     }
