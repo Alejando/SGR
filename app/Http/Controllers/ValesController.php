@@ -132,7 +132,7 @@ class ValesController extends Controller
                     if($fechaInicio=="0"){
                         $fechaTermino=$request->input('fecha_termino');
                         if($fechaTermino=="0"){
-                           $vales = Vale::where('estatus',1)->take(30)->get(); //consulta al inicio
+                           $vales = Vale::where('estatus','<',2)->get(); //consulta al inicio
                            
                         }else{
                              //buscar vales con fecha termino
@@ -174,7 +174,7 @@ class ValesController extends Controller
                 }
            }
            else{
-             $vales = Vale::where('estatus',1)->take(30)->get(); //consulta al inicio
+             $vales = Vale::where('estatus',1)->take(100)->get(); //consulta al inicio
            }
       
         for ($i=0; $i <sizeof($vales); $i++) { 

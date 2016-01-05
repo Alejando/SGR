@@ -112,7 +112,12 @@ class PdfController extends Controller
         }
         else{
             if($fechaCarbon->day<=9){
-                return "25-".$this->meses($fechaCarbon->month-1)."-".$fechaCarbon->year." al 09-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year;                
+               if($fechaCarbon->month-1==0){
+                    return "25-".$this->meses($fechaCarbon->month-1)."-".($fechaCarbon->year-1)." al 09-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year;
+                }else{
+                    return "25-".$this->meses($fechaCarbon->month-1)."-".$fechaCarbon->year." al 09-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year;
+                }
+                                
             }else{
                 return "25-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year." al 09-".$this->meses($fechaCarbon->month+1)."-".$fechaCarbon->year; 
             }  
@@ -169,7 +174,7 @@ class PdfController extends Controller
             }  
         }
     }
-    
+
     public function CalcularFechaEntrega($fecha){
        $fechaCarbon=Carbon::parse($fecha);
         // 10 nomviembre- 24 Novimebre-> 27 Novimebre
@@ -188,8 +193,11 @@ class PdfController extends Controller
 
 
     public function meses($mes){
-        if($mes==13){
+        if($mes==13 ){
             $mes=1;
+        }
+        if($mes==0){
+            $mes=12;
         }
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre","nulo");
         
