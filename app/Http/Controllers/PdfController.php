@@ -20,13 +20,13 @@ class PdfController extends Controller
 {
 
 
-    public function reporte_2(Request $request){
+    public function reporte_2(Request $request){ //reporte cobranza
         $id=$request->input('id');
         $fecha=$request->input('fecha');
         if($fecha==""){
             $fecha=Carbon::today();
         }
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoImporte=0;
         $saldoAnteriorTotal=0;
@@ -52,6 +52,7 @@ class PdfController extends Controller
             $vales[$i]->deuda_actual="$".$saldoActual.".00";
             
          }
+        $totalVales=sizeof($vales);
         $comision=$this->calcularComision($saldoTotal);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
@@ -63,7 +64,7 @@ class PdfController extends Controller
         $periodo=$this->calcularPeriodo($fecha);
         $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
         
-        $view =  \View::make('reportes/reporte_2', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
+        $view =  \View::make('reportes/reporte_2', compact('datas','totalVales','fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_2.pdf');
@@ -215,7 +216,7 @@ class PdfController extends Controller
     {
         $id=$request->input('id');
         $fecha=$request->input('fecha');
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoComision;
         for ($i=0; $i <sizeof($vales); $i++) { 
@@ -258,7 +259,7 @@ class PdfController extends Controller
     {
         $id=$request->input('id');
         $fecha=$request->input('fecha');
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoComision;
         for ($i=0; $i <sizeof($vales); $i++) { 
@@ -308,7 +309,7 @@ class PdfController extends Controller
         $SaldoTotalSinComision=0;
         $distribuidores=Distribuidor::all();
         for($j=sizeof($distribuidores)-1; $j >=0; $j--) { 
-            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
             $saldoTotal=0;
           if (count($vales)==0) {
                 unset($distribuidores[$j]);

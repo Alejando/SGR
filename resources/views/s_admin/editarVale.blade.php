@@ -20,44 +20,45 @@
 						</div>
 						@endif
 					    </div>
+					    <label>Editar vale</label>
+								<br/>
 		                <form class="form" id="form"role="form" method="POST" action="../modificarVale" >
 		                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		                	<input type="hidden" id="id_vale" name="id_vale" value="{{$vale->id_vale}}">
 							<div class="col-lg-12">
-								<label>Editar vale</label>
-								</br>
-								<div class="col-md-1">
+								
+								<div class="col-md-4">
 									<div class="form-group">
 										<label>Serie</label>
 										<input type="text" value="{{ $vale->serie }}"  id="serie" name="serie" class="form-control" >
 									</div>	
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label>Folio </label>
 										<input type="number" value="{{$vale->folio}}"  id="folio" name="folio" class="form-control" required>
 									</div>		
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label>Fecha de venta </label>
-										<input type="date" value="{{$vale->fecha_venta}}"  id="fecha_venta" name="fecha_venta" class="form-control" required>
+										<input type="date" value="{{$vale->fecha_venta}}"  id="fecha_venta" name="fecha_venta" class="form-control" >
 									</div>		
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label>Fecha de inicio de pago </label>
-										<input type="date" value="{{$vale->fecha_inicio_pago}}"  id="fecha_inicio_pago" name="fecha_inicio_pago" class="form-control" required>
+										<input type="date" value="{{$vale->fecha_inicio_pago}}"  id="fecha_inicio_pago" name="fecha_inicio_pago" class="form-control" >
 									</div>		
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<div class="checkbox">
 									<input type="checkbox" id="promo1" />
 									<label for="promo1">Promocion Empiece a pagar en...</label>
 									<input type="hidden"   value="{{$vale->id_promocion}}" name="id_promocion"/>
 								</div>	
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label>Limite de Credito</label>
 										<input type="text" value="{{$vale->cantidad_limite}}" name="limite_vale" class="form-control" >

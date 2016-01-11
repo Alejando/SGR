@@ -269,7 +269,7 @@ class DistribuidorsController extends Controller
         if($fecha==""){
             $fecha=Carbon::today();
         }
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
 
         for ($i=0; $i <sizeof($vales); $i++) { 
 
@@ -352,7 +352,7 @@ class DistribuidorsController extends Controller
         $resultado = array();
         $distribuidores=Distribuidor::all();
         for($j=0; $j < sizeof($distribuidores); $j++) { 
-            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
             $saldoTotal=0;
             for ($i=0; $i <sizeof($vales); $i++) { 
                 

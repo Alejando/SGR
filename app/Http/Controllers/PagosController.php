@@ -55,7 +55,7 @@ class PagosController extends Controller
             $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
             $pagos[$i]->cantidad_comision='$'.$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
             $nombre = "'".$pagos[$i]->id_distribuidor."'";
-            $cantidad = $pagos[$i]->cantidad;
+            $cantidad = $this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision);
             $can_letra = "'".$this->num_to_letras($cantidad)."'";
             $periodo = "'".$this->calcularPeriodo($pagos[$i]->fecha_creacion)."'";
             $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
@@ -141,7 +141,7 @@ class PagosController extends Controller
     }
     public function aumentarPagos($id,$fecha){
 
-        $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->where('fecha_inicio_pago','<=',$fecha)->get();
          for ($i=0; $i <sizeof($vales); $i++) 
         {
             $vales[$i]->pagos_realizados++;
@@ -200,7 +200,7 @@ class PagosController extends Controller
 	                
 	            $distribuidores=Distribuidor::all();
 	        for($j=0; $j < sizeof($distribuidores); $j++) { 
-	            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+	            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
 	            $saldoTotal=0;
 	            for ($i=0; $i <sizeof($vales); $i++) { 
 	                
@@ -247,7 +247,7 @@ class PagosController extends Controller
 	        }
         }
         else{
-        	$vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        	$vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
 	            $saldoTotal=0;
 	            for ($i=0; $i <sizeof($vales); $i++) { 
 	                
@@ -372,13 +372,15 @@ class PagosController extends Controller
         // 10 nomviembre- 24 Novimebre-> 07 Diciembre
             // 25 novimebre-09 Diciembre -> 21 Diciembre
         if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
-            return "07-".($fechaCarbon->month+1)."-".$fechaCarbon->year;       
+             $fechaCarbon->addMonth(); 
+            return "07-".($fechaCarbon->month)."-".$fechaCarbon->year;       
         }
         else{
             if($fechaCarbon->day<=9){
                 return "21-".($fechaCarbon->month)."-".$fechaCarbon->year;                
             }else{
-                return "21-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                 $fechaCarbon->addMonth(); 
+                return "21-".($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }

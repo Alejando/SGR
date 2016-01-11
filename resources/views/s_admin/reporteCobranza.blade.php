@@ -59,6 +59,7 @@
 						        <th data-field="id_cliente" data-sortable="true">Cliente</th>
 						        <th data-field="folio" data-halign="center"data-sortable="true">Vale</th>
 						        <th data-field="folio_venta" data-halign="center"  data-sortable="false">Folio Venta</th>
+						        <th data-field="fecha_inicio_pago" data-halign="center"  data-sortable="false">Fecha venta</th>
 						        <th data-field="cantidad" data-halign="center" data-sortable="true">Importe</th>
 						        <th data-field="numero_pagos" data-halign="center" data-sortable="true">Saldo Anterior</th>
 						        <th data-field="pagos_realizados" data-halign="center" data-sortable="true">Pagos</th>
