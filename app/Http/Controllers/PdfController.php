@@ -106,7 +106,7 @@ class PdfController extends Controller
 
     public function tabla_reporte_2($id,$fecha)
     {
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoImporte=0;
         $saldoAnteriorTotal=0;
@@ -186,7 +186,7 @@ class PdfController extends Controller
         {
             $id=$distribuidores[$i]->id_distribuidor; 
 
-            $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+            $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
             
             if(count($vales)!=0)
             { 
@@ -427,11 +427,9 @@ class PdfController extends Controller
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
-<<<<<<< HEAD
-             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
-=======
+
             $saldoActual=$saldoAnterior-$abono;
->>>>>>> origin/master
+
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_vale=$vales[$i]->id_cliente;

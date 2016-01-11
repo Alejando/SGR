@@ -91,13 +91,13 @@ class PagosController extends Controller
                 $anioActual=$fechaCarbon->year;
                 $mesActual=$fechaCarbon->month;
                 $fechaCarbon->subMonth();
-                return "25-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year." al 09-".$this->meses($mesActual)."-".$anioActual; 
+                return "25-".$fechaCarbon->month."-".$fechaCarbon->year." al 09-".$mesActual."-".$anioActual; 
                            
             }else{
                 $anioActual=$fechaCarbon->year;
                 $mesActual=$fechaCarbon->month;
                 $fechaCarbon->addMonth();
-                return "25-".$this->meses($mesActual)."-".$anioActual." al 09-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year; 
+                return "25-".$mesActual."-".$anioActual." al 09-".$fechaCarbon->month."-".$fechaCarbon->year; 
             }  
         }
     }
