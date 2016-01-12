@@ -295,7 +295,7 @@
 	      <td>L9</td-->
 	    </tr>
 	    <tr>
-	      <td colspan="9"  class="negrita mensaje">Cabalgando a Fresnillo</td>
+	      <td colspan="9"  class="negrita mensaje">Calzando a Fresnillo</td>
 	      <!--td>M2</td>
 	      <td>M3</td>
 	      <td>M4</td>
@@ -305,7 +305,7 @@
 	      <td>M8</td>
 	      <td>M9</td-->
 	      <td class="invisible">x</td>
-	      <td colspan="9"  class="negrita mensaje">Cabalgando a Fresnillo</td>
+	      <td colspan="9"  class="negrita mensaje">Calzando a Fresnillo</td>
 	      <!--td>M2</td>
 	      <td>M3</td>
 	      <td>M4</td>
