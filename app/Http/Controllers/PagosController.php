@@ -53,9 +53,9 @@ class PagosController extends Controller
         for ($i=0; $i <sizeof($pagos); $i++) 
         {
             $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
-            $pagos[$i]->cantidad_comision='$'.$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
+             $cantidad = (($this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision))-($pagos[$i]->abono));
+            $pagos[$i]->cantidad_comision='$'.$cantidad.".00";
             $nombre = "'".$pagos[$i]->id_distribuidor."'";
-            $cantidad = $this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision);
             $can_letra = "'".$this->num_to_letras($cantidad)."'";
             $periodo = "'".$this->calcularPeriodo($pagos[$i]->fecha_creacion)."'";
             $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
@@ -71,7 +71,7 @@ class PagosController extends Controller
              if( $pagos[$i]->estado==1){
                $pagos[$i]->estado='<p style="background-color: Red;">Pago Desfasado</p>';
             }
-            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin"  data-target="#abono" onclick="obtenerId('.$pagos[$i]->id_pago.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  onclick="obtenerId('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" data-target="#pago" href="#">Pagar</a>';//' <a type="button" class="btn btn-warning " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
+            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin"  data-target="#abono" onclick="obtenerId('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  onclick="obtenerId('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" data-target="#pago" href="#">Pagar</a>';//' <a type="button" class="btn btn-warning " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
 
          }
         
@@ -118,6 +118,7 @@ class PagosController extends Controller
             Session::flash('message','Error al registrar Abono');
             Session::flash('class','danger');
         }
+        return $this->num_to_letras($abono);
        
     }
     public function liquidarPago(Request $request){
