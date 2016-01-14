@@ -124,6 +124,7 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('obtenerPagos','PagosController@obtenerPagos');
 	Route::get('abonarPago','PagosController@abonarPago');
 	Route::get('liquidarPago','PagosController@liquidarPago');
+	Route::get('consultarPagosRealizados','PagosController@consultarPagosRealizados');
 });
 
 Route::get('prueba', function()

@@ -17,6 +17,7 @@
          <div class="col-md-12">
             <div  class="pull-right">
               <div class="btn-group">
+                <a  class="btn btn-success" onclick="pagosRealizados()"> Consultar </a>
               <button data-toggle="dropdown" class="btn btn-warning ">Exportar <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a onclick="mostrarPDF()">PDF</a></li>
@@ -27,7 +28,7 @@
          </div>
           </br>
           </br>   
-				<table data-toggle="table" data-url="obtenerPagos"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+				<table id="table" data-toggle="table" data-url="obtenerPagos"  data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 				    <thead>
 				    <tr>
 				        <th data-field="id_pago" data-sortable="true">Id</th>
@@ -46,8 +47,8 @@
 			</div>
 		</div>
 	</div>
-
-  <div id="ticket" style="display: none">
+<div id="ticketMega" style="display: none">
+  <div id="ticket">
       <h4 class="titulo">Zapatería "El Gran Remate" </h4>
       <h5 class="titulo">Recibo del pago de distribuidor</h5>
       <h5 class="titulo"  id="pBueno">Bueno por: $</h5>
@@ -62,11 +63,15 @@
       <p class="titulo" id="pDistribuidor">Firma Distribuidor</p>
       <br>
       <p class="titulo" >________________________________</p>
-      <p class="titulo" >ADMINISTRADOR</p>
+      <p class="titulo" >{{Session::get('nombre')}}</p>
       <p class="titulo" id="pDistribuidor">Firma Recibe</p>
       <br>
     </div>
-
+    <br></br>
+    <br></br>
+   <div id="ticket1" >
+   </div> 
+</div>
 
 	<div class="modal fade" id="abono">
       <div class="modal-dialog ">
@@ -84,7 +89,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-small btn-danger" data-dismiss="modal">Cancelar</button>
-             <a class="btn btn-small btn-success" href="consultarPagos" onclick="abonar()">Abonar</a>
+             <a class="btn btn-small btn-success"  onclick="abonar()">Abonar</a>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

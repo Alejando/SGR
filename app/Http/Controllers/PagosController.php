@@ -108,6 +108,7 @@ class PagosController extends Controller
         $pago->abono+=$abono;
         if($pago->abono>=$this->pagoComision($pago->cantidad,$pago->comision)){
             $pago->estado=2;
+            $pago->abono=0;
         }
        
         if($pago->save()){
@@ -125,6 +126,7 @@ class PagosController extends Controller
         $id=$request->input('id');
         $pago=Pago::find($id);
         $pago->estado=2;
+        $pago->abono=0;
         $id_distribuidor=$pago->id_distribuidor;
         if($pago->save()){
             $distribuidor=Distribuidor::find($id_distribuidor);
@@ -171,6 +173,36 @@ class PagosController extends Controller
         else{
             return $pago;
         }
+    }
+
+    public function consultarPagosRealizados(){
+         
+        $pagos= Pago::where('estado',2)->get();
+        for ($i=0; $i <sizeof($pagos); $i++) 
+        {
+             $fechaHoy="'".Carbon::parse($pagos[$i]->updated_at)->toDateString()."'";
+            $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
+            $cantidad = (($this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision))-($pagos[$i]->abono));
+            $pagos[$i]->cantidad_comision='$'.$cantidad.".00";
+            $nombre = "'".$pagos[$i]->id_distribuidor."'";
+            $can_letra = "'".$this->num_to_letras($cantidad)."'";
+            $periodo = "'".$this->calcularPeriodo($pagos[$i]->fecha_creacion)."'";
+            $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
+            $pagos[$i]->abono='$'.$pagos[$i]->abono.".00";
+            $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
+            $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
+            $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
+            $pagos[$i]->comision=$pagos[$i]->comision."%";
+
+           
+               $pagos[$i]->estado='<p style="background-color: Red;"> Liquidado </p>';
+         
+           
+            $pagos[$i]->acciones ='<a  type="button"  class="btn btn-warning margin"   onclick="reimprimir('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" href="#">Imprimir</a> ';//' <a type="button" class="btn btn-warning " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
+
+         }
+        
+        return $pagos;
     }
     public function CalcularFechaLimiteCorta($fecha){
        $fechaCarbon=Carbon::parse($fecha);
