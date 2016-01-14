@@ -37,6 +37,17 @@
 									<li><a onclick="mostrarReporte1b()" class="font-bold">Comprobantes B</a></li>
 								</ul>
 						</div>	
+					</div>
+					
+					<div class="col-lg-1">
+						<div class="btn-group">
+							<br>
+							<button data-toggle="dropdown" class="btn btn-danger ">Distribuidores <span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a onclick="mostrarTodosPDF()">PDF</a></li>
+									<li><a onclick="mostrarTodosReporte1b()" class="font-bold">Comprobantes</a></li>
+								</ul>
+						</div>	
 					</div>	
 					<!--div class="col-lg-1">
 						<div class="form-group">

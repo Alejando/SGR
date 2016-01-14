@@ -9,8 +9,6 @@
   </head>
   <body>
 
-    <main>
-
       <table>
         <tr>
           <td class="medio invisible" id="logo" rowspan="2"><img height="60" width="100" src="img/logoGR.jpg"></td>
@@ -64,5 +62,6 @@
           </tr>
         </tfoot>
       </table>
+     
   </body>
 </html>

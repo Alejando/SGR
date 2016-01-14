@@ -34,12 +34,17 @@ class PdfController extends Controller
         for ($i=0; $i <sizeof($vales); $i++) { 
             
              $importe=$vales[$i]->cantidad;
+             //11.-saldoImporte
              $saldoImporte+=$importe;
              $saldoAnterior=$vales[$i]->deuda_actual;
+
+             //10.-saldoAnteriorTotal
              $saldoAnteriorTotal+=$saldoAnterior;
              $pagosRealizados=$vales[$i]->pagos_realizados+1;
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+
+             //8.-saldoTotal
              $saldoTotal+=$abono;
              $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
@@ -52,15 +57,35 @@ class PdfController extends Controller
             $vales[$i]->deuda_actual="$".$saldoActual.".00";
             
          }
-        $comision=$this->calcularComision($saldoTotal);
-        $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
-        $saldoComision=$saldoTotal-$saldoDistribuidor;
+        
+
+        //1.-Datas
         $datas = $vales;
-        $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
+        
+        //2.- FechaHoy
         $fechaHoy = $this->modificarFechas(Carbon::now());
+        
+        //3.-Distribuidor
+        $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
+
+
+        //4.-fechaEntrega
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
+
+        //5.- FechaLimite
         $fechaLimite=$this->CalcularFechaLimite($fecha);
+
+        //6.-periodo
         $periodo=$this->calcularPeriodo($fecha);
+
+        //7.-comision
+        $comision=$this->calcularComision($saldoTotal);
+        $saldoDistribuidor=intval(($saldoTotal*$comision)/100); 
+
+        //9.-saldoComision
+        $saldoComision=$saldoTotal-$saldoDistribuidor;
+
+        //12.-saldoActualTotal
         $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
         
         $view =  \View::make('reportes/reporte_2', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
@@ -68,6 +93,112 @@ class PdfController extends Controller
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_2.pdf');
 
+    }
+
+    public function tabla_reporte_2($id,$fecha)
+    {
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        $saldoTotal=0;
+        $saldoImporte=0;
+        $saldoAnteriorTotal=0;
+        $saldoComision;
+        for ($i=0; $i <sizeof($vales); $i++) { 
+            
+             $importe=$vales[$i]->cantidad;
+             //11.-saldoImporte
+             $saldoImporte+=$importe;
+             $saldoAnterior=$vales[$i]->deuda_actual;
+
+             //10.-saldoAnteriorTotal
+             $saldoAnteriorTotal+=$saldoAnterior;
+             $pagosRealizados=$vales[$i]->pagos_realizados+1;
+             $numeroPagos=$vales[$i]->numero_pagos;
+             $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+
+             //8.-saldoTotal
+             $saldoTotal+=$abono;
+             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
+             $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
+
+            $vales[$i]->id_cliente=$nombreCliente;
+            $vales[$i]->cantidad="$".$importe.".00";
+            $vales[$i]->numero_pagos="$".$saldoAnterior.".00";
+            $vales[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
+            $vales[$i]->cantidad_limite="$".$abono.".00";
+            $vales[$i]->deuda_actual="$".$saldoActual.".00";
+            
+         }
+        
+
+        //1.-Datas
+        $datas = $vales;
+        
+        //2.- FechaHoy
+        $fechaHoy = $this->modificarFechas(Carbon::now());
+        
+        //3.-Distribuidor
+        $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
+
+
+        //4.-fechaEntrega
+        $fechaEntrega=$this->CalcularFechaEntrega($fecha);
+
+        //5.- FechaLimite
+        $fechaLimite=$this->CalcularFechaLimite($fecha);
+
+        //6.-periodo
+        $periodo=$this->calcularPeriodo($fecha);
+
+        //7.-comision
+        $comision=$this->calcularComision($saldoTotal);
+        $saldoDistribuidor=intval(($saldoTotal*$comision)/100); 
+
+        //9.-saldoComision
+        $saldoComision=$saldoTotal-$saldoDistribuidor;
+
+        //12.-saldoActualTotal
+        $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
+        
+        $view =  \View::make('reportes/reporte_2_todos', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
+
+        return ($view);
+    }
+
+
+    public function reporte_2_todos(Request $request){
+        $fecha=$request->input('fecha');
+        $head = '<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Reporte 2</title><link href="css/pdf.css"  rel="stylesheet"></head><body>';
+        $foot =   '</body></html>';
+        $body = ' ';
+        $todo = ' ';
+
+        $distribuidores = Distribuidor::all();
+        for ($i=0; $i < sizeof($distribuidores); $i++)
+        {
+            $id=$distribuidores[$i]->id_distribuidor; 
+
+            $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+            
+            if(count($vales)!=0)
+            { 
+                $conVales[] = $distribuidores[$i]->id_distribuidor;   
+            }
+           
+        }
+
+        for ($i=0; $i <sizeof($conVales); $i++) 
+        {
+            $body = $this->tabla_reporte_2($conVales[$i],$fecha);
+            $todo = $todo . $body;
+        } 
+        $result = $head.$todo.$foot;
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($result);
+        return $pdf->stream('reporte_2_todos.pdf');
+        
+        //return ($conVales);
+        //$result = $head.$body.$foot;
+        //return ($todo);
     }
 
     public function calcularPago($cantidad,$tPagos,$nPago){
@@ -226,7 +357,7 @@ class PdfController extends Controller
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
-            $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
+             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_vale=$vales[$i]->id_cliente;

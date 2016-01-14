@@ -64,3 +64,10 @@ function mostrarReporte1b(){
     window.open(url, '_blank');
 	
 }
+
+function mostrarTodosPDF(){
+	var fecha=$('#fecha').val();
+	url='reporte_2_todos?fecha='+fecha;
+    window.open(url, '_blank');
+	
+}

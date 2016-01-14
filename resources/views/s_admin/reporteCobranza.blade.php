@@ -36,7 +36,9 @@
 									<li><a onclick="mostrarReporte1b()" class="font-bold">Comprobantes B</a></li>
 								</ul>
 						</div>	
-					</div>	
+					</div>
+					
+						
 					<!--div class="col-lg-1">
 						<div class="form-group">
 							<label>--</label>
