@@ -55,7 +55,7 @@
     <tfoot>
       <tr>
         <td></td>
-        <td></td>
+        <td>{{$totalVales}} Vales</td>
         <td colspan="3">Totales</td>
         <td >${{$saldoImporte}}.00</td>
         <td >${{$saldoAnteriorTotal}}.00</td>

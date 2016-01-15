@@ -58,16 +58,16 @@ class PdfController extends Controller
             $vales[$i]->deuda_actual="$".$saldoActual.".00";
             
          }
-<<<<<<< HEAD
+
         
 
         //1.-Datas
-=======
+
         $totalVales=sizeof($vales);
         $comision=$this->calcularComision($saldoTotal);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
->>>>>>> origin/master
+
         $datas = $vales;
         
         //2.- FechaHoy
@@ -139,7 +139,7 @@ class PdfController extends Controller
             
          }
         
-
+          $totalVales=sizeof($vales);
         //1.-Datas
         $datas = $vales;
         
@@ -169,7 +169,7 @@ class PdfController extends Controller
         //12.-saldoActualTotal
         $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
         
-        $view =  \View::make('reportes/reporte_2_todos', compact('datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
+        $view =  \View::make('reportes/reporte_2_todos', compact('totalVales','datas', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
 
         return ($view);
     }
@@ -367,11 +367,11 @@ class PdfController extends Controller
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
-<<<<<<< HEAD
+
              $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
-=======
+
             $saldoActual=$saldoAnterior-$abono;
->>>>>>> origin/master
+
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_vale=$vales[$i]->id_cliente;
