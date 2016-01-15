@@ -64,7 +64,7 @@ class PdfController extends Controller
         //1.-Datas
 
         $totalVales=sizeof($vales);
-        $comision=$this->calcularComision($saldoTotal);
+        $comision=$this->calcularComision($saldoTotal,$id);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
 
@@ -87,7 +87,6 @@ class PdfController extends Controller
         $periodo=$this->calcularPeriodo($fecha);
 
         //7.-comision
-        $comision=$this->calcularComision($saldoTotal);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100); 
 
         //9.-saldoComision
@@ -160,7 +159,7 @@ class PdfController extends Controller
         $periodo=$this->calcularPeriodo($fecha);
 
         //7.-comision
-        $comision=$this->calcularComision($saldoTotal);
+        $comision=$this->calcularComision($saldoTotal,$id);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100); 
 
         //9.-saldoComision
@@ -352,10 +351,17 @@ class PdfController extends Controller
         return $meses[$mes-1];
     }
     
-    public function calcularComision($total){
+    public function calcularComision($total,$id){
         
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
-        return $comision[count($comision)-1]->porcentaje;
+        $distribuidor= Distribuidor::find($id);
+        if($distribuidor->estatus==1){
+             return 0;
+        }else{
+            return $comision[count($comision)-1]->porcentaje;
+           
+        }
+        
     }
 
 
@@ -391,7 +397,7 @@ class PdfController extends Controller
             
          }
          
-        $comision=$this->calcularComision($saldoTotal);
+        $comision=$this->calcularComision($saldoTotal,$id);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
         $data = $vales;
@@ -434,7 +440,7 @@ class PdfController extends Controller
             
          }
          
-        $comision=$this->calcularComision($saldoTotal);
+        $comision=$this->calcularComision($saldoTotal,$id);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
         $data = $vales;
