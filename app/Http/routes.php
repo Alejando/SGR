@@ -24,6 +24,7 @@ Route::get('reporte_6', 'PdfController@reporte_6');
 Route::get('reporte_2', 'PdfController@reporte_2');
 Route::get('reporte_1', 'PdfController@reporte_1');
 Route::get('reporte_1b', 'PdfController@reporte_1b');
+Route::get('reporte_1b_todos', 'PdfController@reporte_1b_todos');
 Route::get('reporte_2_todos', 'PdfController@reporte_2_todos');
 
 //---------------> Grupos <----------------///

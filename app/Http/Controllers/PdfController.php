@@ -414,7 +414,7 @@ class PdfController extends Controller
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
-            $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
+             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_vale=$vales[$i]->id_cliente;
@@ -442,6 +442,7 @@ class PdfController extends Controller
         return $pdf->stream('reporte_1b.pdf');
 
     }
+
 
     public function reporte_6(Request $request){
          $fecha=$request->input('fecha');
@@ -577,5 +578,92 @@ class PdfController extends Controller
         $fechaCarbon=Carbon::parse($fecha);
         return $fechaCarbon->day."-".$fechaCarbon->month."-".$fechaCarbon->year;
     }
+
+
+
+     public function reporte_1b_todos(Request $request)
+    {
+        $fecha=$request->input('fecha');
+
+        //Partes de la vista
+        $head = '<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Reporte 1</title><link href="css/reporte_1b.css"  rel="stylesheet"></head>';
+        $foot = '</html>';
+        $body = ' ';
+        $todo = ' ';
+
+
+        //Filtrar los administradores que tienen vales
+        $distribuidores = Distribuidor::all();
+        for ($i=0; $i < sizeof($distribuidores); $i++)
+        {
+            $id=$distribuidores[$i]->id_distribuidor; 
+
+            $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+            
+            if(count($vales)!=0)
+            { 
+                $conVales[] = $distribuidores[$i]->id_distribuidor;   
+            }
+           
+        }
+
+        //Crear el cuerpo de la vista
+        for ($i=0; $i <sizeof($conVales); $i++) 
+        {
+            $body = $this->body_reporte_1b($conVales[$i],$fecha);
+            $todo = $todo . $body;
+        } 
+        $result = $head.$todo.$foot;
+
+        //Crear el pdf
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($result);
+        return $pdf->stream('reporte_1b_todos.pdf');
+    }
+
+
+    public function body_reporte_1b($id,$fecha)
+    {
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
+        $saldoTotal=0;
+        $saldoComision;
+        for ($i=0; $i <sizeof($vales); $i++) { 
+            
+             $importe=$vales[$i]->cantidad;
+             $saldoAnterior=$vales[$i]->deuda_actual;
+             $pagosRealizados=$vales[$i]->pagos_realizados+1;
+             $numeroPagos=$vales[$i]->numero_pagos;
+             $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+             $saldoTotal+=$abono;
+             $saldoActual=$saldoAnterior-$abono;
+             $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
+
+            $vales[$i]->id_vale=$vales[$i]->id_cliente;
+            $vales[$i]->id_cliente=$nombreCliente;
+            $vales[$i]->cantidad="$".$importe.".00";
+            $vales[$i]->numero_pagos="$".$saldoAnterior.".00";
+            $vales[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
+            $vales[$i]->cantidad_limite="$".$abono.".00";
+            $vales[$i]->deuda_actual="$".$saldoActual.".00";
+            
+         }
+         
+        $comision=$this->calcularComision($saldoTotal,$id);
+        $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
+        $saldoComision=$saldoTotal-$saldoDistribuidor;
+        $data = $vales;
+        $distribuidor=Distribuidor::find($id)->nombre;
+        $fechaHoy = $this->modificarFechas(Carbon::today()->toDateString());
+        $fechaEntrega=$this->CalcularFechaEntrega($fecha);
+        $fechaLimite=$this->CalcularFechaLimiteCliente($fecha);
+        $periodo=$this->calcularPeriodo($fecha);
+        $view =  \View::make('reportes/reporte_1b_todos', compact('data', 'fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision'))->render();
+        
+        return ($view);
+
+    }
+
+
+
 }
     

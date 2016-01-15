@@ -71,3 +71,10 @@ function mostrarTodosPDF(){
     window.open(url, '_blank');
 	
 }
+
+function mostrarTodosReporte1b(){
+	var fecha=$('#fecha').val();
+	url='reporte_1b_todos?fecha='+fecha;
+    window.open(url, '_blank');
+	
+}
