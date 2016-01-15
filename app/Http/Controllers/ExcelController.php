@@ -25,7 +25,7 @@ class ExcelController extends Controller
         if($fecha==""){
             $fecha=Carbon::today();
         }
-        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoImporte=0;
         $saldoAnteriorTotal=0;
@@ -51,6 +51,7 @@ class ExcelController extends Controller
             $vales[$i]->deuda_actual=$saldoActual.".00";
             
          }
+         $totalVales=sizeof($vales);
         $comision=$this->calcularComision($saldoTotal);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
@@ -62,7 +63,7 @@ class ExcelController extends Controller
         $periodo=$this->calcularPeriodo($fecha);
         $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
 
-        Excel::create('Reporte_Cobranza', function($excel) use ($datas, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
+        Excel::create('Reporte_Cobranza', function($excel) use ($datas,$totalVales, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
             $excel->sheet('Reporte_Cobranza', function($sheet) use ($datas, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
                 $sheet->loadView('reportes.reporte_2_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("distribuidor", $distribuidor)->with("fechaEntrega", $fechaEntrega)->with("fechaLimite", $fechaLimite)->with("periodo", $periodo)->with("comision", $comision)->with("saldoTotal", $saldoTotal)->with("saldoComision", $saldoComision)->with("saldoAnteriorTotal", $saldoAnteriorTotal)->with("saldoImporte", $saldoImporte)->with("saldoActualTotal", $saldoActualTotal);
             });
@@ -79,7 +80,7 @@ class ExcelController extends Controller
         $SaldoTotalSinComision=0;
         $distribuidores=Distribuidor::all();
         for($j=sizeof($distribuidores)-1; $j >=0; $j--) { 
-            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
             $saldoTotal=0;
           if (count($vales)==0) {
                 unset($distribuidores[$j]);

@@ -41,6 +41,7 @@
             <th id="cliente" >Cliente</th>
             <th class="campo">Vale</th>
             <th class="campo">Folio Venta</th>
+             <th class="campo">Fecha Venta</th>
             <th class="campo">Importe</th>
             <th class="campo">Saldo Anterior</th>
             <th class="campo">Pagos</th>
@@ -54,6 +55,7 @@
             <td>{{$data->id_cliente}}</td>
             <td>{{$data->folio}}</td>
             <td>{{$data->folio_venta}}</td>
+             <td>{{$data->fecha_inicio_pago}}</td>
             <td>{{$data->cantidad}}</td>
             <td>{{$data->numero_pagos}}</td>
             <td>{{$data->pagos_realizados}}</td>
@@ -66,7 +68,8 @@
         <tfoot>
           <tr>
             <td></td>
-            <td colspan="2"><b>Totales</b></td>
+            <td> {{$totalVales}} Vales</td>
+            <td ><b>Totales</b></td>
             <td >{{$saldoImporte}}.00</td>
             <td >{{$saldoAnteriorTotal}}.00</td>
             <td></td>

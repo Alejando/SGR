@@ -94,6 +94,8 @@ Route::group(['middleware' => 'super_y_admin'], function () {
    	Route::get('editarVale/{id}', 'ValesController@editarVale');
 	Route::post('actualizarVale/{id}', 'ValesController@actualizarVale');
 	Route::post('modificarVale', 'ValesController@modificarVale');
+	Route::get('cambiarVales', 'ValesController@cambiarVales');
+	Route::post('actualizarVales', 'ValesController@actualizarVales');
 
    	Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');
@@ -123,6 +125,7 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('obtenerPagos','PagosController@obtenerPagos');
 	Route::get('abonarPago','PagosController@abonarPago');
 	Route::get('liquidarPago','PagosController@liquidarPago');
+	Route::get('consultarPagosRealizados','PagosController@consultarPagosRealizados');
 });
 
 Route::get('prueba', function()

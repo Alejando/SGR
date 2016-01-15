@@ -53,9 +53,9 @@ class PagosController extends Controller
         for ($i=0; $i <sizeof($pagos); $i++) 
         {
             $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
-            $pagos[$i]->cantidad_comision='$'.$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
+             $cantidad = (($this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision))-($pagos[$i]->abono));
+            $pagos[$i]->cantidad_comision='$'.$cantidad.".00";
             $nombre = "'".$pagos[$i]->id_distribuidor."'";
-            $cantidad = $pagos[$i]->cantidad;
             $can_letra = "'".$this->num_to_letras($cantidad)."'";
             $periodo = "'".$this->calcularPeriodo($pagos[$i]->fecha_creacion)."'";
             $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
@@ -71,7 +71,7 @@ class PagosController extends Controller
              if( $pagos[$i]->estado==1){
                $pagos[$i]->estado='<p style="background-color: Red;">Pago Desfasado</p>';
             }
-            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin"  data-target="#abono" onclick="obtenerId('.$pagos[$i]->id_pago.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  onclick="obtenerId('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" data-target="#pago" href="#">Pagar</a>';//' <a type="button" class="btn btn-warning " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
+            $pagos[$i]->acciones ='<a data-toggle="modal" type="button"  class="btn btn-primary margin"  data-target="#abono" onclick="obtenerId('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" href="#">Abonar</a> <a  data-toggle="modal" type="button" class="btn btn-success margin"  onclick="obtenerId('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" data-target="#pago" href="#">Pagar</a>';//' <a type="button" class="btn btn-warning " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
 
          }
         
@@ -108,6 +108,7 @@ class PagosController extends Controller
         $pago->abono+=$abono;
         if($pago->abono>=$this->pagoComision($pago->cantidad,$pago->comision)){
             $pago->estado=2;
+            $pago->abono=0;
         }
        
         if($pago->save()){
@@ -118,12 +119,14 @@ class PagosController extends Controller
             Session::flash('message','Error al registrar Abono');
             Session::flash('class','danger');
         }
+        return $this->num_to_letras($abono);
        
     }
     public function liquidarPago(Request $request){
         $id=$request->input('id');
         $pago=Pago::find($id);
         $pago->estado=2;
+        $pago->abono=0;
         $id_distribuidor=$pago->id_distribuidor;
         if($pago->save()){
             $distribuidor=Distribuidor::find($id_distribuidor);
@@ -141,7 +144,7 @@ class PagosController extends Controller
     }
     public function aumentarPagos($id,$fecha){
 
-        $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->where('fecha_inicio_pago','<',$fecha)->get();
+        $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->where('fecha_inicio_pago','<=',$fecha)->get();
          for ($i=0; $i <sizeof($vales); $i++) 
         {
             $vales[$i]->pagos_realizados++;
@@ -170,6 +173,36 @@ class PagosController extends Controller
         else{
             return $pago;
         }
+    }
+
+    public function consultarPagosRealizados(){
+         
+        $pagos= Pago::where('estado',2)->get();
+        for ($i=0; $i <sizeof($pagos); $i++) 
+        {
+             $fechaHoy="'".Carbon::parse($pagos[$i]->updated_at)->toDateString()."'";
+            $pagos[$i]->id_distribuidor=Distribuidor::find( $pagos[$i]->id_distribuidor)->nombre;
+            $cantidad = (($this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision))-($pagos[$i]->abono));
+            $pagos[$i]->cantidad_comision='$'.$cantidad.".00";
+            $nombre = "'".$pagos[$i]->id_distribuidor."'";
+            $can_letra = "'".$this->num_to_letras($cantidad)."'";
+            $periodo = "'".$this->calcularPeriodo($pagos[$i]->fecha_creacion)."'";
+            $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
+            $pagos[$i]->abono='$'.$pagos[$i]->abono.".00";
+            $pagos[$i]->fecha_creacion=$this->modificarFechas($pagos[$i]->fecha_creacion);
+            $pagos[$i]->fecha_limite=$this->CalcularFechaLimiteCorta($pagos[$i]->fecha_creacion);
+            $pagos[$i]->id_cuenta=Cuenta::find($pagos[$i]->id_cuenta)->nombre;
+            $pagos[$i]->comision=$pagos[$i]->comision."%";
+
+           
+               $pagos[$i]->estado='<p style="background-color: Red;"> Liquidado </p>';
+         
+           
+            $pagos[$i]->acciones ='<a  type="button"  class="btn btn-warning margin"   onclick="reimprimir('. $pagos[$i]->id_pago.','.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')" href="#">Imprimir</a> ';//' <a type="button" class="btn btn-warning " onclick="imprimirComprobante('.$nombre.','.$cantidad.','.$can_letra.','.$periodo.','.$fechaHoy.')">Imprimir</a>';
+
+         }
+        
+        return $pagos;
     }
     public function CalcularFechaLimiteCorta($fecha){
        $fechaCarbon=Carbon::parse($fecha);
@@ -200,7 +233,7 @@ class PagosController extends Controller
 	                
 	            $distribuidores=Distribuidor::all();
 	        for($j=0; $j < sizeof($distribuidores); $j++) { 
-	            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+	            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
 	            $saldoTotal=0;
 	            for ($i=0; $i <sizeof($vales); $i++) { 
 	                
@@ -247,7 +280,7 @@ class PagosController extends Controller
 	        }
         }
         else{
-        	$vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<',$this->calcularFechaCorte($fecha))->get();
+        	$vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
 	            $saldoTotal=0;
 	            for ($i=0; $i <sizeof($vales); $i++) { 
 	                
@@ -372,13 +405,15 @@ class PagosController extends Controller
         // 10 nomviembre- 24 Novimebre-> 07 Diciembre
             // 25 novimebre-09 Diciembre -> 21 Diciembre
         if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
-            return "07-".($fechaCarbon->month+1)."-".$fechaCarbon->year;       
+             $fechaCarbon->addMonth(); 
+            return "07-".($fechaCarbon->month)."-".$fechaCarbon->year;       
         }
         else{
             if($fechaCarbon->day<=9){
                 return "21-".($fechaCarbon->month)."-".$fechaCarbon->year;                
             }else{
-                return "21-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                 $fechaCarbon->addMonth(); 
+                return "21-".($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }

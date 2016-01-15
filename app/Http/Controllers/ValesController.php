@@ -29,14 +29,24 @@ class ValesController extends Controller
         $vale=Vale::find($id);
          switch (Session::get('tipo')) {
             case 0:   
-                return view('s_admin.editarVale');
+                return view('s_admin.editarVale',compact('vale'));
             break;
             case 1:
                return view('admin.editarVale',compact('vale'));
             break; 
         } 
     }
-
+    public function cambiarVales()
+    {   
+        switch (Session::get('tipo')) {
+            case 0:   
+                return view('s_admin.cambiarVale');
+            break;
+            case 1:
+               return view('admin.cambiarVale');
+            break; 
+        } 
+    }
     public function guardarVale(Request $request)
     {
         $id_distribuidor = $request->input('id_distribuidor');
@@ -51,7 +61,7 @@ class ValesController extends Controller
             else{
                 $ultimo=$auxV->last()->folio;
             }
-            //if($folioInicio>$ultimo){
+            if($folioInicio>$ultimo){
                 for($i=$folioInicio;$i<=$folioFin;$i++){
                     $vale = new Vale;
                     $vale->id_distribuidor=$id_distribuidor;
@@ -64,11 +74,11 @@ class ValesController extends Controller
                 }
                 Session::flash('message','Guardado Correctamente');
                     Session::flash('class','success');
-         /*  }
+          }
             else{
                  Session::flash('message','Folio repetido, el ultimo folio es: '.$ultimo);
                 Session::flash('class','danger');
-            }*/
+            }
         }
         else{
              Session::flash('message','Folio fin debe ser mayor a folio inicio ');
@@ -77,24 +87,25 @@ class ValesController extends Controller
        return redirect('crearVale'); 
        
     }
-    public function cambiarVale(Request $request)
+    public function actualizarVales(Request $request)
     {
-        $id_distribuidor = $request->input('id_distribuidor_a');
-        $serie = strtoupper($request->input('serie_a'));
-        $folioInicio = $request->input('folio_inicio_a');
-        $folioFin = $request->input('folio_fin_a');
+        $id_distribuidor = $request->input('id_distribuidor');
+        $serie = strtoupper($request->input('serie'));
+        $folioInicio = $request->input('folio_inicio');
+        $folioFin = $request->input('folio_fin');
         if($folioFin>=$folioInicio){
                       
                 for($i=$folioInicio;$i<=$folioFin;$i++){
-                    $vale = Vale::where('folio',$i)->get();
-                    $vale->id_distribuidor=$id_distribuidor;
-                    $vale->serie=$serie;
-                    $vale->cantidad_limite=Distribuidor::find($id_distribuidor)->limite_vale;
-                    $vale->fecha_creacion=Carbon::today(); 
-                    $vale->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
-                    $vale->save();
+                    $vale = Vale::where('folio',$i)->where('serie',$serie)->where('estatus','<',1)->get();
+                    if(sizeof($vale)>0){
+                        $vale[0]->id_distribuidor=$id_distribuidor;
+                        $vale[0]->serie=$serie;
+                        $vale[0]->cantidad_limite=Distribuidor::find($id_distribuidor)->limite_vale;
+                        $vale[0]->estatus=0; // 0=disponible, 1=ocupado 2=cancelado
+                        $vale[0]->save();
+                    }
                 }
-                Session::flash('message','FoliosnActualizados  Correctamente');
+                Session::flash('message','Folios Actualizados  Correctamente');
                     Session::flash('class','success');
       
         }
@@ -102,7 +113,7 @@ class ValesController extends Controller
              Session::flash('message','Folio fin debe ser mayor a folio inicio ');
                 Session::flash('class','danger');
         }
-       return redirect('crearVale'); 
+       return redirect('cambiarVales'); 
        
     }
 
@@ -394,6 +405,7 @@ class ValesController extends Controller
         $vale->numero_pagos=$numeroPagos;
         $vale->folio_venta=$folioVenta;
         $vale->estatus=$estatus;
+        $vale->cantidad_limite=$limiteVale;
         $vale->motivo_cancelacion=$motivoCancelacion;
          $auxVale= Vale::where('serie',$serie)->where('folio',$folio)->get();  
          if(sizeof($auxVale)==0){

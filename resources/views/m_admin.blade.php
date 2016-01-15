@@ -52,6 +52,11 @@
 						</a>
 					</li>
 					<li>
+						<a class="" href="cambiarVales">
+							<span class="glyphicon glyphicon-share-alt"></span> Actualizar Vales
+						</a>
+					</li>
+					<li>
 						<a class="" href="registrarVale">
 							<span class="glyphicon glyphicon-share-alt"></span> Registro de ventas
 						</a>
@@ -61,6 +66,7 @@
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Vales
 						</a>
 					</li>
+					
 				</ul>
 			</li>
 			<li class="parent ">
