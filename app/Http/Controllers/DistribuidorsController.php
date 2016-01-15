@@ -188,9 +188,8 @@ class DistribuidorsController extends Controller
         $distribuidor->estado_aval = strtoupper($request->input('estado_aval'));
         $distribuidor->telefono_aval = $request->input('telefono_aval');
         $distribuidor->limite_credito = $request->input('limite_credito');
-        $distribuidor->limite_vale = $request->input('limite_vale');
-       
-        
+        $limiteVale= $request->input('limite_vale');
+        $distribuidor->limite_vale = $limiteVale;
         
       
         $fileFirma = $request->file('firma');
@@ -212,9 +211,14 @@ class DistribuidorsController extends Controller
 
 
 
+    $vales= Vale::where('id_distribuidor',$distribuidor->id_distribuidor)->where('estatus',0)->get();
 
 
         if($distribuidor->save()){
+            for ($i=0; $i < sizeof($vales); $i++) { 
+              $vales[$i]->cantidad_limite=$limiteVale;
+              $vales[$i]->save();
+            }
             $movimiento= new Movimiento;
             $movimiento->id_cuenta=Session::get('id');
             $movimiento->fecha=Carbon::today();
@@ -307,7 +311,7 @@ class DistribuidorsController extends Controller
                 return $fechaCarbon->toDateString();           
             }else{
                 $fechaCarbon->day=9;
-                $fechaCarbon->month++;
+               $fechaCarbon->addMonth();
                 return $fechaCarbon->toDateString();
             }  
         }

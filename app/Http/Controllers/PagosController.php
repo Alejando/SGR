@@ -88,9 +88,16 @@ class PagosController extends Controller
         }
         else{
             if($fechaCarbon->day<=9){
-                return "25-".($fechaCarbon->month-1)."-".$fechaCarbon->year." al 09-".$fechaCarbon->month."-".$fechaCarbon->year;                
+                $anioActual=$fechaCarbon->year;
+                $mesActual=$fechaCarbon->month;
+                $fechaCarbon->subMonth();
+                return "25-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year." al 09-".$this->meses($mesActual)."-".$anioActual; 
+                           
             }else{
-                return "25-".$fechaCarbon->month."-".$fechaCarbon->year." al 09-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                $anioActual=$fechaCarbon->year;
+                $mesActual=$fechaCarbon->month;
+                $fechaCarbon->addMonth();
+                return "25-".$this->meses($mesActual)."-".$anioActual." al 09-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }
@@ -131,6 +138,7 @@ class PagosController extends Controller
         if($pago->save()){
             $distribuidor=Distribuidor::find($id_distribuidor);
             $distribuidor->estatus=0;
+            $distribuidor->saldo_atual-=$pago->cantidad;
             $distribuidor->save();
             $this->aumentarPagos($id_distribuidor,$pago->fecha_creacion);
             Session::flash('message','Pago registrado correctamente');
