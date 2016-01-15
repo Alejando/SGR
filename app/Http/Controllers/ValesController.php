@@ -302,7 +302,7 @@ class ValesController extends Controller
             if($vale->distribuidor->estatus==0){ //0->activo 1->desactivado
                 if($cantidad<=$vale->cantidad_limite || $vale->cantidad_limite==0){
                
-                    if($saldoNuevoDistribuidor<$limiteCreditoDistribuidor){ 
+                    if($saldoNuevoDistribuidor<=$limiteCreditoDistribuidor){ 
                          if(is_null($idCliente)){
                             $cliente= new Cliente;
                             $cliente->nombre=$nombre;
@@ -315,6 +315,8 @@ class ValesController extends Controller
                             $vale_promo->promocion_id = $idPromocion;
                             $vale_promo->save();
                         }
+                        $vale->distribuidor->saldo_actual=$saldoNuevoDistribuidor;
+                        $vale->distribuidor->save();
                         $vale->id_cliente=$idCliente;
                         $vale->id_cuenta=$cuenta;
                         $vale->fecha_venta=Carbon::today();
@@ -335,7 +337,7 @@ class ValesController extends Controller
                         }
                     }
                     else{
-                        Session::flash('message','El distribuidor a superado limite de credito por $'.$saldoNuevoDistribuidor-$limiteCreditoDistribuidor.'.00');
+                        Session::flash('message','El distribuidor a superado limite de credito por $'.($saldoNuevoDistribuidor-$limiteCreditoDistribuidor).'.00');
                         Session::flash('class','danger');
                     }
                 }

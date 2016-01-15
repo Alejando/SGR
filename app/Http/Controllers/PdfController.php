@@ -127,7 +127,7 @@ class PdfController extends Controller
 
              //8.-saldoTotal
              $saldoTotal+=$abono;
-             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
+             $saldoActual=$saldoAnterior-$abono;
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_cliente=$nombreCliente;
@@ -237,7 +237,7 @@ class PdfController extends Controller
                 return $fechaCarbon->toDateString();           
             }else{
                 $fechaCarbon->day=9;
-                $fechaCarbon->month++;
+                $fechaCarbon->addMonth();
                 return $fechaCarbon->toDateString();
             }  
         }
@@ -260,7 +260,10 @@ class PdfController extends Controller
                 }
                                 
             }else{
-                return "25-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year." al 09-".$this->meses($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                $anioActual=$fechaCarbon->year;
+                $mesActual=$fechaCarbon->month;
+                $fechaCarbon->addMonth();
+                return "25-".$this->meses($mesActual)."-".$anioActual." al 09-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }
@@ -270,13 +273,15 @@ class PdfController extends Controller
         // 10 nomviembre- 24 Novimebre-> 04 Diciembre
             // 25 novimebre-09 Diciembre -> 18 Diciembre
         if($fechaCarbon->day>=10 && $fechaCarbon->day<=24){
-            return "04-".$this->meses($fechaCarbon->month+1)."-".$fechaCarbon->year;       
+            $fechaCarbon->addMonth();
+            return "04-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year;       
         }
         else{
             if($fechaCarbon->day<=9){
                 return "18-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year;                
             }else{
-                return "18-".$this->meses($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                $fechaCarbon->addMonth();
+                return "18-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }
@@ -294,7 +299,8 @@ class PdfController extends Controller
             if($fechaCarbon->day<=9){
                 return "15-".($fechaCarbon->month)."-".$fechaCarbon->year;                
             }else{
-                return "15-".($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                $fechaCarbon->addMonth();
+                return "15-".($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }
@@ -327,7 +333,8 @@ class PdfController extends Controller
             if($fechaCarbon->day<=9){
                 return "12-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year;                
             }else{
-                return "12-".$this->meses($fechaCarbon->month+1)."-".$fechaCarbon->year; 
+                $fechaCarbon->addMonth();
+                return "12-".$this->meses($fechaCarbon->month)."-".$fechaCarbon->year; 
             }  
         }
     }
@@ -368,7 +375,7 @@ class PdfController extends Controller
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
 
-             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
+             $saldoActual=$saldoAnterior-$abono;
 
             $saldoActual=$saldoAnterior-$abono;
 
@@ -414,7 +421,7 @@ class PdfController extends Controller
              $numeroPagos=$vales[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
-            $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
+            $saldoActual=$saldoAnterior-$abono;
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_vale=$vales[$i]->id_cliente;
