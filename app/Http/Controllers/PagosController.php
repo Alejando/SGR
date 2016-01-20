@@ -400,7 +400,7 @@ class PagosController extends Controller
         
         if($fechaHoy>=$fechaLimite){
             $distribuidor=Distribuidor::find($id);
-            $distribuidor->estatus=1;
+            $distribuidor->estatus=1; //baja temporal
             $distribuidor->save();
             return 1;
         }else{
