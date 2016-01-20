@@ -17,7 +17,7 @@
 								    <strong> {{ Session::get('message')}} </strong>
 							</div>
 						@endif
-						<div class="col-md-6">
+						<div class="col-md-6" >
 							<label>Datos Distribuidor</label>
 							<form class="form" role="form" method="POST" action="{{URL::to('actualizarDistribuidor/').'/'.$distribuidor->id_distribuidor}}" enctype="multipart/form-data">
      					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -151,10 +151,28 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<div class="form-group">
+										<label>Estatus:</label>
+										@if ($distribuidor->estatus == 0)
+										    <div class="alert bg-success" role="alert">
+												<span class="glyphicon glyphicon-check"></span> Habilitado 
+											</div>
+										@elseif ($distribuidor->estatus == 1)
+											<div class="alert bg-danger" role="alert">
+												<span class="glyphicon glyphicon-check"></span> Inhabilitado 
+											</div>
+										@endif
+									</div>
+									
+								</div>
+							</div>
 							<div class="col-md-12">
 								<div class="pull-right">
-										<button type="reset" class="btn btn-danger ">Borrar datos</button>
-										<button type="submit" class="btn btn-success ">Enviar datos</button>
+										<a  class="btn btn-primary" href="{{URL::to('activarDesactivar/'.$distribuidor->id_distribuidor)}}">Activar/Desactivar</a>
+										<button type="reset" class="btn btn-danger">Borrar datos</button>
+										<button type="submit" class="btn btn-success">Enviar datos</button>
 								</div>
 							</div>	
 						</form>
@@ -162,7 +180,6 @@
 					</div>
 				</div>
 			</div><!-- /.col-->
-		</div><!-- /.row -->
-		
+		</div><!-- /.row -->	
 	</div><!--/.main-->
 @stop

@@ -112,6 +112,7 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('editarDistribuidor/{id}', 'DistribuidorsController@editarDistribuidor');
 	Route::post('actualizarDistribuidor/{id}', 'DistribuidorsController@actualizarDistribuidor');
 	Route::get('verDistribuidor/{id}', 'DistribuidorsController@verDistribuidor');
+	Route::get('activarDesactivar/{id}', 'DistribuidorsController@activarDesactivar');
 
 	Route::get('reporteCobranza', 'DistribuidorsController@reporteCobranza');
 	Route::get('emitirReporteCobranza', 'DistribuidorsController@emitirReporteCobranza');

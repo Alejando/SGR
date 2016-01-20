@@ -425,5 +425,19 @@ class DistribuidorsController extends Controller
          }
         return $vales;
     }
+
+     public function activarDesactivar($id)
+    {   
+        $distribuidor=Distribuidor::find($id);
+        if($distribuidor->estatus==0){
+            $distribuidor->estatus=1;
+            $distribuidor->save();
+        }
+        else{
+            $distribuidor->estatus=0;
+            $distribuidor->save();
+        }
+       return redirect('editarDistribuidor/'.$id);
+    }
     
 }

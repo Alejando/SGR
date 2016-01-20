@@ -19,8 +19,7 @@
 						        <th data-field="limite_vale"  data-sortable="true">Limite vale</th>
 						        <th data-field="saldo_actual"  data-sortable="true">Saldo actual</th>
 						        <th data-field="comision"  data-sortable="true">Comisión</th>
-						        <th data-field="acciones" data-halign="center" data-sortable="true">Acciones </th>
-						        
+						        <th data-field="acciones" data-halign="center" data-sortable="true">Acciones </th> 
 						    </tr>
 						    </thead>
 						</table>
