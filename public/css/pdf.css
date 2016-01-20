@@ -26,6 +26,10 @@ tfoot
     text-align: center;
 }
 
+.resaltar {
+	font-size: 10px;
+}
+
 #encabezado {
   background-color: #ff9933;
   color: black;
