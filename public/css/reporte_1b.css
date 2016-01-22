@@ -17,14 +17,11 @@ table tbody tr td {
     border: 1px solid black;
     text-align: center;
     border: 1px solid #ffffff;
-   
- 
 }
 
 .izq_border{
     border-left: solid #1a1a1a;
-    border-style: dotted;
-    
+    border-style: dotted;  
 }
 
 .der_border{

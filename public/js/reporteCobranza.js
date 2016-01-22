@@ -72,9 +72,8 @@ function mostrarTodosPDF(){
 	
 }
 
-function mostrarTodosReporte1b(){
+function mostrarTodosReporte1b(tipo){
 	var fecha=$('#fecha').val();
-	url='reporte_1b_todos?fecha='+fecha;
+	url='reporte_1b_todos?fecha='+fecha+'&tipo='+tipo;
     window.open(url, '_blank');
-	
 }
