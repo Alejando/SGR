@@ -428,13 +428,7 @@ class PdfController extends Controller
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
 
-<<<<<<< HEAD
             $saldoActual=$saldoAnterior-$abono;
-
-=======
-             $saldoActual=$saldoAnterior-($abono*$pagosRealizados);
-             //$saldoActual=$saldoAnterior-$abono;
->>>>>>> c3021897f0bd1ee2630fed7365670de05fcc8cf3
              $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
 
             $vales[$i]->id_vale=$vales[$i]->id_cliente;
