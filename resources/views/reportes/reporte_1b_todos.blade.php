@@ -6,7 +6,7 @@
 	  		
 	<table  background="img/logo_tabla.jpg">
 	    <tr>
-	      <td colspan="9" class="mitad invisible izq_texto"><img src="img/logo_tabla.jpg" width="110px" height="80px"/></td>
+	      <td colspan="9" class="mitad invisible izq_texto"><img class="logo" src="img/logo_tabla.jpg" width="110px" height="80px"/></td>
 	      <!--td>A2</td>
 	      <td>A3</td>
 	      <td>A4</td>
@@ -16,7 +16,7 @@
 	      <td>A8</td>
 	      <td>A9</td-->
 	      <td class="division" class="invisible">.</td>
-	      <td colspan="9" class="mitad invisible izq_texto"><img src="img/logo_tabla.jpg" width="110px" height="80px"/></td>
+	      <td colspan="9" class="mitad invisible izq_texto"><img class="logo" src="img/logo_tabla.jpg" width="110px" height="80px"/></td>
 	      <!--td>A2</td>
 	      <td>A3</td>
 	      <td>A4</td>

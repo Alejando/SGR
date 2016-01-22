@@ -1,0 +1,48 @@
+table {
+    border-collapse: collapse;
+    font-size: 11px;
+    font-family: sans-serif;
+
+}
+
+table thead tr th {
+    border: 1px solid black;
+    text-align: center;
+}
+
+
+table tbody tr td {
+    border: 1px solid black;
+    text-align: center;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+}
+
+tfoot
+{
+	text-align: right;
+}
+
+.mitad{
+	width: 345px;
+	height: 75px;
+
+}
+
+.espacio{
+	height: 10px;
+}
+
+
+.division{
+	width: 30px;
+	
+}
+
+.texto{
+    color: #000000;
+}
+
+.logo{
+    visibility: hidden;
+}

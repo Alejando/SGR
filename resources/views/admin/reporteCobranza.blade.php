@@ -45,7 +45,8 @@
 							<button data-toggle="dropdown" class="btn btn-danger ">Distribuidores <span class="caret"></span></button>
 								<ul class="dropdown-menu">
 									<li><a onclick="mostrarTodosPDF()">PDF</a></li>
-									<li><a onclick="mostrarTodosReporte1b()" class="font-bold">Comprobantes</a></li>
+									<li><a onclick="mostrarTodosReporte1b('a')" class="font-bold">Comprobantes A</a></li>
+									<li><a onclick="mostrarTodosReporte1b('b')" class="font-bold">Comprobantes B</a></li>
 								</ul>
 						</div>	
 					</div>	
