@@ -138,7 +138,7 @@ class PagosController extends Controller
         if($pago->save()){
             $distribuidor=Distribuidor::find($id_distribuidor);
             $distribuidor->estatus=0;
-            $distribuidor->saldo_atual-=$pago->cantidad;
+            $distribuidor->saldo_actual-=$pago->cantidad;
             $distribuidor->save();
             $this->aumentarPagos($id_distribuidor,$pago->fecha_creacion);
             Session::flash('message','Pago registrado correctamente');
@@ -155,7 +155,7 @@ class PagosController extends Controller
         $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->where('fecha_inicio_pago','<=',$fecha)->get();
          for ($i=0; $i <sizeof($vales); $i++) 
         {
-            $vales[$i]->pagos_realizados++;
+            $vales[$i]->pagos_realizados=$vales[$i]->pagos_realizados+1;
             $importe=$vales[$i]->cantidad;
             $saldoAnterior=$vales[$i]->deuda_actual;
             $pagosRealizados=$vales[$i]->pagos_realizados;

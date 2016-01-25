@@ -1,4 +1,5 @@
 @extends ('Layouts.m_super_admin')
+
 @section ('titulo') Reporte de pago
 @stop
 

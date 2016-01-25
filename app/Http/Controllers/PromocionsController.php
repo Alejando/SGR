@@ -158,7 +158,17 @@ class PromocionsController extends Controller
                 //Convercion de fechas  a tipo Carbon 
                 $fechaCreacionCarbon=Carbon::parse($fechaCreacionPromoDB);
                 $fechaTerminoCarbon=Carbon::parse($fechaTerminoPromoDB);
+                $fechaInicio=Carbon::parse($promocion->fecha_inicio);
+                     if($fechaInicio->day==15){
+                        $fechaInicio->day=9;
+                    }else{
+                        if($fechaInicio>$fechaHoy){
+                            $fechaInicio->day=24;
+                        }
+                    }
+                    $promocion->fecha_inicio=$fechaInicio->toDateString();
                 if($fechaHoy>=$fechaCreacionCarbon && $fechaHoy<=$fechaTerminoCarbon){
+
                     $results[] = $promocion;
                 }
                

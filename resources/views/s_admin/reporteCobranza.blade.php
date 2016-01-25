@@ -1,4 +1,5 @@
 @extends ('Layouts.m_super_admin')
+
 @section ('titulo') Consultar Clientes
 @stop
 
@@ -38,7 +39,17 @@
 						</div>	
 					</div>
 					
-						
+					<div class="col-lg-1">
+						<div class="btn-group">
+							<br>
+							<button data-toggle="dropdown" class="btn btn-danger ">Distribuidores <span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a onclick="mostrarTodosPDF()">PDF</a></li>
+									<li><a onclick="mostrarTodosReporte1b('a')" class="font-bold">Comprobantes A</a></li>
+									<li><a onclick="mostrarTodosReporte1b('b')" class="font-bold">Comprobantes B</a></li>
+								</ul>
+						</div>	
+					</div>	
 					<!--div class="col-lg-1">
 						<div class="form-group">
 							<label>--</label>
@@ -62,8 +73,8 @@
 						        <th data-field="folio" data-halign="center"data-sortable="true">Vale</th>
 						        <th data-field="folio_venta" data-halign="center"  data-sortable="false">Folio Venta</th>
 						        <th data-field="fecha_inicio_pago" data-halign="center"  data-sortable="false">Fecha venta</th>
-						        <th data-field="cantidad" data-halign="center" data-sortable="true">Importe</th>
 						        <th data-field="numero_pagos" data-halign="center" data-sortable="true">Saldo Anterior</th>
+						        <th data-field="cantidad" data-halign="center" data-sortable="true">Importe</th>
 						        <th data-field="pagos_realizados" data-halign="center" data-sortable="true">Pagos</th>
 						        <th data-field="cantidad_limite" data-halign="center" data-sortable="true">Abono</th>
 						         <th data-field="deuda_actual"  data-halign="center" data-sortable="true">Saldo Actual</th>

@@ -121,6 +121,7 @@ function mostrarPromocion(){
 		for (var i = 0; i < data.length; i++) {
 			if(data[i].tipo_promocion==1 ){
 		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Comience a pagar el  "+cambiarTipoFecha(data[i].fecha_inicio)+" </div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
+		    	
 		    	fechaInicioPago=data[i].fecha_inicio;
 		    	BoolFechaPromo=1;
 		    	inputOcultos+='<input type="hidden" name="fecha_inicio_pago" value='+fechaInicioPago+'/>';

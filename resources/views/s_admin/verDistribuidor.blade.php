@@ -1,10 +1,11 @@
 @extends ('Layouts.m_super_admin_show')
+
 @section ('titulo') Editar distribuidor
 @stop
 
 @section ('contenido')
 
-   <div class="row">
+  <div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">Editar Distribuidor</div>
 			<div class="panel-body">
@@ -155,6 +156,4 @@
 		</div>
 			
 	</div><!-- /.row -->
-		
-
 @stop
