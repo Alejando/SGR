@@ -36,8 +36,19 @@
 					</div>
 					<div class="col-lg-1">
 						<div class="form-group">
-							<label>--</label>
+							</br>
 							<p  id="consultar" class="btn btn-primary" onclick="mostrarTabla()"> Consultar </p>
+						</div>	
+					</div>
+					<div class="col-lg-1">
+						<div class="btn-group">
+							<br>
+							<button data-toggle="dropdown" class="btn btn-danger ">Exportar <span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a onclick="">PDF</a></li>
+									<li><a onclick="" class="font-bold">Excel</a></li>
+									
+								</ul>
 						</div>	
 					</div> 	
 				</div>

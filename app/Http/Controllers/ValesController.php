@@ -219,9 +219,18 @@ class ValesController extends Controller
         for ($i=0; $i <sizeof($vales); $i++) { 
 
              $distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
+<<<<<<< HEAD
              if($vales[$i]->id_cliente!=0){
              $vales[$i]->id_cliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
               }
+=======
+             if($vales[$i]->id_cliente != 0)
+             {
+                $vales[$i]->id_cliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
+             }
+             
+            
+>>>>>>> origin/master
             if(Vale::find($vales[$i]->id_vale)->distribuidor->estatus==1){
                 $vales[$i]->id_distribuidor='<p  style="background-color: brown; ">'.$distribuidor.'</p>';
             }else{

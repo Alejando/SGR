@@ -41,3 +41,19 @@ $table.bootstrapTable('removeAll');
 		alert("error en buscar fecha de pago");
 	}
 }
+
+function mostrarPDF(){
+	var fecha_inicio=$('#fecha_inicio').val();
+	var fecha_termino=$('#fecha_termino').val();
+	url='reporte_9_pdf?fecha_inicio='+fecha_inicio+'&fecha_termino='+fecha_termino+'&id='+idDistribuidor;
+    window.open(url, '_blank');
+	
+}
+
+function mostrarExcel(){
+	var fecha_inicio=$('#fecha_inicio').val();
+	var fecha_termino=$('#fecha_termino').val();
+	url='reporte_9_excel?fecha_inicio='+fecha_inicio+'&fecha_termino='+fecha_termino+'&id='+idDistribuidor;
+    window.open(url, '_blank');
+	
+}
