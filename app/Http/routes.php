@@ -26,6 +26,14 @@ Route::get('reporte_1', 'PdfController@reporte_1');
 Route::get('reporte_1b', 'PdfController@reporte_1b');
 Route::get('reporte_1b_todos', 'PdfController@reporte_1b_todos');
 Route::get('reporte_2_todos', 'PdfController@reporte_2_todos');
+Route::get('reporte_9_pdf', 'PdfController@reporte_9_pdf');
+
+Route::get('reporteCobranzaExcel', 'DistribuidorsController@reporteCobranzaExcel');
+Route::get('reporte_2_excel', 'ExcelController@reporte_2_excel');
+Route::get('reporte_6_excel', 'ExcelController@reporte_6_excel');
+Route::get('reporte_8_excel', 'ExcelController@reporte_8_excel');
+Route::get('reporte_7_excel', 'ExcelController@reporte_7_excel');
+Route::get('reporte_9_excel', 'ExcelController@reporte_9_excel');
 
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {
@@ -161,10 +169,4 @@ Route::get('prueba', function()
 	return ("Holi--->".$telefono_cliente);
 });
 
-
-Route::get('reporteCobranzaExcel', 'DistribuidorsController@reporteCobranzaExcel');
-Route::get('reporte_2_excel', 'ExcelController@reporte_2_excel');
-Route::get('reporte_6_excel', 'ExcelController@reporte_6_excel');
-Route::get('reporte_8_excel', 'ExcelController@reporte_8_excel');
-Route::get('reporte_7_excel', 'ExcelController@reporte_7_excel');
 
