@@ -52,7 +52,7 @@ class ExcelController extends Controller
             
          }
          $totalVales=sizeof($vales);
-        $comision=$this->calcularComision($saldoTotal);
+        $comision=$this->calcularComision($saldoTotal,$id);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
         $datas = $vales;
@@ -63,9 +63,9 @@ class ExcelController extends Controller
         $periodo=$this->calcularPeriodo($fecha);
         $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
 
-        Excel::create('Reporte_Cobranza', function($excel) use ($datas,$totalVales, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
-            $excel->sheet('Reporte_Cobranza', function($sheet) use ($datas, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
-                $sheet->loadView('reportes.reporte_2_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("distribuidor", $distribuidor)->with("fechaEntrega", $fechaEntrega)->with("fechaLimite", $fechaLimite)->with("periodo", $periodo)->with("comision", $comision)->with("saldoTotal", $saldoTotal)->with("saldoComision", $saldoComision)->with("saldoAnteriorTotal", $saldoAnteriorTotal)->with("saldoImporte", $saldoImporte)->with("saldoActualTotal", $saldoActualTotal);
+        Excel::create('Reporte_Cobranza', function($excel) use ($datas, $totalVales, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
+            $excel->sheet('Reporte_Cobranza', function($sheet) use ($totalVales,$datas, $fechaHoy, $distribuidor, $fechaEntrega, $fechaLimite, $periodo, $comision, $saldoTotal, $saldoComision, $saldoAnteriorTotal, $saldoImporte, $saldoActualTotal ) {
+                $sheet->loadView('reportes.reporte_2_excel')->with("totalVales",$totalVales)->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("distribuidor", $distribuidor)->with("fechaEntrega", $fechaEntrega)->with("fechaLimite", $fechaLimite)->with("periodo", $periodo)->with("comision", $comision)->with("saldoTotal", $saldoTotal)->with("saldoComision", $saldoComision)->with("saldoAnteriorTotal", $saldoAnteriorTotal)->with("saldoImporte", $saldoImporte)->with("saldoActualTotal", $saldoActualTotal);
             });
         })->export('xls');
     }
@@ -98,7 +98,7 @@ class ExcelController extends Controller
                 }
 
                 if($saldoTotal>0){
-                    $comision=$this->calcularComision($saldoTotal);
+                    $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
                     $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
                     $saldoComision=$saldoTotal-$saldoDistribuidor;
                     $SaldoTotalSinComision+=$saldoTotal;
@@ -311,10 +311,17 @@ class ExcelController extends Controller
         
         return $meses[$mes-1];
     }
-    public function calcularComision($total){
+     public function calcularComision($total,$id){
         
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
-        return $comision[count($comision)-1]->porcentaje;
+        $distribuidor= Distribuidor::find($id);
+        if($distribuidor->estatus==1){
+             return 0;
+        }else{
+            return $comision[count($comision)-1]->porcentaje;
+           
+        }
+        
     }
 
 }

@@ -128,16 +128,13 @@ function mostrarPromocion(){
 		    	inputOcultos+='<input type="hidden" name="id_promocion" value='+data[i].id_promocion+'/>';
 		     }
 		     if(data[i].tipo_promocion==2 ){
-		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 6 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
-			 	nPagosGlobal=6;
+		     	nPagosGlobal=data[i].numero_pagos;
+		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a "+nPagosGlobal+" quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
 			 	
 			 	
-			 }
-		     if(data[i].tipo_promocion==3){
-		     	codigo+="<div class='col-md-6'><div class='panel panel-primary'><div class='panel-heading'> Paga a 8 quincenas</div><div class='panel-body'><p>Inicio  de promocion "+cambiarTipoFecha(data[i].fecha_creacion)+"</p></br><p>fin de promocion "+cambiarTipoFecha(data[i].fecha_termino)+"</p></div></div></div>";
-			 	nPagosGlobal=8;
 			 	
 			 }
+		     
 		};
 		//Estandar de promociones 1="PAgue en..." 2="PAgue en 6 quinsenas" 3="Pague en  8 quinsenas"
 		//console.log(codigo);

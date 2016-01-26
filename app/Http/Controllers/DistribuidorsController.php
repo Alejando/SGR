@@ -369,7 +369,7 @@ class DistribuidorsController extends Controller
                 
             }
             if($saldoTotal>0){
-                $comision=$this->calcularComision($saldoTotal);
+                $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
                 $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
                 $saldoComision=$saldoTotal-$saldoDistribuidor;
             
@@ -382,10 +382,17 @@ class DistribuidorsController extends Controller
         return $resultado;
         
     }
-     public function calcularComision($total){
+     public function calcularComision($total,$id){
         
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
-        return $comision[0]->porcentaje;
+        $distribuidor= Distribuidor::find($id);
+        if($distribuidor->estatus==1){
+             return 0;
+        }else{
+            return $comision[count($comision)-1]->porcentaje;
+           
+        }
+        
     }
 
     public function reporteHistorico()

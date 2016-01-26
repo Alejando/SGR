@@ -486,7 +486,7 @@ class PdfController extends Controller
                 }
 
                 if($saldoTotal>0){
-                    $comision=$this->calcularComision($saldoTotal);
+                    $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
                     $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
                     $saldoComision=$saldoTotal-$saldoDistribuidor;
                     $SaldoTotalSinComision+=$saldoTotal;
