@@ -43,17 +43,17 @@ $table.bootstrapTable('removeAll');
 }
 
 function mostrarPDF(){
-	var fechaInicio=$('#fechaInicio').val();
-	var fechaTermino=$('#fechaTermino').val();
-	url='reporte_9_pdf?fechaInicio='+fechaInicio+'&fechaTermino='+fechaTermino+'&id='+idDistribuidor;
+	var fecha_inicio=$('#fecha_inicio').val();
+	var fecha_termino=$('#fecha_termino').val();
+	url='reporte_9_pdf?fecha_inicio='+fecha_inicio+'&fecha_termino='+fecha_termino+'&id='+idDistribuidor;
     window.open(url, '_blank');
 	
 }
 
 function mostrarExcel(){
-	var fechaInicio=$('#fechaInicio').val();
-	var fechaTermino=$('#fechaTermino').val();
-	url='reporte_9_excel?fechaInicio='+fechaInicio+'&fechaTermino='+fechaTermino+'&id='+idDistribuidor;
+	var fecha_inicio=$('#fecha_inicio').val();
+	var fecha_termino=$('#fecha_termino').val();
+	url='reporte_9_excel?fecha_inicio='+fecha_inicio+'&fecha_termino='+fecha_termino+'&id='+idDistribuidor;
     window.open(url, '_blank');
 	
 }
