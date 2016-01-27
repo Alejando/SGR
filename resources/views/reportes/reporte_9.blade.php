@@ -58,10 +58,10 @@
             <td>{{$vale->id_distribuidor}}</td>
             <td>{{$vale->id_cliente}}</td>
             <td>{{$vale->fecha_venta}}</td>
-            <td>{{$vale->deuda_actual}}</td>
-            <td>{{$vale->total_pagos}}</td>
+            <td>{{$vale->cantidad}}</td>
+            <td>{{$vale->numero_pagos}}</td>
             <td>{{$vale->pagos_realizados}}</td>
-            <td>{{$vale->adeudo}}</td>
+            <td>{{$vale->deuda_actual}}</td>
             <td>{{$vale->estatus}}</td>
           </tr>
         @endforeach

@@ -165,29 +165,22 @@ class PdfController extends Controller
                 $vales[$i]->id_cliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
              }
              
-
-            if(Vale::find($vales[$i]->id_vale)->distribuidor->estatus==1){
-                $vales[$i]->id_distribuidor='<p  style="background-color: brown; ">'.$distribuidor.'</p>';
-            }else{
                 $vales[$i]->id_distribuidor=$distribuidor;
-            }
+            
              if($vales[$i]->estatus==0){
                 $vales[$i]->estatus='Disponible';
              }
              if($vales[$i]->estatus==1){
-                $vales[$i]->estatus='<p  style="background-color: green;">Ocupado</p>';
+                $vales[$i]->estatus='Ocupado';
              }
              if($vales[$i]->estatus==2){
-                $vales[$i]->estatus='<p  style="background-color: red;">Cancelado</p>';
+                $vales[$i]->estatus='Cancelado';
              }
              if($vales[$i]->estatus==3){
-                $vales[$i]->estatus='<p  style="background-color: brown;">Pagado</p>';
-                $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin">No disponible</a>'; 
-             }
-             else{
+                $vales[$i]->estatus='Pagado';
                
-                $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>'; 
              }
+            
           }
         
         $fechaHoy = $this->modificarFechas(Carbon::now());
