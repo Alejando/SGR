@@ -105,8 +105,7 @@ class PdfController extends Controller
 
     public function reporte_9_pdf(Request $request)
     {
-        $limite=$request->input('limit');
-           if(is_null($limite)){
+        
                 $distribuidor=$request->input('distribuidor');
                 if($distribuidor=="0"){
                     $fechaInicio=$request->input('fecha_inicio');
@@ -117,16 +116,16 @@ class PdfController extends Controller
                            
                         }else{
                              //buscar vales con fecha termino
-                             $vales = Vale::where('estatus',1)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
+                             $vales = Vale::where('estatus',1)->orWhere('estatus',3)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
                         }
                     }else{
                         $fechaTermino=$request->input('fecha_termino');
                         if($fechaTermino=="0"){
-                            $vales = Vale::where('estatus',1)->where('fecha_inicio_pago','=>',$fechaInicio)->get();
+                            $vales = Vale::where('estatus',1)->orWhere('estatus',3)->where('fecha_inicio_pago','=>',$fechaInicio)->get();
                             
                         }else{
                            //buscar vales con fecha inicio y fecha termino
-                           $vales = Vale::where('estatus',1)->where('fecha_inicio_pago','=>',$fechaInicio)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
+                           $vales = Vale::where('estatus',1)->orWhere('estatus',3)->where('fecha_inicio_pago','=>',$fechaInicio)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
                         }
                     }
 
@@ -135,38 +134,37 @@ class PdfController extends Controller
                     if($fechaInicio=="0"){
                         $fechaTermino=$request->input('fecha_termino');
                         if($fechaTermino=="0"){
-                            $vales = Vale::where('estatus',1)->where('id_distribuidor',$distribuidor)->get();
+                            $vales = Vale::where('id_distribuidor',$distribuidor)->where('estatus',1)->orWhere('estatus',3)->get();
                             
                         }else{
                              //buscar vales con fecha termino y distribuidor
-                          $vales = Vale::where('estatus',1)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
+                          $vales = Vale::where('estatus',1)->orWhere('estatus',3)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
                         }
                     }else{
                         $fechaTermino=$request->input('fecha_termino');
                         if($fechaTermino=="0"){
                                     //buscar vales con fecha inicio y distribuidor
-                           $vales = Vale::where('estatus',1)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','=>',$fechaInicio)->get();
+                           $vales = Vale::where('estatus',1)->orWhere('estatus',3)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','=>',$fechaInicio)->get();
                             
                         }else{
                            //buscar con los tres valores
-                            $vales = Vale::where('estatus',1)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','=>',$fechaInicio)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
+                            $vales = Vale::where('estatus',1)->orWhere('estatus',3)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','=>',$fechaInicio)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
                         }
                     }
                 }
-           }
-           else{
-             $vales = Vale::where('estatus',1)->get(); //consulta al inicio
-           }
+           
+         
       
         for ($i=0; $i <sizeof($vales); $i++) { 
 
              $distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
+
              if($vales[$i]->id_cliente != 0)
              {
                 $vales[$i]->id_cliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
              }
              
-            
+
             if(Vale::find($vales[$i]->id_vale)->distribuidor->estatus==1){
                 $vales[$i]->id_distribuidor='<p  style="background-color: brown; ">'.$distribuidor.'</p>';
             }else{
@@ -189,9 +187,11 @@ class PdfController extends Controller
                
                 $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>'; 
              }
-   
-        }    
-        $view =  \View::make('reportes/reporte_9', compact('vales'))->render();
+          }
+        
+        $fechaHoy = $this->modificarFechas(Carbon::now());
+
+        $view =  \View::make('reportes/reporte_9', compact('vales','fechaHoy'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_9.pdf');

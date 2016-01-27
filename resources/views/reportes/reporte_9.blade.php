@@ -66,18 +66,7 @@
           </tr>
         @endforeach
         </tbody>
-        <!--tfoot>
-          <tr>
-            <td></td>
-            <td>${{$saldoTotal}}.00</td>
-            <td>${{$saldoTotalAbono}}.00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tfoot-->
+        
       </table>
   </body>
 </html>
