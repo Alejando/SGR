@@ -47,7 +47,7 @@ function mostrarPDF(){
 	var fecha_termino=$('#fecha_termino').val();
 	url='reporte_9_pdf?fecha_inicio='+fecha_inicio+'&fecha_termino='+fecha_termino+'&id='+idDistribuidor;
     window.open(url, '_blank');
-	
+	//alert("PDF");
 }
 
 function mostrarExcel(){

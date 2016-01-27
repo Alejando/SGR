@@ -45,9 +45,8 @@
 							<br>
 							<button data-toggle="dropdown" class="btn btn-danger ">Exportar <span class="caret"></span></button>
 								<ul class="dropdown-menu">
-									<li><a onclick="">PDF</a></li>
-									<li><a onclick="" class="font-bold">Excel</a></li>
-									
+									<li><a onclick="mostrarPDF()" class="font-bold">PDF</a></li>
+									<li><a onclick="mostrarExcel()" class="font-bold">Excel</a></li>
 								</ul>
 						</div>	
 					</div> 	
