@@ -112,7 +112,7 @@ class PdfController extends Controller
                     if($fechaInicio=="0"){
                         $fechaTermino=$request->input('fecha_termino');
                         if($fechaTermino=="0"){
-                           $vales = Vale::where('estatus','<',2)->get(); //consulta al inicio
+                           $vales = Vale::where('estatus',1)->orWhere('estatus',3)->get();
                            
                         }else{
                              //buscar vales con fecha termino

@@ -124,6 +124,95 @@ class ExcelController extends Controller
 
     }
 
+     public function reporte_9_excel(Request $request)
+    {
+        
+                $distribuidor=$request->input('distribuidor');
+                if($distribuidor=="0"){
+                    $fechaInicio=$request->input('fecha_inicio');
+                    if($fechaInicio=="0"){
+                        $fechaTermino=$request->input('fecha_termino');
+                        if($fechaTermino=="0"){
+                           $vales = Vale::where('estatus',1)->orWhere('estatus',3)->get(); //consulta al inicio
+                           
+                        }else{
+                             //buscar vales con fecha termino
+                             $vales = Vale::where('estatus','>',0)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
+                        }
+                    }else{
+                        $fechaTermino=$request->input('fecha_termino');
+                        if($fechaTermino=="0"){
+                            $vales = Vale::where('estatus','>',0)->where('fecha_inicio_pago','=>',$fechaInicio)->get();
+                            
+                        }else{
+                           //buscar vales con fecha inicio y fecha termino
+                           $vales = Vale::where('estatus','>',0)->where('fecha_inicio_pago','=>',$fechaInicio)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
+                        }
+                    }
+
+                }else{
+                    $fechaInicio=$request->input('fecha_inicio');
+                    if($fechaInicio=="0"){
+                        $fechaTermino=$request->input('fecha_termino');
+                        if($fechaTermino=="0"){
+                            $vales = Vale::where('id_distribuidor',$distribuidor)->where('estatus','>',0)->get();
+                            
+                        }else{
+                             //buscar vales con fecha termino y distribuidor
+                          $vales = Vale::where('estatus','>',0)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
+                        }
+                    }else{
+                        $fechaTermino=$request->input('fecha_termino');
+                        if($fechaTermino=="0"){
+                                    //buscar vales con fecha inicio y distribuidor
+                           $vales = Vale::where('estatus','>',0)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','=>',$fechaInicio)->get();
+                            
+                        }else{
+                           //buscar con los tres valores
+                            $vales = Vale::where('estatus','>',0)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','=>',$fechaInicio)->where('fecha_inicio_pago','<=',$fechaTermino)->get();
+                        }
+                    }
+                }
+           
+           
+         
+      
+        for ($i=0; $i <sizeof($vales); $i++) { 
+
+             $distribuidor=Vale::find($vales[$i]->id_vale)->distribuidor->nombre;
+
+             if($vales[$i]->id_cliente != 0)
+             {
+                $vales[$i]->id_cliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
+             }
+             
+                $vales[$i]->id_distribuidor=$distribuidor;
+            
+             if($vales[$i]->estatus==0){
+                $vales[$i]->estatus='Disponible';
+             }
+             if($vales[$i]->estatus==1){
+                $vales[$i]->estatus='Ocupado';
+             }
+             if($vales[$i]->estatus==2){
+                $vales[$i]->estatus='Cancelado';
+             }
+             if($vales[$i]->estatus==3){
+                $vales[$i]->estatus='Pagado';
+               
+             }
+            
+          }
+        
+        $fechaHoy = $this->modificarFechas(Carbon::now());
+
+         Excel::create('Reporte_vales', function($excel) use ($vales, $fechaHoy) {
+            $excel->sheet('Reporte_vales', function($sheet) use ($vales, $fechaHoy) {
+                $sheet->loadView('reportes.reporte_9_excel')->with("vales", $vales)->with("fechaHoy", $fechaHoy);
+            });
+        })->export('xls');
+    }
+
     public function reporte_8_excel(Request $request)
     {
         $id=$request->input('id');
