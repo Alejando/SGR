@@ -18,14 +18,18 @@ table tbody tr td {
     color: #ffffff;
 }
 
+.texto{
+    color: #000000;
+}
+
 tfoot
 {
 	text-align: right;
 }
 
-.mitad{
+.encabezado{
 	width: 345px;
-	height: 75px;
+	height: 55px;
 
 }
 
@@ -39,6 +43,3 @@ tfoot
 	
 }
 
-.texto{
-    color: #000000;
-}

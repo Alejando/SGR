@@ -12,7 +12,7 @@
 	  		
 	<table>
 	    <tr>
-	      <td colspan="9" class="mitad">A1</td>
+	      <td colspan="9" class="encabezado">A1</td>
 	      <!--td>A2</td>
 	      <td>A3</td>
 	      <td>A4</td>
@@ -22,7 +22,7 @@
 	      <td>A8</td>
 	      <td>A9</td-->
 	      <td class="division">x</td>
-	      <td colspan="9" class="mitad">A1</td>
+	      <td colspan="9" class="encabezado">A1</td>
 	      <!--td>A2</td>
 	      <td>A3</td>
 	      <td>A4</td>
@@ -234,6 +234,11 @@
 	      <td>J9</td-->
 	    </tr>
 	    <tr>
+	      <td class="espacio" colspan="9"></td>
+	      <td class="division espacio"></td>
+	      <td class="espacio" colspan="9"></td>
+	    </tr>
+	    <tr>
 	      <td colspan="3">K1</td>
 	      <!--td>K2</td>
 	      <td>K3</td-->
@@ -297,6 +302,7 @@
 	      <td>M9</td-->
 	    </tr>
 	</table>
+	<br>
 	<br>
 	@endif
 	@endfor
