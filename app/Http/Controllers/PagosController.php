@@ -132,8 +132,8 @@ class PagosController extends Controller
     public function liquidarPago(Request $request){
         $id=$request->input('id');
         $pago=Pago::find($id);
-        $pago->estado=2;
-        $pago->abono=0;
+        $pago->estado=2;    // estados de los pagos
+        $pago->abono=0;    // 0=esperando pago, 1=pago desfasado  2=liquidado 3= abonado a otro pago
         $id_distribuidor=$pago->id_distribuidor;
         if($pago->save()){
             $distribuidor=Distribuidor::find($id_distribuidor);
@@ -153,21 +153,64 @@ class PagosController extends Controller
     public function aumentarPagos($id,$fecha){
 
         $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->where('fecha_inicio_pago','<=',$fecha)->get();
+        $pagos=pago::where('id_distribuidor',$id)->where('estado',3)->get();
+        $nPagos=count($pagos);
          for ($i=0; $i <sizeof($vales); $i++) 
         {
-            $vales[$i]->pagos_realizados=$vales[$i]->pagos_realizados+1;
-            $importe=$vales[$i]->cantidad;
-            $saldoAnterior=$vales[$i]->deuda_actual;
-            $pagosRealizados=$vales[$i]->pagos_realizados;
-            $numeroPagos=$vales[$i]->numero_pagos;
-            $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-            $vales[$i]->deuda_actual=$saldoAnterior-$abono;
-            if($numeroPagos==$pagosRealizados){
-                $vales[$i]->estatus=3;
+            if($nPagos==0){
+                $vales[$i]->pagos_realizados=$vales[$i]->pagos_realizados+1;
+                $importe=$vales[$i]->cantidad;
+                $saldoAnterior=$vales[$i]->deuda_actual;
+                $pagosRealizados=$vales[$i]->pagos_realizados;
+                $numeroPagos=$vales[$i]->numero_pagos;
+                $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+                $vales[$i]->deuda_actual=$saldoAnterior-$abono;
+                if($numeroPagos==$pagosRealizados){
+                    $vales[$i]->estatus=3;
+                }
+                $vales[$i]->save();
             }
-            $vales[$i]->save();
+            else{
+                $vales[$i]->pagos_realizados=$vales[$i]->pagos_realizados+1;
+                $importe=$vales[$i]->cantidad;
+                $saldoAnterior=$vales[$i]->deuda_actual;
+                $pagosRealizados=$vales[$i]->pagos_realizados;
+                $numeroPagos=$vales[$i]->numero_pagos;
+                $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+                $vales[$i]->deuda_actual=$saldoAnterior-$abono;
+                if($numeroPagos==$pagosRealizados){
+                    $vales[$i]->estatus=3;
+                }
+                $vales[$i]->save();
+                $this->aumentarVariosPagos($vales[$i],$pagos);
+            }
+           
         }
+    }
 
+
+    public function aumentarVariosPagos($vales,$pagos){
+        $fechaPago=Carbon::parse($vales->fecha_inicio_pago);
+        for ($i=0; $i <sizeof($pagos) ; $i++) { 
+            $fechaAtraso= Carbon::parse($pagos[$i]->fecha_creacion);
+            if($fechaPago<=$fechaAtraso && $vales->estatus==1){
+                $vales->pagos_realizados=$vales->pagos_realizados+1;
+                $importe=$vales->cantidad;
+                $saldoAnterior=$vales->deuda_actual;
+                $pagosRealizados=$vales->pagos_realizados;
+                $numeroPagos=$vales->numero_pagos;
+                $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+                $vales->deuda_actual=$saldoAnterior-$abono;
+                if($numeroPagos==$pagosRealizados){
+                    $vales->estatus=3;
+                }
+                $vales->save();
+
+            }
+            $pagos[$i]->estado=2;
+            $pagos[$i]->save();
+        }
+       
     }
 
     public function calcularPago($cantidad,$tPagos,$nPago){
@@ -229,8 +272,12 @@ class PagosController extends Controller
             }  
         }
     }
+
+
     public function crearPagos(Request $request)
     {   
+
+      
         $id=$request->input('id');
         $fecha=$request->input('fecha');
         if($fecha==""){
@@ -239,7 +286,7 @@ class PagosController extends Controller
 
         if($id==0){
 	                
-	            $distribuidores=Distribuidor::all();
+	        $distribuidores=Distribuidor::all();
 	        for($j=0; $j < sizeof($distribuidores); $j++) { 
 	            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
 	            $saldoTotal=0;
@@ -256,81 +303,122 @@ class PagosController extends Controller
 	            if($saldoTotal>0){
 	                 $comision=$this->calcularComision($saldoTotal);
             
-	            	$pagoAux= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
-	            	 
-                     if (count($pagoAux)==0) {
-		                $pago = new Pago;
-						$pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
-						$pago->cantidad=$saldoTotal;
-						$pago->fecha_creacion=$this->calcularFechaCorte($fecha);
-						$pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
-                        $pago->comision=$comision;
-						$pago->id_cuenta=Session::get('id');
-						$pago->save();
-		            }else{
-                        if($pagoAux[0]->estatus==1){
-                            $pago=new Pago;
-                            $pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
-                            $pago->cantidad=$saldoTotal;
-                            $pago->fecha_creacion=$this->calcularFechaCorte($fecha);
-                            $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
-                            $pago->comision=0;
-                            $pago->abono=$pagoAux[0]->abono;
-                            $pago->id_cuenta=Session::get('id');
-                            $pago->save();
-                            $pagoAux[0]->estatus=3;
-                            $pagoAux->save();
-                        }
-                    }         
+	            	$pagoDoble= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
+                    $pagoAux= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('estado',1)->get();
+	            	 if(count($pagoDoble)==0){
+                         if (count($pagoAux)==0) {
+    		                $pago = new Pago;
+    						$pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
+    						$pago->cantidad=$saldoTotal;
+    						$pago->fecha_creacion=$this->calcularFechaCorte($fecha);
+    						$pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
+                            $pago->comision=$comision;
+    						$pago->id_cuenta=Session::get('id');
+    						$pago->save();
+                         
+    		            }else{
+                                $pagoAux[0]->estado=3;
+                                $pagoAux[0]->save();
+                                $pago=new Pago;
+                                $pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
+                                $pago->cantidad=$saldoTotal+($this->saldoAtrasado($vales,$distribuidores[$j]->id_distribuidor));
+                                $pago->fecha_creacion=$this->calcularFechaCorte($fecha);
+                                $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
+                                $pago->comision=0;
+                                $pago->abono=$pagoAux[0]->abono;
+                                $pago->id_cuenta=Session::get('id');
+                                $pago->save();
+                              
+                               
+                            
 
-	            }
+                        }///else     
+                    }   
+
+	            }// if saldo total
 	            
-	        }
+	        }// for distribuidores
         }
         else{
         	$vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
 	            $saldoTotal=0;
 	            for ($i=0; $i <sizeof($vales); $i++) { 
-	                
-	                 $importe=$vales[$i]->cantidad;
-	                 $saldoAnterior=$vales[$i]->deuda_actual;
-	                 $pagosRealizados=$vales[$i]->pagos_realizados+1;
-	                 $numeroPagos=$vales[$i]->numero_pagos;
-	                 $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-	                 $saldoTotal+=$abono;
-	                
-	            }
-            	
-            	$pagoAux= Pago::where('$id_distribuidor',$id)->where('fecha_creacion',$this->calcularFechaCorte($fecha));
-                 $comision=$this->calcularComision($saldoTotal);
-            	 if (count($pagoAux)==0) {
-	                $pago=new Pago;
-					$pago->id_distribuidor=$id;
-					$pago->cantidad=$saldoTotal;
-					$pago->fecha_creacion=$this->calcularFechaCorte($fecha);
-					$pago->estado=0; // 0:pendiente  1:desfasado 2:pagado
-                    $pago->comision=$comision;
-					$pago->id_cuenta=Session::get('id');
-					$pago->save();
-	            }
-                else{
-                        if($pagoAux[0]->estatus==1){
-                            $pago=new Pago;
+                    
+                     $importe=$vales[$i]->cantidad;
+                     $saldoAnterior=$vales[$i]->deuda_actual;
+                     $pagosRealizados=$vales[$i]->pagos_realizados+1;
+                     $numeroPagos=$vales[$i]->numero_pagos;
+                     $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+                     $saldoTotal+=$abono;
+                    
+                }
+                if($saldoTotal>0){
+                     $comision=$this->calcularComision($saldoTotal);
+            
+                    $pagoDoble= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
+                    $pagoAux= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('estado',1)->get();
+                     if(count($pagoDoble)==0){
+                         if (count($pagoAux)==0) {
+                            $pago = new Pago;
                             $pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
                             $pago->cantidad=$saldoTotal;
                             $pago->fecha_creacion=$this->calcularFechaCorte($fecha);
-                            $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado
-                            $pago->comision=0;
-                            $pago->abono=$pagoAux[0]->abono;
+                            $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
+                            $pago->comision=$comision;
                             $pago->id_cuenta=Session::get('id');
                             $pago->save();
-                        }
-                    }              
+                         
+                        }else{
+                                $pagoAux[0]->estado=3;
+                                $pagoAux[0]->save();
+                                $pago=new Pago;
+                                $pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
+                                $pago->cantidad=$saldoTotal+($this->saldoAtrasado($vales,$distribuidores[$j]->id_distribuidor));
+                                $pago->fecha_creacion=$this->calcularFechaCorte($fecha);
+                                $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
+                                $pago->comision=0;
+                                $pago->abono=$pagoAux[0]->abono;
+                                $pago->id_cuenta=Session::get('id');
+                                $pago->save();
+                              
+                               
+                            
+
+                        }///else     
+                    }   
+
+                }// if saldo total
+                
+            }// for distribuidores
         	
         }
-        return 'consultarPagos';
+        return redirect('consultarPagos');
     }
-    
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    public function saldoAtrasado($vales,$id){
+        $pagos= Pago::where('id_distribuidor',$id)->where('estado',3)->get();
+        $nPagos=count($pagos);
+        $acumulado=0;
+        for ($j=0; $j <$nPagos ; $j++) { 
+            
+            for ($i=0; $i <sizeof($vales); $i++) { 
+                 $importe=$vales[$i]->cantidad;
+                 $saldoAnterior=$vales[$i]->deuda_actual;
+
+                 $pagosRealizados=$vales[$i]->pagos_realizados+$j+2;
+                 $numeroPagos=$vales[$i]->numero_pagos;
+                 $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+                 if($pagosRealizados<=$numeroPagos){
+                    $acumulado+=$abono;
+                 }
+                 
+            }
+        }
+        return $acumulado;
+    }
+
+
     public function calcularFechaCorte($fecha){
         $fechaCarbon=Carbon::parse($fecha);
         // 10 nomviembre- 24 Novimebre -> 27 Novimebre
@@ -367,8 +455,8 @@ class PagosController extends Controller
        $fechaHoy=Carbon::today();
         // 10 nomviembre- 24 Novimebre-> 04 Diciembre
         // 25 novimebre-09 Diciembre -> 18 Diciembre
-        
-       if($fechaHoy==$fechaLimiteUno){
+        if($comision!=0){
+            if($fechaHoy==$fechaLimiteUno){
             $comision=$comision-2;
           
         }else{
@@ -382,6 +470,8 @@ class PagosController extends Controller
                 }
             }
         }
+        }
+       
         
         return $comision;
         

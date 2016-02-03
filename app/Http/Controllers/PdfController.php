@@ -14,7 +14,7 @@ use App\DistribuidorsController;
 use App\Comision;
 use App\Pago;
 use App\Cuenta;
-
+use Session;
 
 class PdfController extends Controller
 {
@@ -31,6 +31,7 @@ class PdfController extends Controller
 
         //return (count($pagosAbonados));
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
+          if(sizeof($vales)>0){
         //return ($vales);
         //$saldoTotal=0;
         //$saldoImporte=0;
@@ -136,10 +137,19 @@ class PdfController extends Controller
         //12.-saldoActualTotal
         $saldoActualTotal=$saldoAnteriorTotal-$saldoTotal;
         
-        $view =  \View::make('reportes/reporte_2', compact('datas','totalVales','fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('reporte_2.pdf');
+        
+     
+            $view =  \View::make('reportes/reporte_2', compact('datas','totalVales','fechaHoy','distribuidor', 'fechaEntrega','fechaLimite','periodo','comision','saldoTotal','saldoComision','saldoAnteriorTotal','saldoImporte','saldoActualTotal'))->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->stream('reporte_2.pdf');
+        }else{
+            
+           $view =  \View::make('reportes/nodisponible')->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->stream('noDisponible.pdf');
+        }
         
 
     }
@@ -195,7 +205,7 @@ class PdfController extends Controller
                 }
            
            
-         
+         if(sizeof($vales)>0){
       
         for ($i=0; $i <sizeof($vales); $i++) { 
 
@@ -230,6 +240,13 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_9.pdf');
+         }else{
+            
+           $view =  \View::make('reportes/nodisponible')->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->stream('noDisponible.pdf');
+        }
     }
 
     public function tabla_reporte_2($id,$fecha)
@@ -500,6 +517,7 @@ class PdfController extends Controller
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoComision;
+        if(sizeof($vales)>0){
         for ($i=0; $i <sizeof($vales); $i++) { 
             
              $importe=$vales[$i]->cantidad;
@@ -538,7 +556,13 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_1.pdf');
-
+         }else{
+            
+           $view =  \View::make('reportes/nodisponible')->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->stream('noDisponible.pdf');
+        }
     }
      public function reporte_1b(Request $request)
     {
@@ -547,6 +571,7 @@ class PdfController extends Controller
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
         $saldoTotal=0;
         $saldoComision;
+        if(sizeof($vales)>0){
         for ($i=0; $i <sizeof($vales); $i++) { 
             
              $importe=$vales[$i]->cantidad;
@@ -582,7 +607,13 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_1b.pdf');
-
+         }else{
+            
+           $view =  \View::make('reportes/nodisponible')->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->stream('noDisponible.pdf');
+        }
     }
 
 
@@ -627,6 +658,7 @@ class PdfController extends Controller
             
         }
          $datas=$distribuidores;
+        if(sizeof($distribuidores)>0){
         $fechaHoy = Carbon::now();
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
         $fechaLimite=$this->CalcularFechaLimite($fecha);
@@ -636,6 +668,13 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_6.pdf');
+         }else{
+            
+           $view =  \View::make('reportes/nodisponible')->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->stream('noDisponible.pdf');
+        }
     }
 
     public function reporte_8(Request $request)
@@ -644,7 +683,7 @@ class PdfController extends Controller
         $saldoTotal=0;
         $saldoTotalActual=0;
         $vales=Vale::where('id_distribuidor',$id)->where('estatus',1)->get();
-
+        if(sizeof($vales)){
         for ($i=0; $i <sizeof($vales); $i++) 
         { 
 
@@ -672,6 +711,13 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_8.pdf');
+         }else{
+            
+           $view =  \View::make('reportes/nodisponible')->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->stream('noDisponible.pdf');
+        }
     }
      public function reporte_7(){
 
