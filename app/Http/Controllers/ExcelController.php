@@ -25,37 +25,72 @@ class ExcelController extends Controller
         if($fecha==""){
             $fecha=Carbon::today();
         }
+
+        $pagosAbonados = Pago::where('id_distribuidor', $id)->where('estado', 3)->get();
+
+
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
+        $valesClonados = array();
+        for ($i=0; $i <sizeof($vales); $i++) 
+        {
+            $clon = clone $vales[$i];
+            $valesClonados[]=$clon;
+        }
+
+        for ($i=0; $i <sizeof($vales); $i++) 
+        {
+            for($j=0; $j < sizeof($pagosAbonados); $j++)
+                {
+                    if($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1)
+                    { 
+
+                        $importe=$vales[$i]->cantidad; //*
+                        $saldoAnterior=$vales[$i]->deuda_actual; //*
+                        $pagosRealizados=$vales[$i]->pagos_realizados+1; //*
+                        $numeroPagos=$vales[$i]->numero_pagos; //*
+                        $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados); //*
+                        $saldoActual=$saldoAnterior-$abono; //*
+                        $vales[$i]->deuda_actual=$saldoActual;
+
+                        $vales[$i]->pagos_realizados=$vales[$i]->pagos_realizados+1;
+                        $clone = clone $vales[$i];
+                        $valesClonados[]=$clone; 
+                    }
+                }     
+        }
+
         $saldoTotal=0;
         $saldoImporte=0;
         $saldoAnteriorTotal=0;
         $saldoComision;
-        for ($i=0; $i <sizeof($vales); $i++) { 
+        for ($i=0; $i <sizeof($valesClonados); $i++) { 
             
-             $importe=$vales[$i]->cantidad;
+             $importe=$valesClonados[$i]->cantidad;
              $saldoImporte+=$importe;
-             $saldoAnterior=$vales[$i]->deuda_actual;
+             $saldoAnterior=$valesClonados[$i]->deuda_actual;
              $saldoAnteriorTotal+=$saldoAnterior;
-             $pagosRealizados=$vales[$i]->pagos_realizados+1;
-             $numeroPagos=$vales[$i]->numero_pagos;
+             $pagosRealizados=$valesClonados[$i]->pagos_realizados+1;
+             $numeroPagos=$valesClonados[$i]->numero_pagos;
              $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
              $saldoTotal+=$abono;
              $saldoActual=$saldoAnterior-$abono;
-             $nombreCliente=Vale::find($vales[$i]->id_vale)->cliente->nombre;
+             $nombreCliente=Vale::find($valesClonados[$i]->id_vale)->cliente->nombre;
 
-            $vales[$i]->id_cliente=$nombreCliente;
-            $vales[$i]->cantidad=$importe.".00";
-            $vales[$i]->numero_pagos=$saldoAnterior.".00";
-            $vales[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
-            $vales[$i]->cantidad_limite=$abono.".00";
-            $vales[$i]->deuda_actual=$saldoActual.".00";
+            $valesClonados[$i]->id_cliente=$nombreCliente;
+            $valesClonados[$i]->cantidad=$importe.".00";
+            $valesClonados[$i]->numero_pagos=$saldoAnterior.".00";
+            $valesClonados[$i]->pagos_realizados=$pagosRealizados." de ".$numeroPagos;
+            $valesClonados[$i]->cantidad_limite=$abono.".00";
+            $valesClonados[$i]->deuda_actual=$saldoActual.".00";
             
          }
-         $totalVales=sizeof($vales);
+
+
+        $totalVales=sizeof($valesClonados);
         $comision=$this->calcularComision($saldoTotal,$id);
         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
         $saldoComision=$saldoTotal-$saldoDistribuidor;
-        $datas = $vales;
+        $datas = $valesClonados;
         $distribuidor=$id.".-".Distribuidor::find($id)->nombre;
         $fechaHoy = Carbon::now();
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
