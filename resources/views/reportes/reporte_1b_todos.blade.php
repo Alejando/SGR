@@ -311,6 +311,7 @@
 	    </tr>
 	</table>
 	<br>
+	<br>
 	@endif
 	@endfor
   </body>
