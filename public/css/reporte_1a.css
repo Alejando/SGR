@@ -18,6 +18,10 @@ table tbody tr td {
     color: #ffffff;
 }
 
+.texto{
+    color: #000000;
+}
+
 tfoot
 {
 	text-align: right;
@@ -25,7 +29,7 @@ tfoot
 
 .mitad{
 	width: 345px;
-	height: 75px;
+	height: 55px;
 
 }
 
@@ -37,10 +41,6 @@ tfoot
 .division{
 	width: 30px;
 	
-}
-
-.texto{
-    color: #000000;
 }
 
 .logo{
