@@ -30,14 +30,12 @@ class PdfController extends Controller
         $pagosAbonados = Pago::where('id_distribuidor', $id)->where('estado', 3)->get();
 
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
-<<<<<<< HEAD
           if(sizeof($vales)>0){
         //return ($vales);
         //$saldoTotal=0;
         //$saldoImporte=0;
         //$saldoAnteriorTotal=0;
-=======
->>>>>>> origin/master
+
         $valesClonados = array();
         for ($i=0; $i <sizeof($vales); $i++) 
         {
@@ -545,9 +543,6 @@ class PdfController extends Controller
         $id=$request->input('id');
         $fecha=$request->input('fecha');
 
-
-
-
         $pagosAbonados = Pago::where('id_distribuidor', $id)->where('estado', 3)->get();
 
 
@@ -583,13 +578,12 @@ class PdfController extends Controller
 
 
         $saldoTotal=0;
-<<<<<<< HEAD
+
         $saldoComision;
         if(sizeof($vales)>0){
-        for ($i=0; $i <sizeof($vales); $i++) { 
-=======
+
         for ($i=0; $i <sizeof($valesClonados); $i++) { 
->>>>>>> origin/master
+
             
              $importe=$valesClonados[$i]->cantidad;
              $saldoAnterior=$valesClonados[$i]->deuda_actual;
@@ -674,15 +668,14 @@ class PdfController extends Controller
         }
 
         $saldoTotal=0;
-<<<<<<< HEAD
+
         $saldoComision;
         if(sizeof($vales)>0){
-        for ($i=0; $i <sizeof($vales); $i++) { 
-=======
+
 
 
         for ($i=0; $i <sizeof($valesClonados); $i++) { 
->>>>>>> origin/master
+
             
              $importe=$valesClonados[$i]->cantidad;
              $saldoAnterior=$valesClonados[$i]->deuda_actual;
