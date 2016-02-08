@@ -416,7 +416,9 @@ class PagosController extends Controller
             for ($i=0; $i <sizeof($vales); $i++) { 
                  $fechaPago=Carbon::parse($vales[$i]->fecha_inicio_pago);
                  $importe=$vales[$i]->cantidad;
+
                  $pagosRealizados=$vales[$i]->pagos_realizados+$control+2;
+
                  $numeroPagos=$vales[$i]->numero_pagos;
                  $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
                  if(($pagosRealizados<=$numeroPagos) && ($fechaPago<=$fechaAtraso)){
