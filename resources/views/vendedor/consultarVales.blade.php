@@ -51,10 +51,10 @@
 			</div>
 
 			<div id="ticket" style="display: none">
-			<h4 class="titulo">Zapatería "El Gran Remate" </h4>
-			<h5 class="titulo">Pasaje Hidalgo #218 Col.Centro </h5>
-			<h5 class="titulo">CP. 99000 Fresnillo, zacatecas</h5>
-			<h4 class="titulo">Corte de Ventas </h4>
+			<p class="titulo">Zapatería "El Gran Remate" </p>
+			<p class="titulo">Pasaje Hidalgo #218 Col.Centro </p>
+			<p class="titulo">CP. 99000 Fresnillo, zacatecas</p>
+			<p class="titulo">Corte de Ventas </p>
 			
 			<p class="texto" id="pFecha">Fecha: Juanito</p>
 			
