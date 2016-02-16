@@ -15,27 +15,35 @@ $(function() {
 
 	mostrarPromocion();
     $("#cantidad").focusout(function(){
-    	if(BoolFechaPromo!=1){
-    		fechaInicioPago=$('#fecha').val();
-    	}
-    	
     	var cantidad=$("#cantidad").val(); // obtenemos cantidad del vale
-    	importe=cantidad;
-    	var pagos=cantidad/nPagosGlobal;
-    	var pago=pagos.toFixed(); // crea
-    	var pagoFinal=cantidad-(pago*(nPagosGlobal-1));
-    	var code="";
-    	var pagos="";
-	  	//alert(sumaFecha(22,sFecha));
-		for (var i = 1; i < nPagosGlobal;i++) {
-			code+="<div class='col-md-3'><div class='panel panel-primary'><div class='panel-heading'> Pago "+i+"</div><div class='panel-body'><p>De $"+pago+".00  el "+cambiarTipoFecha(fechaPago(fechaInicioPago,i))+"</p></div></div></div>";
-			pagos+="<p class='texto'>Pago "+i+" De $"+pago+".00 </p><p class='texto'>El "+cambiarTipoFecha(fechaPago(fechaInicioPago,i))+"</p>";
-			}
-	  	code+="<div class='col-md-3'><div class='panel panel-primary'><div class='panel-heading'> Ultimo pago </div><div class='panel-body'><p>De $"+pagoFinal+".00  el "+cambiarTipoFecha(fechaPago(fechaInicioPago,nPagosGlobal))+"</p></div></div></div>";
-		pagos+="<p class='texto'>Pago "+i+" De $"+pagoFinal+".00 </p><p class='texto'>El "+cambiarTipoFecha(fechaPago(fechaInicioPago,nPagosGlobal))+"</p>";
-		$("#pagos").html(code);
-		
-		$('#pagosTicket').html(pagos)
+    	var limiteVale=$("#limite_vale").val();
+
+    	//if(cantidad<limiteVale){
+    		if(BoolFechaPromo!=1){
+    			fechaInicioPago=$('#fecha').val();
+	    	}
+	    		    	
+	    	importe=cantidad;
+	    	var pagos=cantidad/nPagosGlobal;
+	    	var pago=pagos.toFixed(); // crea
+	    	var pagoFinal=cantidad-(pago*(nPagosGlobal-1));
+	    	var code="";
+	    	var pagos="";
+		  	//alert(sumaFecha(22,sFecha));
+			for (var i = 1; i < nPagosGlobal;i++) {
+				code+="<div class='col-md-3'><div class='panel panel-primary'><div class='panel-heading'> Pago "+i+"</div><div class='panel-body'><p>De $"+pago+".00  el "+cambiarTipoFecha(fechaPago(fechaInicioPago,i))+"</p></div></div></div>";
+				pagos+="<p class='texto'>Pago "+i+" De $"+pago+".00 </p><p class='texto'>El "+cambiarTipoFecha(fechaPago(fechaInicioPago,i))+"</p>";
+				}
+		  	code+="<div class='col-md-3'><div class='panel panel-primary'><div class='panel-heading'> Ultimo pago </div><div class='panel-body'><p>De $"+pagoFinal+".00  el "+cambiarTipoFecha(fechaPago(fechaInicioPago,nPagosGlobal))+"</p></div></div></div>";
+			pagos+="<p class='texto'>Pago "+i+" De $"+pagoFinal+".00 </p><p class='texto'>El "+cambiarTipoFecha(fechaPago(fechaInicioPago,nPagosGlobal))+"</p>";
+			$("#pagos").html(code);
+			
+			$('#pagosTicket').html(pagos)
+    //	}
+    	//else{
+    //		alert("La cantidad es mayor al limite"+cantidad+'>>>'+limiteVale);
+    	//}
+    	
 	})
 
 
@@ -71,13 +79,20 @@ $(function() {
 
 });
 function imprimir(){
-	$('#pFecha').html("Fecha: "+cambiarTipoFecha(fechaInicioPago));
-	$('#pDistribuidor').html("Distribuidor: "+distribuidor);
-	$('#pCliente').html("Cliente: "+$('#nombreCliente').val());
-	$('#pImporte').html("Importe: $"+importe+".00");
-	$('#ticket').show();
-	$('#ticket').printArea();
-	$('#ticket').hide();
+
+	if($('#cantidad').val().length>1 && $('#nombreCliente').val().length>2 && $('#folioVenta').val().length>1){
+
+
+
+		$('#pFecha').html("Fecha: "+cambiarTipoFecha(fechaInicioPago));
+		$('#pDistribuidor').html("Distribuidor: "+distribuidor);
+		$('#pCliente').html("Cliente: "+$('#nombreCliente').val());
+		$('#pImporte').html("Importe: $"+importe+".00");
+		$('#ticket').show();
+		$('#ticket').printArea();
+		$('#ticket').hide();
+	}
+	
 
 }
 function fechaPago(fecha,nPago){
@@ -207,13 +222,26 @@ function datosVale(){
 			    	}
 			    }
 			   	if(name=="cantidad_limite"){
-			   		$("#limite_vale").val(value);
+			   		
+			   			$("#limite_vale").val(value);	
+			   		
+			   		
 			   	}
 			   	if(name=="cantidad"){
-			   		$("#cantidad").val(value);
+			   		if(value!=0){
+			   			$("#cantidad").val(value);
+			   		}else{
+			   			$("#cantidad").val();	
+			   		}	
 			   	}
 			   	if(name=="folio_venta"){
-			   		$("#folioVenta").val(value);
+			   		if(value!=0){
+			   			$("#folioVenta").val(value);
+			   		}else{
+			   			$("#folioVenta").val();	
+			   		}	
+
+			   		
 			   	}
 			   	if(name=="id_cliente"){
 			   		 //console.log(name + ':' + value); 
@@ -223,7 +251,12 @@ function datosVale(){
 				 		data: {id:value}						
 					}).done(function( result ) {
 					 //console.log(result); 
-						$("#nombreCliente").val(result);
+					 if(result!=null){
+					 	$("#nombreCliente").val(result);
+					 }else{
+					 	$("#nombreCliente").val();
+					 }
+						
 					});
 			   	}
 			   	if(name=="id_distribuidor"){

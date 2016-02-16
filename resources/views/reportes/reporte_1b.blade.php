@@ -10,7 +10,7 @@
 
   	@if($i%2==0)
 	  		
-	<table  background="img/logo_tabla.jpg">
+	<table  background="img/logo_tabla.jpg" >
 	    <tr>
 	      <td colspan="9" class="mitad invisible izq_texto"><img src="img/logo_tabla.jpg" width="110px" height="80px"/></td>
 	      <!--td>A2</td>
@@ -21,7 +21,7 @@
 	      <td>A7</td>
 	      <td>A8</td>
 	      <td>A9</td-->
-	      <td class="division" class="invisible">.</td>
+	      <td class="division" class="">l</td>
 	      <td colspan="9" class="mitad invisible izq_texto"><img src="img/logo_tabla.jpg" width="110px" height="80px"/></td>
 	      <!--td>A2</td>
 	      <td>A3</td>
@@ -42,7 +42,7 @@
 	      <!--td>B7</td-->
 	      <td colspan="2" class="texto inf_linea">{{$data[$i]->folio}}</td>
 	      <!--td>B9</td-->
-	      <td class="invisible">x</td>
+	      <td class="">l</td>
 	      <td colspan="2" class="negrita der_texto">Fecha:</td>
 	      <!--td>B2</td-->
 	      <td colspan="2" class="texto inf_linea">{{$fechaHoy}}</td>
@@ -71,7 +71,7 @@
 	      <td>C7</td>
 	      <td>C8</td>
 	      <td>C9</td-->
-	      <td class="invisible">x</td>
+	      <td class="">l</td>
 	      <td colspan="2" class="negrita izq_border sup_border color">No.</td>
 	      <!--td>C2</td-->
 	      <td colspan="7" class="negrita der_border sup_border color">DISTRIBUIDOR</td>
@@ -92,7 +92,7 @@
 	      <td>D7</td>
 	      <td>D8</td>
 	      <td>D9</td-->
-	      <td class="invisible">x</td>@if($i+1< sizeof($data))
+	      <td class="">l</td>@if($i+1< sizeof($data))
 	      <td colspan="2" class="texto izq_border">{{$data[$i+1]->id_distribuidor}}</td>
 	      <!--td>D2</td-->
 	      <td colspan="7" class="texto der_border">{{$distribuidor}}</td>@endif
@@ -113,7 +113,7 @@
 	      <td>E7</td>
 	      <td>E8</td>
 	      <td>E9</td-->
-	      <td class="invisible">x</td>
+	      <td class="">l</td>
 	      <td colspan="2" class="negrita izq_border color">No.</td>
 	      <!--td>E2</td-->
 	      <td colspan="7" class="negrita der_border color">CLIENTE</td>
@@ -134,7 +134,7 @@
 	      <td>F7</td>
 	      <td>F8</td>
 	      <td>F9</td-->
-	      <td class="invisible">x</td>@if($i+1< sizeof($data))
+	      <td class="">l</td>@if($i+1< sizeof($data))
 	       <td colspan="2" class="texto izq_border inf_border">{{$data[$i+1]->id_vale}}</td>
 	      <!--td>F2</td-->
 	      <td colspan="7" class="texto der_border inf_border">{{$data[$i+1]->id_cliente}}</td>@endif
@@ -161,7 +161,7 @@
 	      <td colspan="3" class="texto der_border sup_border">{{$data[$i]->numero_pagos}}</td>
 	      <!--td>G8</td>
 	      <td>G9</td-->
-	      <td class="invisible">x</td>
+	      <td class="">l</td>
 	      <td colspan="3" class="invisible">G1</td>
 	      <td colspan="3" class="negrita der_texto izq_border sup_border color">SALDO ANTERIOR:</td>
 	      <!--td>G2</td>
@@ -184,7 +184,7 @@
 	      <td colspan="3" class="texto der_border">$0.00</td>
 	      <!--td>H8</td>
 	      <td>H9</td-->
-	      <td class="invisible">x</td>
+	      <td class="">l</td>
 	      <td colspan="3" class="invisible">G2</td>
 	      <td colspan="3" class="negrita der_texto izq_border color">CARGOS:</td>
 	      <!--td>H2</td>
@@ -207,7 +207,7 @@
 	      <td colspan="3" class="invisible der_border">I7</td>
 	      <!--td>I8</td>
 	      <td>I9</td-->
-	      <td class="invisible">x</td>@if($i+1< sizeof($data))
+	      <td class="">l</td>@if($i+1< sizeof($data))
 	   
 	     
 	    <td colspan="3" class="texto der_border" >Pago: {{$data[$i+1]->pagos_realizados}}</td>
@@ -233,7 +233,7 @@
 	      <td colspan="3" class="texto der_border inf_border">{{$data[$i]->numero_pagos}}</td>
 	      <!--td>J8</td>
 	      <td>J9</td-->
-	      <td class="invisible">x</td>
+	      <td class="">l</td>
 	      <td colspan="3" class="invisible">G4</td>
 	      <td colspan="3" class="negrita der_texto izq_border inf_border color">SALDO:</td>
 	      <!--td>J2</td>
@@ -262,7 +262,7 @@
 	      <td colspan="3" class="negrita der_border sup_border color">NUEVO SALDO</td>
 	      <!--td>K8</td>
 	      <td>K9</td-->
-	      <td class="invisible">x</td>
+	      <td class="">l</td>
 	      <td colspan="3" class="negrita izq_border sup_border color">VENCIMIENTO</td>
 	      <!--td>K2</td>
 	      <td>K3</td-->
@@ -283,7 +283,7 @@
 	      <td colspan="3" class="texto der_border inf_border">{{$data[$i]->deuda_actual}}</td>
 	      <!--td>L8</td>
 	      <td>L9</td-->
-	      <td class="invisible">x</td>@if($i+1< sizeof($data))
+	      <td class="">l</td>@if($i+1< sizeof($data))
 	      <td colspan="3" class="texto izq_border inf_border">{{$fechaLimite}}</td>
 	      <!--td>L2</td>
 	      <td>L3</td-->
@@ -304,7 +304,7 @@
 	      <td>M7</td>
 	      <td>M8</td>
 	      <td>M9</td-->
-	      <td class="invisible">x</td>
+	      <td class="">l</td>
 	      <td colspan="9"  class="negrita mensaje">Calzando a Fresnillo</td>
 	      <!--td>M2</td>
 	      <td>M3</td>
@@ -316,7 +316,7 @@
 	      <td>M9</td-->
 	    </tr>
 	</table>
-	<br>
+	<hr style="border-style: dashed none none none;border-width: 2px;"></hr>
 	@endif
 	@endfor
   </body>
