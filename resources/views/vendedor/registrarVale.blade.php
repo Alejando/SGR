@@ -121,6 +121,7 @@
 			<p class="texto">Cajera:{{Session::get('nombre')}}</p>
 			<p class="texto" id="pDistribuidor">Distribuidor: Juanito</p>
 			<p class="texto" id="pCliente">Cliente: Juanito</p>
+			<p class="texto" id="pFolio">Folio: jsjsd</p>
 			<p class="texto" id="pImporte">Importe: $348.00</p>
 			<h5 class="titulo"> Pagos</h3>
 			<div id="pagosTicket"></div>
