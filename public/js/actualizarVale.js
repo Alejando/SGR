@@ -9,6 +9,7 @@ var confirma=0;
 var cliente;
 var distribuidor;
 var importe;
+var globalFolio;
 
 $(function() {
 	$('#fecha').val(fechaInicioPago);
@@ -88,6 +89,7 @@ function imprimir(){
 		$('#pDistribuidor').html("Distribuidor: "+distribuidor);
 		$('#pCliente').html("Cliente: "+$('#nombreCliente').val());
 		$('#pImporte').html("Importe: $"+importe+".00");
+		$('#pFolio').html("Folio: "+globalFolio);
 		$('#ticket').show();
 		$('#ticket').printArea();
 		$('#ticket').hide();
@@ -163,7 +165,7 @@ function mostrarPromocion(){
 function datosVale(){	
 	var serie = $('#serie').val();
 	var folio = $('#folio').val();
-	
+	globalFolio=folio;
 	$.ajax({
 		type: "GET",
  		url: "buscarVale",
