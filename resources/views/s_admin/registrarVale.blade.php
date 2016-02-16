@@ -113,18 +113,18 @@
 		</div><!-- /.row -->
 		
 		<div id="ticket" style="display: none">
-			<h4 class="titulo">Zapatería "El Gran Remate" </h4>
-			<h5 class="titulo">Pasaje Hidalgo #218 Col.Centro </h5>
-			<h5 class="titulo">CP. 99000 Fresnillo, zacatecas</h5>
-			<h4 class="titulo"> Venta a credito </h4>
+			<p class="titulo">Zapatería "El Gran Remate" </p>
+			<p class="titulo">Pasaje Hidalgo #218 Col.Centro </p>
+			<p class="titulo">CP. 99000 Fresnillo, zacatecas</p>
+			<p class="titulo"> Venta a credito </p>
 			<p class="texto" id="pFecha">Fecha: Juanito</p>
 			<p class="texto">Cajera:{{Session::get('nombre')}}</p>
 			<p class="texto" id="pDistribuidor">Distribuidor: Juanito</p>
 			<p class="texto" id="pCliente">Cliente: Juanito</p>
 			<p class="texto" id="pImporte">Importe: $348.00</p>
-			<h5 class="titulo"> Pagos</h3>
+			<p class="titulo"> Pagos</p>
 			<div id="pagosTicket"></div>
-			<h4 class="titulo"> ¡Gracias por su compra! </h4>
+			<p class="titulo"> ¡Gracias por su compra! </p>
 		</div>
 
 
