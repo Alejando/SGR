@@ -93,6 +93,7 @@ function imprimir(){
 		$('#ticket').show();
 		$('#ticket').printArea();
 		$('#ticket').hide();
+		
 	}
 	
 
@@ -203,7 +204,6 @@ function datosVale(){
 			    		$("#bVericar").removeClass("btn btn-danger");
 			    		$("#bVericar").removeClass("btn btn-warning");  
 			    		$("#bVericar").addClass("btn btn-success"); 
-			    		$("#nombreCliente").val(" ");
 			    		mensaje='<div id="borrarMensaje"class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El vale esta disponible</strong></div>';
 						$('#mensaje').html(mensaje);
 						    	setTimeout(function() {
@@ -272,6 +272,15 @@ function datosVale(){
 					distribuidor=result;
 					$("#nombreDistribuidor").val(result);
 					});
+			   	}
+			   	if(name=="saldo"){
+			   		$("#saldoDistribuidor").val(value);	
+
+			   	}
+			   	if(name=="estado"){
+			   		if(value==1){
+			   			alert("El distribuidor esta temporalmente suspendido");
+			   		}
 			   	}
 			    
 			});

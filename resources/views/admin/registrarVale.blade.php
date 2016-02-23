@@ -70,16 +70,22 @@
 							</div>	
 							<div class="col-md-12">
 								
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label>Cantidad de venta</label>
-										<input type="number"  id="cantidad" name="cantidad" class="bloqueado" disabled required/>
+										<input type="number"  id="cantidad" name="cantidad" class="form-control" disabled required/>
 									</div>	
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label>Folio venta </label>
-										<input type="number"  id="folioVenta" name="folio_venta" class="bloqueado"  disabled required/>
+										<input type="number"  id="folioVenta" name="folio_venta" class="form-control"  disabled required/>
+									</div>		
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Saldo disponible del distribuidor</label>
+										<input type="number"  id="saldoDistribuidor" class="form-control"  disabled />
 									</div>		
 								</div>
 								

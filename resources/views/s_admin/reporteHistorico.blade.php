@@ -41,7 +41,7 @@
 						        <th data-field="folio" data-halign="center"data-sortable="true">Vale</th>
 						        <th data-field="folio_venta" data-halign="center"  data-sortable="false">Folio Venta</th>
 						        <th data-field="cantidad" data-halign="center" data-sortable="true">Importe</th>
-						        <th data-field="fecha_venta"  data-halign="center" data-sortable="true">Fecha de venta</th>
+						        <th data-field="fecha_inicio_pago"  data-halign="center" data-sortable="true">Fecha de venta</th>
 					   		 </tr>
 					    </thead>
 					</table>

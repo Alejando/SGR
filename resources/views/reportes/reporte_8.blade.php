@@ -51,7 +51,7 @@
             <td>{{$data->folio}}</td>
             <td>{{$data->folio_venta}}</td>
             <td>{{$data->cantidad}}</td>
-            <td>{{$data->fecha_venta}}</td>
+            <td>{{$data->fecha_inicio_pago}}</td>
           </tr>
 
            @endforeach
