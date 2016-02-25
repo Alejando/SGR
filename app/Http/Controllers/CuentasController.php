@@ -153,7 +153,7 @@ class CuentasController extends Controller
         $cuenta->nombre = strtoupper($request->input('nombre'));
         $cuenta->telefono = $request->input('telefono');
         $cuenta->usuario = strtoupper($request->input('usuario'));
-        $cuenta->contrasena = $request->input('contrasena');
+        $cuenta->contrasena = strtoupper($request->input('contrasena'));
         
         $contrasena = $request->input('contrasena');
         $contrasena2 = $request->input('contrasena2');
@@ -221,7 +221,7 @@ class CuentasController extends Controller
         $cuenta->nombre = strtoupper($request->input('nombre'));
         $cuenta->telefono = $request->input('telefono');
         $cuenta->usuario = strtoupper($request->input('usuario'));
-        $cuenta->contrasena = $request->input('contrasena');
+        $cuenta->contrasena = strtoupper($request->input('contrasena'));
         $cuenta->tipo = $request->input('tipo');
         
 

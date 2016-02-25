@@ -391,7 +391,7 @@ class PagosController extends Controller
                 
             }// for distribuidores
         	
-        }
+        
         return redirect('consultarPagos');
     }
     //////////////////////////////////////////////////////////////////////////////////////

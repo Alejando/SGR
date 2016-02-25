@@ -14,8 +14,7 @@
 							<div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
 								    <button type="button" class="close" data-dismiss="alert">&times;</button>
 								    <strong> {{ Session::get('message')}} </strong>
-							</div>
-						@endif           
+							</div>          
 		                @endif
 						<div class="col-md-6">
 							<label>Datos Comisión</label>
