@@ -139,7 +139,8 @@ class DistribuidorsController extends Controller
         $distribuidores = Distribuidor::all();
         for ($i=0; $i <sizeof($distribuidores); $i++) 
         {
-            
+           
+
             //$distribuidores[$i]->calle=$distribuidores[$i]->calle." #".$distribuidores[$i]->numero_exterior." ".$distribuidores[$i]->colonia." ".$distribuidores[$i]->municipio." ".$distribuidores[$i]->estado." ".$distribuidores[$i]->codigo_postal; 
             $distribuidores[$i]->acciones = '<a type="button" class="btn btn-success margin" href="verDistribuidor/'. $distribuidores[$i]->id_distribuidor .'">Ver</a> <a type="button" class="btn btn-primary margin" href="editarDistribuidor/'. $distribuidores[$i]->id_distribuidor .'">Actualizar</a>';    
         }
@@ -383,16 +384,18 @@ class DistribuidorsController extends Controller
         
     }
      public function calcularComision($total,$id){
-        
-        $comision=Comision::where('cantidad_inicial','<',$total)->get();
-        $distribuidor= Distribuidor::find($id);
-        if($distribuidor->estatus==1){
-             return 0;
+        if($total>0){
+            $comision=Comision::where('cantidad_inicial','<',$total)->get();
+            $distribuidor= Distribuidor::find($id);
+            if($distribuidor->estatus==1){
+                 return 0;
+            }else{
+                return $comision[count($comision)-1]->porcentaje;
+               
+            }
         }else{
-            return $comision[count($comision)-1]->porcentaje;
-           
+            return 0;
         }
-        
     }
 
     public function reporteHistorico()

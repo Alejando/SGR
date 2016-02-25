@@ -304,7 +304,7 @@ class PagosController extends Controller
 	                 $comision=$this->calcularComision($saldoTotal);
             
 	            	$pagoDoble= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
-                    $pagoAux= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('estado',1)->get();
+                    $pagoAux= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('estado',1)->get(); //pagos
 	            	 if(count($pagoDoble)==0){
                          if (count($pagoAux)==0) {
     		                $pago = new Pago;
@@ -315,6 +315,8 @@ class PagosController extends Controller
                             $pago->comision=$comision;
     						$pago->id_cuenta=Session::get('id');
     						$pago->save();
+                            $distribuidores[$j]->comision=$comision;
+                            $distribuidores[$j]->save();
                          
     		            }else{
                                 $pagoAux[0]->estado=3;
@@ -328,7 +330,8 @@ class PagosController extends Controller
                                 $pago->abono=$pagoAux[0]->abono;
                                 $pago->id_cuenta=Session::get('id');
                                 $pago->save();
-                              
+                                $distribuidores[$j]->comision=$comision;
+                                $distribuidores[$j]->save();
                                
                             
 
@@ -367,6 +370,9 @@ class PagosController extends Controller
                             $pago->comision=$comision;
                             $pago->id_cuenta=Session::get('id');
                             $pago->save();
+                            $distribuidores[$j]->comision=$comision;
+                            $distribuidores[$j]->save();
+
                          
                         }else{
                                 $pagoAux[0]->estado=3;
@@ -380,6 +386,9 @@ class PagosController extends Controller
                                 $pago->abono=$pagoAux[0]->abono;
                                 $pago->id_cuenta=Session::get('id');
                                 $pago->save();
+                                $distribuidores[$j]->comision=$comision;
+                                $distribuidores[$j]->save();
+
                               
                                
                             
@@ -391,7 +400,7 @@ class PagosController extends Controller
                 
             }// for distribuidores
         	
-        }
+        
         return redirect('consultarPagos');
     }
     //////////////////////////////////////////////////////////////////////////////////////
@@ -401,15 +410,16 @@ class PagosController extends Controller
         $nPagos=count($pagos);
         $acumulado=0;
         for ($j=0; $j <$nPagos ; $j++) { 
-            
+            $fechaAtraso= Carbon::parse($pagos[$j]->fecha_creacion);
             for ($i=0; $i <sizeof($vales); $i++) { 
+
+                 $fechaPago=Carbon::parse($vales[$i]->fecha_inicio_pago);
                  $importe=$vales[$i]->cantidad;
                  $saldoAnterior=$vales[$i]->deuda_actual;
-
                  $pagosRealizados=$vales[$i]->pagos_realizados+$j+2;
                  $numeroPagos=$vales[$i]->numero_pagos;
                  $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-                 if($pagosRealizados<=$numeroPagos){
+                 if(($pagosRealizados<=$numeroPagos) && ($fechaPago<=$fechaAtraso)){
                     $acumulado+=$abono;
                  }
                  

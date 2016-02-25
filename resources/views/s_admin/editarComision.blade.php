@@ -16,7 +16,7 @@
 								    <strong> {{ Session::get('message')}} </strong>
 							</div>
 						@endif           
-		                @endif
+		                
 						<div class="col-md-6">
 							<label>Datos Comisión</label>
 							<form class="form" role="form" method="POST" action="{{URL::to('actualizarComision/').'/'.$comision->id_comision}}" enctype="multipart/form-data">
