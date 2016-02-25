@@ -41,7 +41,9 @@ class ExcelController extends Controller
         {
             for($j=0; $j < sizeof($pagosAbonados); $j++)
                 {
-                    if($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1)
+                    $fecha_pago_carbon = Carbon::parse($vales[$i]->fecha_inicio_pago);
+                    $fecha_atraso_carbon = Carbon::parse($pagosAbonados[$j]->fecha_creacion);
+                    if(($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1) && ($fecha_pago_carbon <= $fecha_atraso_carbon ))
                     { 
 
                         $importe=$vales[$i]->cantidad; //*

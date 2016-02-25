@@ -30,11 +30,9 @@ class PdfController extends Controller
         $pagosAbonados = Pago::where('id_distribuidor', $id)->where('estado', 3)->get();
 
         $vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
-          if(sizeof($vales)>0){
-        //return ($vales);
-        //$saldoTotal=0;
-        //$saldoImporte=0;
-        //$saldoAnteriorTotal=0;
+        
+        if(sizeof($vales)>0){
+    
 
         $valesClonados = array();
         for ($i=0; $i <sizeof($vales); $i++) 
@@ -42,12 +40,16 @@ class PdfController extends Controller
             $clon = clone $vales[$i];
             $valesClonados[]=$clon;
         }
+        //Caboniar fechas 
+
 
         for ($i=0; $i <sizeof($vales); $i++) 
         {
             for($j=0; $j < sizeof($pagosAbonados); $j++)
                 {
-                    if($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1)
+                    $fecha_pago_carbon = Carbon::parse($vales[$i]->fecha_inicio_pago);
+                    $fecha_atraso_carbon = Carbon::parse($pagosAbonados[$j]->fecha_creacion);
+                    if(($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1) && ($fecha_pago_carbon <= $fecha_atraso_carbon ))
                     { 
 
                         $importe=$vales[$i]->cantidad; //*
@@ -261,7 +263,9 @@ class PdfController extends Controller
         {
             for($j=0; $j < sizeof($pagosAbonados); $j++)
                 {
-                    if($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1)
+                    $fecha_pago_carbon = Carbon::parse($vales[$i]->fecha_inicio_pago);
+                    $fecha_atraso_carbon = Carbon::parse($pagosAbonados[$j]->fecha_creacion);
+                    if(($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1) && ($fecha_pago_carbon <= $fecha_atraso_carbon ))
                     { 
 
                         $importe=$vales[$i]->cantidad; //*
@@ -558,7 +562,9 @@ class PdfController extends Controller
         {
             for($j=0; $j < sizeof($pagosAbonados); $j++)
                 {
-                    if($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1)
+                    $fecha_pago_carbon = Carbon::parse($vales[$i]->fecha_inicio_pago);
+                    $fecha_atraso_carbon = Carbon::parse($pagosAbonados[$j]->fecha_creacion);
+                    if(($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1) && ($fecha_pago_carbon <= $fecha_atraso_carbon ))
                     { 
 
                         $importe=$vales[$i]->cantidad; //*
@@ -649,7 +655,9 @@ class PdfController extends Controller
         {
             for($j=0; $j < sizeof($pagosAbonados); $j++)
                 {
-                    if($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1)
+                    $fecha_pago_carbon = Carbon::parse($vales[$i]->fecha_inicio_pago);
+                    $fecha_atraso_carbon = Carbon::parse($pagosAbonados[$j]->fecha_creacion);
+                    if(($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1) && ($fecha_pago_carbon <= $fecha_atraso_carbon ))
                     { 
 
                         $importe=$vales[$i]->cantidad; //*
@@ -933,7 +941,9 @@ class PdfController extends Controller
         {
             for($j=0; $j < sizeof($pagosAbonados); $j++)
                 {
-                    if($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1)
+                    $fecha_pago_carbon = Carbon::parse($vales[$i]->fecha_inicio_pago);
+                    $fecha_atraso_carbon = Carbon::parse($pagosAbonados[$j]->fecha_creacion);
+                    if(($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1) && ($fecha_pago_carbon <= $fecha_atraso_carbon ))
                     { 
 
                         $importe=$vales[$i]->cantidad; //*
