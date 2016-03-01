@@ -106,7 +106,7 @@
 							<div id="ocultos"></div>
 							<div class="col-md-12">
 								<div class="pull-right">
-										<a type="button" class="btn btn-primary " onclick="imprimir()">Imprimir</a>
+										<a type="button" class="btn btn-primary" onclick="imprimir()">Imprimir</a>
 										<button type="reset" class="btn btn-danger ">Borrar datos</button>
 										<button type="submit" class="btn btn-success ">Guardar Vale</button>
 								</div>

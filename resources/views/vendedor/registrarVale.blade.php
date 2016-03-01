@@ -19,6 +19,7 @@
 						@endif
 		                <form class="form" id="form"role="form" method="POST" action="ventaVale" >
 		                	<input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+		                	<input type="hidden" id="usuario" value="vendedor"/>
 							<div class="col-md-12">
 								<label>Registro de vales</label>
 								</br>
@@ -104,11 +105,12 @@
 								</div>
 							</div>	
 							<div id="ocultos"></div>
+
 							<div class="col-md-12">
 								<div class="pull-right">
 									
 										<button type="reset" class="btn btn-danger ">Borrar datos</button>
-										<button type="submit" class="btn btn-success " onclick="imprimir()">Guardar Vale</button>
+										<button  type="submit" class="btn btn-success" >Guardar Vale</button>
 								</div>
 							</div>
 						</form>

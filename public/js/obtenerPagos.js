@@ -38,7 +38,7 @@ function abonar(){
 	$.ajax({
 		type: "GET",
  		url: "abonarPago",
- 		async: false, 
+ 		async: true, 
 		data: {id:$id, abono:abono},
 		success: llegada
 	});
@@ -75,7 +75,7 @@ function pagar(){
 	$.ajax({
 		type: "GET",
  		url: "liquidarPago",
- 		async: false, 
+ 		async: true, 
 		data: {id:$id}
 	});
 	

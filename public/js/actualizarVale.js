@@ -65,7 +65,18 @@ $(function() {
 		inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
 		inputOcultos+='<input type="hidden" name="fecha_venta" value="'+$('#fecha').val()+'"/>';
 		$("#ocultos").html(inputOcultos);
-		if(confirma==1){
+		if(confirma==1 && $('#cantidad').val().length>1 && $('#nombreCliente').val().length>2 && $('#folioVenta').val().length>1){
+			var usuario=$('#usuario').val();
+			if(usuario=="vendedor"){
+				$('#pFecha').html("Fecha: "+cambiarTipoFecha(fechaInicioPago));
+				$('#pDistribuidor').html("Distribuidor: "+distribuidor);
+				$('#pCliente').html("Cliente: "+$('#nombreCliente').val());
+				$('#pImporte').html("Importe: $"+importe+".00");
+				$('#pFolio').html("Folio: "+globalFolio);
+				$('#ticket').show();
+				$('#ticket').printArea();
+				$('#ticket').hide();
+			}
 			return true;
 		}
 		else{
@@ -93,7 +104,10 @@ function imprimir(){
 		$('#ticket').show();
 		$('#ticket').printArea();
 		$('#ticket').hide();
-		
+		return false;
+	}
+	else{
+		return false;
 	}
 	
 
@@ -133,7 +147,7 @@ function mostrarPromocion(){
 		error: problemas
 	});
 	function llegada(data){
-		console.log(data.length);
+		//console.log(data.length);
 		var tipo=0;
 		var control=0; //variable auxiliar en el control de datos
 		for (var i = 0; i < data.length; i++) {
