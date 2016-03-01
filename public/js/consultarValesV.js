@@ -50,7 +50,7 @@ function imprimir(){
 			vales+="<tr class='ticket'><td align='center'>"+data[i].id_distribuidor+"</td><td align='center'>"+data[i].serie+""+data[i].folio+"</td><td align='center'>"+data[i].folio_venta+"</td><td align='center'>$"+data[i].cantidad+".00</td><td align='center'>"+data[i].numero_pagos+"</td></tr>";
 		}
 
-		vales+="<tr class='ticket'><td colspan='3' class='total' align='right'>Total: </td><td class='importe' align='center'>$"+total+".00</td><td></td></tr></table>";
+		vales+="<tr class='ticket'><td></td><td align='center'># "+data.length+"</td><td colspan='1' class='total' align='right'>Total: </td><td class='importe' align='center'>$"+total+".00</td><td></td></tr></table>";
 		$('#vales').html(vales);
 	}
 	function problemas(data){
