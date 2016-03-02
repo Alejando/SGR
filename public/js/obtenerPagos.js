@@ -38,9 +38,9 @@ function abonar(){
 	$.ajax({
 		type: "GET",
  		url: "abonarPago",
- 		async: true, 
-		data: {id:$id, abono:abono},
-		success: llegada
+ 		data: {id:$id, abono:abono},
+		success: llegada,
+		async: false
 	});
 	function llegada(data){
 	
@@ -51,7 +51,7 @@ function abonar(){
 	 setTimeout(
    function(){
 	 $( location ).attr("href", 'consultarPagos');
-   }, 500);
+   }, 1000);
 }
 function pagosRealizados(){
 	$table.bootstrapTable('removeAll');
@@ -71,13 +71,22 @@ function pagosRealizados(){
 	}
 }
 function pagar(){
-	imprimir();
+	
 	$.ajax({
 		type: "GET",
  		url: "liquidarPago",
- 		async: true, 
-		data: {id:$id}
+		data: {id:$id},
+		success: llegada,
+		async: false
 	});
+	function llegada(data){
+	 imprimir();
+	}
+	 setTimeout(
+   function(){
+	 $( location ).attr("href", 'consultarPagos');
+   }, 1000);
+
 	
 }
 

@@ -50,7 +50,7 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Fecha</label>
-										<input type="date"  id="fecha" name="fecha" class="form-control" />
+										<input type="date"  id="fecha" name="fecha" class="form-control" required/>
 									</div>	
 								</div>
 							</div>
@@ -110,7 +110,9 @@
 								<div class="pull-right">
 									
 										<button type="reset" class="btn btn-danger ">Borrar datos</button>
-										<button  type="submit" class="btn btn-success" >Guardar Vale</button>
+										<a  type="button" class="btn btn-primary" onclick="imprimir()" >Imprimir</a>
+										<button type="submit" id="enviar" class="btn btn-success " disabled>Enviar datos</button>
+										
 								</div>
 							</div>
 						</form>

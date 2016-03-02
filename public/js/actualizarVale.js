@@ -65,20 +65,10 @@ $(function() {
 		inputOcultos+='<input type="hidden" name="numero_pagos" value="'+nPagosGlobal+'"/>';
 		inputOcultos+='<input type="hidden" name="fecha_venta" value="'+$('#fecha').val()+'"/>';
 		$("#ocultos").html(inputOcultos);
-		if(confirma==1 && $('#cantidad').val().length>1 && $('#nombreCliente').val().length>2 && $('#folioVenta').val().length>1){
-			var usuario=$('#usuario').val();
-			if(usuario=="vendedor"){
-				$('#pFecha').html("Fecha: "+cambiarTipoFecha(fechaInicioPago));
-				$('#pDistribuidor').html("Distribuidor: "+distribuidor);
-				$('#pCliente').html("Cliente: "+$('#nombreCliente').val());
-				$('#pImporte').html("Importe: $"+importe+".00");
-				$('#pFolio').html("Folio: "+globalFolio);
-				$('#ticket').show();
-				$('#ticket').printArea();
-				$('#ticket').hide();
-			}
+		if(confirma==1 ){
 			return true;
 		}
+		
 		else{
 			mensaje='<div id="borrarMensaje" facclass="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong> El vale no a sido verificado </strong></div>';
 			$('#mensaje').html(mensaje);
@@ -91,24 +81,21 @@ $(function() {
 
 });
 function imprimir(){
-
+	
 	if($('#cantidad').val().length>1 && $('#nombreCliente').val().length>2 && $('#folioVenta').val().length>1){
+			
+			$('#pFecha').html("Fecha: "+cambiarTipoFecha(fechaInicioPago));
+			$('#pDistribuidor').html("Distribuidor: "+distribuidor);
+			$('#pCliente').html("Cliente: "+$('#nombreCliente').val());
+			$('#pImporte').html("Importe: $"+importe+".00");
+			$('#pFolio').html("Folio: "+globalFolio);
+			$('#ticket').show();
+			$('#ticket').printArea();
+			$('#ticket').hide();
+		
+			$('#enviar').removeAttr("disabled");
+		}
 
-
-
-		$('#pFecha').html("Fecha: "+cambiarTipoFecha(fechaInicioPago));
-		$('#pDistribuidor').html("Distribuidor: "+distribuidor);
-		$('#pCliente').html("Cliente: "+$('#nombreCliente').val());
-		$('#pImporte').html("Importe: $"+importe+".00");
-		$('#pFolio').html("Folio: "+globalFolio);
-		$('#ticket').show();
-		$('#ticket').printArea();
-		$('#ticket').hide();
-		return false;
-	}
-	else{
-		return false;
-	}
 	
 
 }

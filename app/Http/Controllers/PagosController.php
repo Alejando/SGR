@@ -148,7 +148,7 @@ class PagosController extends Controller
             Session::flash('message','Error al liquidar pago');
             Session::flash('class','danger');
         }
-       
+       return "pago realizado";
     }
     public function aumentarPagos($id,$fecha){
 
