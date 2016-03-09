@@ -14,12 +14,18 @@
 								    <button type="button" class="close" data-dismiss="alert">&times;</button>
 								    <strong> {{ Session::get('message')}} </strong>
 							</div>
-						@endif
+						@endif 
 				<div class="col-lg-12">
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="form-group">
 							<label>Distribuidor</label>
 							<input type="text"  id="id_distribuidor" class="form-control" />
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="form-group">
+							<label>Vendedor</label>
+							<input type="text"  id="id_vendedor" class="form-control" />
 						</div>
 					</div>
 					<div class="col-lg-3">
@@ -34,15 +40,10 @@
 							<input type="date"  id="fecha_termino" class="form-control" />
 						</div>
 					</div>
-					<div class="col-lg-1">
-						<div class="form-group">
-							</br>
-							<p  id="consultar" class="btn btn-primary" onclick="mostrarTabla()"> Consultar </p>
-						</div>	
-					</div>
+					
 					<div class="col-lg-1">
 						<div class="btn-group">
-							<br>
+							<p  id="consultar" class="btn btn-primary" onclick="mostrarTabla()"> Consultar </p>
 							<button data-toggle="dropdown" class="btn btn-danger ">Exportar <span class="caret"></span></button>
 								<ul class="dropdown-menu">
 									<li><a onclick="mostrarPDF()" class="font-bold">PDF</a></li>

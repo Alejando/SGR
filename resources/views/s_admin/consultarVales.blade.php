@@ -14,12 +14,18 @@
 								    <button type="button" class="close" data-dismiss="alert">&times;</button>
 								    <strong> {{ Session::get('message')}} </strong>
 							</div>
-						@endif
+						@endif 
 				<div class="col-lg-12">
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="form-group">
 							<label>Distribuidor</label>
 							<input type="text"  id="id_distribuidor" class="form-control" />
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="form-group">
+							<label>Vendedor</label>
+							<input type="text"  id="id_vendedor" class="form-control" />
 						</div>
 					</div>
 					<div class="col-lg-3">
@@ -34,10 +40,15 @@
 							<input type="date"  id="fecha_termino" class="form-control" />
 						</div>
 					</div>
+					
 					<div class="col-lg-1">
-						<div class="form-group">
-							<label>--</label>
+						<div class="btn-group">
 							<p  id="consultar" class="btn btn-primary" onclick="mostrarTabla()"> Consultar </p>
+							<button data-toggle="dropdown" class="btn btn-danger ">Exportar <span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a onclick="mostrarPDF()" class="font-bold">PDF</a></li>
+									<li><a onclick="mostrarExcel()" class="font-bold">Excel</a></li>
+								</ul>
 						</div>	
 					</div> 	
 				</div>
@@ -48,7 +59,7 @@
 				    <thead>
 				    <tr>
 
-				      <th data-field="serie"   data-halign="center" data-sortable="true">Serie</th>
+				        <th data-field="serie"   data-halign="center" data-sortable="true">Serie</th>
 				        <th data-field="folio" data-halign="center"data-sortable="true">Folio</th>
 				        <th data-field="id_distribuidor" data-sortable="true">Distribuidor</th>
 				         <th data-field="id_cliente" data-sortable="true">Cliente</th>
