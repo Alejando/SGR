@@ -172,7 +172,7 @@ class ExcelController extends Controller
                         if($fechaTermino=="0"){
                             $vendedor=$request->input('vendedor');
                             if($vendedor=="0"){
-                                 $vales = Vale::where('estatus','<',2)->get(); //consulta al inicio
+                                 $vales = Vale::where('estatus',1)->get(); //consulta al inicio
                             }else{
                                 $vales = Vale::where('estatus',1)->where('id_cuenta',$vendedor)->get();
                             }

@@ -74,7 +74,7 @@ class ValesController extends Controller
                 }
                 Session::flash('message','Guardado Correctamente');
                     Session::flash('class','success');
-          }
+            }
             else{
                  Session::flash('message','Folio repetido, el ultimo folio es: '.$ultimo);
                 Session::flash('class','danger');
