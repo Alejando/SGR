@@ -50,21 +50,21 @@
 <div id="ticketMega" style="display: none">
   <div id="ticket">
       <h4 class="titulo">Zapatería "El Gran Remate" </h4>
-      <h5 class="titulo">Recibo del pago de distribuidor</h5>
-      <h5 class="titulo"  id="pBueno">Bueno por: $</h5>
+      <h5 class="titulo">Recibo del pago de distribuidorx</h5>
+      <!-- <h5 class="titulo"  id="pBueno">Bueno por: $</h5> -->
       <hr>
       <p class="texto" id="pTexto">Recibi...</p>
       <hr>
       <p class="titulo">Fresnillo,Zacatecas</p>
       <p class="titulo" id="pFecha">Fecha:..</p>
       <br>
-      <p class="titulo" >________________________________</p>
+      <!-- <p class="titulo" >________________________________</p> -->
       <p class="titulo" id="pDistribuidor">Distribuidor</p>
       <p class="titulo" id="pDistribuidor">Firma Distribuidor</p>
-      <br>
+      <!-- <br>
       <p class="titulo" >________________________________</p>
       <p class="titulo" >{{Session::get('nombre')}}</p>
-      <p class="titulo" id="pDistribuidor">Firma Recibe</p>
+      <p class="titulo" id="pDistribuidor">Firma Recibe</p> -->
       <br>
     </div>
     <br></br>
