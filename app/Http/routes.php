@@ -59,6 +59,9 @@ Route::group(['middleware' => 'mixto'], function () {
 	Route::post('actualizarCliente/{id}', 'ClientesController@actualizarCliente');
 	Route::get('buscarCliente', 'ClientesController@buscarCliente');
 	Route::get('buscarIdCliente', 'ClientesController@buscarIdCliente');
+
+	Route::get('editarContrasena','CuentasController@editarContrasena');
+	Route::post('actualizarContrasena','CuentasController@actualizarContrasena');
 });
 
 

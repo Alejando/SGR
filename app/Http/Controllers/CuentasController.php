@@ -86,6 +86,48 @@ class CuentasController extends Controller
             
         }        
     }
+    public function editarContrasena()
+    {
+        
+       $cuenta = Cuenta::find(Session::get('id'));
+
+        switch (Session::get('tipo')) {
+            case 0:
+             
+            return view('s_admin.editarContrasena',compact('cuenta'));
+                break;
+            case 1:
+                return view('admin.editarContrasena',compact('cuenta'));
+                break;
+            case 2:
+                return view('vendedor.editarContrasena',compact('cuenta'));
+                break;
+            
+        }        
+    }
+    public function actualizarContrasena(Request $request)
+    {    
+            $contrasena=strtoupper($request->input('contrasena'));
+            $nContrasena=strtoupper($request->input('nContrasena'));
+            $rContrasena=strtoupper($request->input('rContrasena'));
+            $cuenta = Cuenta::find(Session::get('id'));
+            if($cuenta->contrasena==$contrasena){
+                if($nContrasena==$rContrasena){
+                    $cuenta->contrasena=$nContrasena;
+                    $cuenta->save();
+                    Session::flash('message','La contraseña fue actualizada correctamente');
+                    Session::flash('class','success');
+                }else{
+                    Session::flash('message','Las contraseñas no coinciden');
+                    Session::flash('class','danger');
+                }
+            }else{
+                Session::flash('message','La contraseña actual no es la correcta');
+                Session::flash('class','danger');
+            }
+      return redirect('editarContrasena');
+    }
+
     public function buscarIdCuenta(Request $request){
          
          $id = $request->input('id');
