@@ -46,7 +46,7 @@ function abonar(){
 	
 	 $('#pBueno').html("Bueno por: $"+abono+".00");
 	 $('#pTexto').html("Recibi de: "+$distribuidor+" la cantidad de: $"+abono+".00 ("+data+") por el concepto de abono de ventas por vales referente al periodo "+$periodo);
-	 imprimir();
+	 imprimir_abono();
 	}
 	 setTimeout(
    function(){
@@ -80,7 +80,7 @@ function pagar(){
 		async: false
 	});
 	function llegada(data){
-	 imprimir();
+	 imprimir_pago();
 	}
 	 setTimeout(
    function(){
@@ -102,8 +102,15 @@ function mostrarExcel(){
 	
 }
 
-function imprimir(){
+function imprimir_abono(){
 	$('#ticket1').html($('#ticket').clone());
+	$('#ticketMega').show();
+	$('#ticketMega').printArea();
+	$('#ticketMega').hide();
+}
+
+function imprimir_pago(){
+	//$('#ticket1').html($('#ticket').clone());
 	$('#ticketMega').show();
 	$('#ticketMega').printArea();
 	$('#ticketMega').hide();
