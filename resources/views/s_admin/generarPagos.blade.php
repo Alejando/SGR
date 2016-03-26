@@ -45,7 +45,7 @@
 			                                
         <div class="modal fade" id="ventana">
           <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content abono">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Alerta!</h4>
@@ -63,7 +63,9 @@
 
 @stop
 
-
+@section ('css')
+<link href="css/modal.css"  rel="stylesheet">
+@stop
 @section ('js') 
 <script src="js/generarPagos.js"></script>
 @stop
