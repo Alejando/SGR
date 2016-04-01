@@ -321,7 +321,7 @@ class DistribuidorsController extends Controller
 
     public function calcularPago($cantidad,$tPagos,$nPago){
         $pagos=$cantidad/$tPagos;
-        $pago=intval($pagos);  
+        $pago=round($pagos);  
         $pagoFinal=$cantidad-($pago*($tPagos-1));  
 
         if($nPago==$tPagos){

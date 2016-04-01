@@ -28,7 +28,7 @@ $(function() {
 	    	var pagos=cantidad/nPagosGlobal;
 	    	var pago=pagos.toFixed(); // crea
 	    	var pagoFinal=cantidad-(pago*(nPagosGlobal-1));
-	    	var code="";
+	    	var code=""; 
 	    	var pagos="";
 		  	//alert(sumaFecha(22,sFecha));
 			for (var i = 1; i < nPagosGlobal;i++) {
