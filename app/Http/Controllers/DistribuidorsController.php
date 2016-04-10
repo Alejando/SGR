@@ -13,7 +13,6 @@ use App\Vale;
 use App\Comision;
 use App\Cliente;
 use Maatwebsite\Excel\Facades\Excel;
-
 class DistribuidorsController extends Controller
 {
     
@@ -136,6 +135,7 @@ class DistribuidorsController extends Controller
 
     public function obtenerDistribuidores()
     {
+
         $distribuidores = Distribuidor::all();
         for ($i=0; $i <sizeof($distribuidores); $i++) 
         {
