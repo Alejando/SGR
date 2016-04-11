@@ -360,7 +360,7 @@ class PagosController extends Controller
                      $comision=$this->calcularComision($saldoTotal);
             
                     $pagoDoble= Pago::where('id_distribuidor',$distribuidor->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
-                    $pagoAux= Pago::where('id_distribuidor',$distribuidore->id_distribuidor)->where('estado',1)->get();
+                    $pagoAux=   Pago::where('id_distribuidor',$distribuidor->id_distribuidor)->where('estado',1)->get();
                      if(count($pagoDoble)==0){
                          if (count($pagoAux)==0) {
                             $pago = new Pago;
@@ -410,15 +410,14 @@ class PagosController extends Controller
         $pagos= Pago::where('id_distribuidor',$id)->where('estado',3)->get();
         $nPagos=count($pagos);
         $acumulado=0;
-        for ($j=0; $j <$nPagos ; $j++) { 
-            $control=0;
-            $fechaAtraso= Carbon::parse($pagos[$j]->fecha_creacion);
-            for ($i=0; $i <sizeof($vales); $i++) { 
-                 $fechaPago=Carbon::parse($vales[$i]->fecha_inicio_pago);
+        for ($i=0; $i <sizeof($vales); $i++) { 
+         $fechaPago=Carbon::parse($vales[$i]->fecha_inicio_pago);
+         $control=0;
+           
+             for ($j=0; $j <$nPagos ; $j++) { 
+                 $fechaAtraso= Carbon::parse($pagos[$j]->fecha_creacion);
                  $importe=$vales[$i]->cantidad;
-
                  $pagosRealizados=$vales[$i]->pagos_realizados+$control+2;
-
                  $numeroPagos=$vales[$i]->numero_pagos;
                  $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
                  if(($pagosRealizados<=$numeroPagos) && ($fechaPago<=$fechaAtraso)){
