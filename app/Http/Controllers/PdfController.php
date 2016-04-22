@@ -423,7 +423,7 @@ class PdfController extends Controller
         $result = $head.$todo.$foot;
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($result);
-        return $pdf->stream('reporte_2_todos.pdf');
+        return $result;//->stream('reporte_2_todos.pdf');
         
         //return ($conVales);
         //$result = $head.$body.$foot;

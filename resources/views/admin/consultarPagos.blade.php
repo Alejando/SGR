@@ -107,7 +107,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-small btn-danger" data-dismiss="modal">Cancelar</button>
-             <a class="btn btn-small btn-success" onclick="pagar()">Pagar</a>
+             <a class="btn btn-small btn-success"  id="btnPago" onclick="pagar()">Pagar</a>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

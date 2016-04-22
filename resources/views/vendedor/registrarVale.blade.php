@@ -111,7 +111,7 @@
 									
 										<button type="reset" class="btn btn-danger ">Borrar datos</button>
 										<a  type="button" class="btn btn-primary" onclick="imprimir()" >Imprimir</a>
-										<button type="submit" id="enviar" class="btn btn-success " disabled>Enviar datos</button>
+										<button type="submit" id="enviar" class="btn btn-success " disabled>Guardar Vale</button>
 										
 								</div>
 							</div>

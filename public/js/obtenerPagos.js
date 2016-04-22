@@ -71,6 +71,9 @@ function pagosRealizados(){
 	}
 }
 function pagar(){
+	$('#btnPago').attr('disabled', true);
+	
+	alert('Pago Realizado');
 	
 	$.ajax({
 		type: "GET",
