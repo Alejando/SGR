@@ -51,7 +51,6 @@ class PdfController extends Controller
                     $fecha_atraso_carbon = Carbon::parse($pagosAbonados[$j]->fecha_creacion);
                     if(($vales[$i]->pagos_realizados < ($vales[$i]->numero_pagos)-1) && ($fecha_pago_carbon <= $fecha_atraso_carbon ))
                     { 
-
                         $importe=$vales[$i]->cantidad; //*
                         $saldoAnterior=$vales[$i]->deuda_actual; //*
                         $pagosRealizados=$vales[$i]->pagos_realizados+1; //*

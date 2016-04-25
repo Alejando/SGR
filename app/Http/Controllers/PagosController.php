@@ -345,6 +345,7 @@ class PagosController extends Controller
         else{
         	$vales=Vale::where('id_distribuidor',$id)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
 	            $saldoTotal=0;
+                $distribuidor=Distribuidor::find($id);
 	            for ($i=0; $i <sizeof($vales); $i++) { 
                     
                      $importe=$vales[$i]->cantidad;
@@ -358,36 +359,36 @@ class PagosController extends Controller
                 if($saldoTotal>0){
                      $comision=$this->calcularComision($saldoTotal);
             
-                    $pagoDoble= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
-                    $pagoAux= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('estado',1)->get();
+                    $pagoDoble= Pago::where('id_distribuidor',$distribuidor->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
+                    $pagoAux= Pago::where('id_distribuidor',$distribuidore->id_distribuidor)->where('estado',1)->get();
                      if(count($pagoDoble)==0){
                          if (count($pagoAux)==0) {
                             $pago = new Pago;
-                            $pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
+                            $pago->id_distribuidor=$distribuidor->id_distribuidor;
                             $pago->cantidad=$saldoTotal;
                             $pago->fecha_creacion=$this->calcularFechaCorte($fecha);
                             $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
                             $pago->comision=$comision;
                             $pago->id_cuenta=Session::get('id');
                             $pago->save();
-                            $distribuidores[$j]->comision=$comision;
-                            $distribuidores[$j]->save();
+                            $distribuidor->comision=$comision;
+                            $distribuidor->save();
 
                          
                         }else{
                                 $pagoAux[0]->estado=3;
                                 $pagoAux[0]->save();
                                 $pago=new Pago;
-                                $pago->id_distribuidor=$distribuidores[$j]->id_distribuidor;
-                                $pago->cantidad=$saldoTotal+($this->saldoAtrasado($vales,$distribuidores[$j]->id_distribuidor));
+                                $pago->id_distribuidor=$distribuidor->id_distribuidor;
+                                $pago->cantidad=$saldoTotal+($this->saldoAtrasado($vales,$distribuidor->id_distribuidor));
                                 $pago->fecha_creacion=$this->calcularFechaCorte($fecha);
                                 $pago->estado=0;// 0:pendiente  1:desfasado 2:pagado 3:Cancelado por nuevo pago
                                 $pago->comision=0;
                                 $pago->abono=$pagoAux[0]->abono;
                                 $pago->id_cuenta=Session::get('id');
                                 $pago->save();
-                                $distribuidores[$j]->comision=$comision;
-                                $distribuidores[$j]->save();
+                                $distribuidor->comision=$comision;
+                                $distribuidor->save();
 
                               
                                
@@ -410,14 +411,16 @@ class PagosController extends Controller
         $nPagos=count($pagos);
         $acumulado=0;
         for ($j=0; $j <$nPagos ; $j++) { 
+            $control=0;
             $fechaAtraso= Carbon::parse($pagos[$j]->fecha_creacion);
             for ($i=0; $i <sizeof($vales); $i++) { 
                  $fechaPago=Carbon::parse($vales[$i]->fecha_inicio_pago);
                  $importe=$vales[$i]->cantidad;
-                 $pagosRealizados=$vales[$i]->($pagos_realizados+$j)+2;
+                 $pagosRealizados=$vales[$i]->pagos_realizados+$control+2;
                  $numeroPagos=$vales[$i]->numero_pagos;
                  $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
                  if(($pagosRealizados<=$numeroPagos) && ($fechaPago<=$fechaAtraso)){
+                    $control++;
                     $acumulado+=$abono;
                  }
                  
