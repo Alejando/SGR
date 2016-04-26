@@ -42,7 +42,7 @@
         <td>{{$data->id_cliente}}</td>
         <td>{{$data->folio}}</td>
         <td>{{$data->folio_venta}}</td>
-        <td>{{$data->fecha_venta}}</td>
+        <td>{{$data->fecha_inicio_pago}}</td>
         <td>{{$data->pagos_realizados}}</td>
         <td>{{$data->cantidad}}</td>
         <td>{{$data->numero_pagos}}</td>

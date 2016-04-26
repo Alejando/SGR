@@ -839,7 +839,7 @@ class PdfController extends Controller
         {
             $saldoTotal+= $pagos[$i]->cantidad;
             $saldoTotalAbono+= $pagos[$i]->abono;
-            $pagos[$i]->cantidad_comision='$'.$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
+            $pagos[$i]->cantidad_comision='$'.(($this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision))-$pagos[$i]->abono).".00";
             $pagos[$i]->id_distribuidor=Distribuidor::find($pagos[$i]->id_distribuidor)->nombre;
             $pagos[$i]->cantidad='$'.$pagos[$i]->cantidad.".00";
             $pagos[$i]->abono='$'.$pagos[$i]->abono.".00";

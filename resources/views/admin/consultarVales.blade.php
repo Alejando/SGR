@@ -62,7 +62,7 @@
 				        <th data-field="folio" data-halign="center"data-sortable="true">Folio</th>
 				        <th data-field="id_distribuidor" data-sortable="true">Distribuidor</th>
 				         <th data-field="id_cliente" data-sortable="true">Cliente</th>
-				          <th data-field="fecha_venta" data-sortable="true">Fecha Venta</th>
+				          <th data-field="fecha_inicio_pago" data-sortable="true">Fecha Venta</th>
 				        <th data-field="cantidad" data-halign="center" data-sortable="true">Deuda</th>
 				        <th data-field="numero_pagos" data-halign="center" data-sortable="true">Total pagos</th>
 				        <th data-field="pagos_realizados" data-halign="center" data-sortable="true">Pagos realizados</th>

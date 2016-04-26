@@ -218,7 +218,7 @@ class PagosController extends Controller
         $pago=intval($pagos);  
         $pagoFinal=$cantidad-($pago*($tPagos-1));  
 
-        if($nPago==$tPagos){
+        if($nPago>=$tPagos){
             return $pagoFinal;
         }
         else{
@@ -412,11 +412,9 @@ class PagosController extends Controller
         for ($j=0; $j <$nPagos ; $j++) { 
             $fechaAtraso= Carbon::parse($pagos[$j]->fecha_creacion);
             for ($i=0; $i <sizeof($vales); $i++) { 
-
                  $fechaPago=Carbon::parse($vales[$i]->fecha_inicio_pago);
                  $importe=$vales[$i]->cantidad;
-                 $saldoAnterior=$vales[$i]->deuda_actual;
-                 $pagosRealizados=$vales[$i]->pagos_realizados+$j+2;
+                 $pagosRealizados=$vales[$i]->($pagos_realizados+$j)+2;
                  $numeroPagos=$vales[$i]->numero_pagos;
                  $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
                  if(($pagosRealizados<=$numeroPagos) && ($fechaPago<=$fechaAtraso)){
