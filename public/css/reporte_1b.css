@@ -81,6 +81,7 @@ table tbody tr td {
 
 .invisible{
 	color: #ffffff;
+    visibility: hidden;
 }
 
 tfoot
@@ -115,5 +116,5 @@ tfoot
 }
 
 .color{
-	background-color:  #ffa31a;
+	background:  #ffa31a;
 }
