@@ -21,46 +21,50 @@ table tbody tr td {
 
 .izq_border{
     border-left: solid #1a1a1a;
-    border-style: dotted;  
+    border-style: dashed;  
+    border-width: 2px;
+   
 }
 
 .der_border{
     border-right: solid #1a1a1a;
-    border-style: dotted;
-    
+    border-style: dashed;
+    border-width: 2px;
 }
 
 .sup_border{
     border-top: solid #1a1a1a;
-    border-style: dotted;
+    border-style: dashed;
+    border-width: 2px;
    
 }
 
 .inf_border{
     border-bottom: solid #1a1a1a;
-    border-style: dotted;
+    border-style: dashed;
+    border-width: 2px;
     
 }
 
 
 .izq_linea{
     border-left: solid #1a1a1a;
-    border-width: 1px;
+    border-width: .5px;
 }
 
 .der_linea{
     border-right: solid #1a1a1a;
-    border-width: 1px;
+    border-width: .5px;
 }
 
 .sup_linea{
     border-top: solid #1a1a1a;
-    border-width: 1px;
+    border-width: .5px;
 }
 
 .inf_linea{
     border-bottom: solid #1a1a1a;
-    border-width: 1px;
+    border-width: .5px;
 }
 .negrita{
 	font-weight:bold;

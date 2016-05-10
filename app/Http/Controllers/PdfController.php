@@ -279,7 +279,7 @@ class PdfController extends Controller
         $view =  \View::make('reportes/reporte_9', compact('vales','fechaHoy'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->stream('reporte_9.pdf');
+        return $view; //$pdf->stream('reporte_9.pdf');
          }else{
             
            $view =  \View::make('reportes/nodisponible')->render();
@@ -962,7 +962,7 @@ class PdfController extends Controller
         //Crear el pdf
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($result);
-        return $pdf->stream('reporte_1b_todos.pdf');
+        return $result;//$pdf->stream('reporte_1b_todos.pdf');
     }
 
 
