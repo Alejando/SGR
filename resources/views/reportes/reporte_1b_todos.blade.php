@@ -4,9 +4,9 @@
 
   	@if($i%2==0)
 	  		
-	<table  background="img/logo_tabla.jpg">
+	<table  >
 	    <tr>
-	      <td colspan="9" class="mitad invisible izq_texto"><img class="logo" src="img/logo_tabla.jpg" width="110px" height="80px"/></td>
+	      <td colspan="9" class="mitad  izq_texto"><img class="logo" src="img/logo_tabla.jpg" width="110px" height="70px"/></td>
 	      <!--td>A2</td>
 	      <td>A3</td>
 	      <td>A4</td>
@@ -16,7 +16,7 @@
 	      <td>A8</td>
 	      <td>A9</td-->
 	      <td class="division" class="">l</td>
-	      <td colspan="9" class="mitad invisible izq_texto"><img class="logo" src="img/logo_tabla.jpg" width="110px" height="80px"/></td>
+	      <td colspan="9" class="mitad  izq_texto"><img class="logo" src="img/logo_tabla.jpg" width="110px" height="70px"/></td>
 	      <!--td>A2</td>
 	      <td>A3</td>
 	      <td>A4</td>
@@ -68,7 +68,7 @@
 	      <td class="">l</td>
 	      <td colspan="2" class="negrita izq_border sup_border color">No.</td>
 	      <!--td>C2</td-->
-	      <td colspan="7" class="negrita der_border sup_border color">DISTRIBUIDOR</td>
+	      <td colspan="7" class="color negrita der_border sup_border ">DISTRIBUIDOR</td>
 	      <!--td>C4</td>
 	      <td>C5</td>
 	      <td>C6</td>

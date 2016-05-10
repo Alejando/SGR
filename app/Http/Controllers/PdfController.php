@@ -930,7 +930,7 @@ class PdfController extends Controller
         $fecha =$request->input('fecha');
 
         //Partes de la vista
-        $head = '<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Reporte 1</title><link href="css/reporte_1'.$tipo.'.css"  rel="stylesheet"></head>';
+        $head = '<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Reporte 1</title><link href="css/reporte_1'.$tipo.'.css"  rel="stylesheet" ></head>';
         $foot = '</html>';
         $body = ' ';
         $todo = ' ';
