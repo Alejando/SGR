@@ -46,3 +46,11 @@ tfoot
 .logo{
     visibility: hidden;
 }
+.invisible{
+    color: #ffffff;
+    visibility: hidden;
+}
+.negrita{
+    font-weight:bold;
+     visibility: hidden;
+}
