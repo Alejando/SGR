@@ -17,11 +17,12 @@ class filtro_mixto
     {
          $tipo = Session::get('tipo');
         
-        if($tipo>3)
+        if($tipo>3 || $tipo===null)
         {
              //Session::flash('message','Tu tipo es: '.$tipo);
            // Session::flash('class','success');
-            return redirect('sesion');
+            Session::flush();
+            return redirect('logout');
         }
         return $next($request);
     }

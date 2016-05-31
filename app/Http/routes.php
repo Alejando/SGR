@@ -9,31 +9,15 @@ use App\Distribuidor;
 //----------------------------------------------------------//
 //--------------------> RUTAS PUBLICAS <--------------------//
 //----------------------------------------------------------//
-Route::get('/','LoginController@mostrarLogin');
-Route::get('sesion', 'LoginController@mostrarLogin');
-Route::post('login','LoginController@login');
-Route::get('logout','LoginController@logout');
+
 
 //----------------------------------------------------------//
-//--------------------> RUTAS REPORTES <--------------------//
-//----------------------------------------------------------//
-Route::get('pdf', 'PdfController@invoice');
-Route::get('reporte_8', 'PdfController@reporte_8');
-Route::get('reporte_7', 'PdfController@reporte_7');
-Route::get('reporte_6', 'PdfController@reporte_6');
-Route::get('reporte_2', 'PdfController@reporte_2');
-Route::get('reporte_1', 'PdfController@reporte_1');
-Route::get('reporte_1b', 'PdfController@reporte_1b');
-Route::get('reporte_1b_todos', 'PdfController@reporte_1b_todos');
-Route::get('reporte_2_todos', 'PdfController@reporte_2_todos');
-Route::get('reporte_9_pdf', 'PdfController@reporte_9_pdf');
 
-Route::get('reporteCobranzaExcel', 'DistribuidorsController@reporteCobranzaExcel');
-Route::get('reporte_2_excel', 'ExcelController@reporte_2_excel');
-Route::get('reporte_6_excel', 'ExcelController@reporte_6_excel');
-Route::get('reporte_8_excel', 'ExcelController@reporte_8_excel');
-Route::get('reporte_7_excel', 'ExcelController@reporte_7_excel');
-Route::get('reporte_9_excel', 'ExcelController@reporte_9_excel');
+	Route::get('/','LoginController@mostrarLogin');
+	Route::get('sesion', 'LoginController@mostrarLogin');
+	Route::post('login','LoginController@login');
+	Route::get('logout','LoginController@logout');
+	
 
 //---------------> Grupos <----------------///
 Route::group(['middleware' => 'mixto'], function () {
@@ -139,6 +123,26 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::get('abonarPago','PagosController@abonarPago');
 	Route::get('liquidarPago','PagosController@liquidarPago');
 	Route::get('consultarPagosRealizados','PagosController@consultarPagosRealizados');
+
+	//--------------------> RUTAS REPORTES <--------------------//
+	//----------------------------------------------------------//
+	Route::get('pdf', 'PdfController@invoice');
+	Route::get('reporte_8', 'PdfController@reporte_8');
+	Route::get('reporte_7', 'PdfController@reporte_7');
+	Route::get('reporte_6', 'PdfController@reporte_6');
+	Route::get('reporte_2', 'PdfController@reporte_2');
+	Route::get('reporte_1', 'PdfController@reporte_1');
+	Route::get('reporte_1b', 'PdfController@reporte_1b');
+	Route::get('reporte_1b_todos', 'PdfController@reporte_1b_todos');
+	Route::get('reporte_2_todos', 'PdfController@reporte_2_todos');
+	Route::get('reporte_9_pdf', 'PdfController@reporte_9_pdf');
+
+	Route::get('reporteCobranzaExcel', 'DistribuidorsController@reporteCobranzaExcel');
+	Route::get('reporte_2_excel', 'ExcelController@reporte_2_excel');
+	Route::get('reporte_6_excel', 'ExcelController@reporte_6_excel');
+	Route::get('reporte_8_excel', 'ExcelController@reporte_8_excel');
+	Route::get('reporte_7_excel', 'ExcelController@reporte_7_excel');
+	Route::get('reporte_9_excel', 'ExcelController@reporte_9_excel');
 });
 
 Route::get('prueba', function()

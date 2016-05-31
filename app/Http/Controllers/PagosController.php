@@ -301,7 +301,7 @@ class PagosController extends Controller
 	                
 	            }
 	            if($saldoTotal>0){
-	                 $comision=$this->calcularComision($saldoTotal);
+	                 $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
             
 	            	$pagoDoble= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
                     $pagoAux= Pago::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('estado',1)->get(); //pagos
@@ -357,7 +357,7 @@ class PagosController extends Controller
                     
                 }
                 if($saldoTotal>0){
-                     $comision=$this->calcularComision($saldoTotal);
+                     $comision=$this->calcularComision($saldoTotal,$id);
             
                     $pagoDoble= Pago::where('id_distribuidor',$distribuidor->id_distribuidor)->where('fecha_creacion',$this->calcularFechaCorte($fecha))->get();
                     $pagoAux=   Pago::where('id_distribuidor',$distribuidor->id_distribuidor)->where('estado',1)->get();
@@ -489,10 +489,17 @@ class PagosController extends Controller
         
     }
 
-    public function calcularComision($total){
+     public function calcularComision($total,$id){
         
         $comision=Comision::where('cantidad_inicial','<',$total)->get();
-        return $comision[count($comision)-1]->porcentaje;
+        $distribuidor= Distribuidor::find($id);
+        if($distribuidor->estatus==1){
+             return 0;
+        }else{
+            return $comision[count($comision)-1]->porcentaje;
+           
+        }
+        
     }
     public function nuevoEstado($fecha,$id){
         $fechaLimite=Carbon::parse($this->fechaLimiteBaja($fecha));

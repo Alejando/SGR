@@ -18,8 +18,9 @@ class filtro_admin
         $tipo = Session::get('tipo');
         
         if($tipo != "1")
-        {
-            return redirect('sesion');
+        {   
+            Session::flush();
+            return redirect('logout');
         }
         return $next($request);
     }

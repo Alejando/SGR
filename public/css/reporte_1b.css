@@ -22,27 +22,27 @@ table tbody tr td {
 .izq_border{
     border-left: solid #1a1a1a;
     border-style: dashed;  
-    border-width: 2px;
+    border-width: 0px;
    
 }
 
 .der_border{
     border-right: solid #1a1a1a;
     border-style: dashed;
-    border-width: 2px;
+    border-width: 0px;
 }
 
 .sup_border{
     border-top: solid #1a1a1a;
     border-style: dashed;
-    border-width: 2px;
+    border-width: 0px;
    
 }
 
 .inf_border{
     border-bottom: solid #1a1a1a;
     border-style: dashed;
-    border-width: 2px;
+    border-width: 0px;
     
 }
 
@@ -117,4 +117,10 @@ tfoot
 
 .color{
 	background:  #ffa31a;
+}
+
+.raya{
+    border-top: solid #1a1a1a;
+    border-style: dashed;
+    border-width: 1px;
 }

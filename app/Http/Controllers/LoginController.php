@@ -14,8 +14,31 @@ use Session;
 class LoginController extends Controller
 {
     public function mostrarLogin()
-    {
-        return view('login');
+    { 
+        $tipo=Session::get("tipo");
+        if($tipo===0){
+             return redirect('crearCuenta');
+           // return ("Eres un super administrador");
+
+        }else{
+
+
+      switch (Session::get("tipo")) {
+        case 1:
+            return redirect('crearVale');
+            //return ("Eres un administrador");
+            break;
+        case 2:
+            return redirect('registrarVale');
+            //return ("Eres un vendedor");
+            break;
+        default:
+            return view('login');
+            break;
+    }
+        }
+
+        
     }
 
     public function login(Request $request)

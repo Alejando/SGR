@@ -19,8 +19,8 @@ class filtro_vendedor
         
         if($tipo != "2")
         {
-            
-           return redirect('sesion');
+           Session::flush();   
+           return redirect('logout');
         }
         return $next($request);
     }

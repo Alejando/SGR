@@ -21,7 +21,8 @@ class filtro_super_y_admin
         {
            // Session::flash('message','Tu tipo es: '.$tipo);
             //Session::flash('class','success');
-            return redirect('sesion');
+            Session::flush();
+            return redirect('logout');
         }
         return $next($request);
     }

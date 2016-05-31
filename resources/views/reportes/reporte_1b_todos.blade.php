@@ -318,7 +318,7 @@
 	      <td>M9</td-->
 	    </tr>
 	</table>
-	<hr style="border-style: dashed none none none;border-width: 2px;"></hr>
+	<hr class="raya"></hr>
 	@endif
 	@endfor
   </body>

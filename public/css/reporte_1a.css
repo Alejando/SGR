@@ -54,3 +54,9 @@ tfoot
     font-weight:bold;
      visibility: hidden;
 }
+
+.raya{
+    border-top: solid #1a1a1a;
+    border-style: dashed;
+    border-width: 0px;
+}
