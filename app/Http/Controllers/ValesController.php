@@ -486,14 +486,51 @@ class ValesController extends Controller
                  return redirect('consultarVales');
             }
          }
-       
-            
-            
-
-     
                 
 
     }
-    
+    public function mostrarInvertirVales(){
+        switch (Session::get('tipo')) {
+            case 0:
+               return view('s_admin.invertirVales');
+                break;
+            case 1:
+                return view('admin.invertirVales');
+                break;
+            
+        }   
+    }
+    public function invertirVales(Request $request){
+        $vale_1=$request->input('vale_1');
+        $vale_2=$request->input('vale_2');
+        $serie_1=$request->input('serie_1');
+        $serie_2=$request->input('serie_2');
 
+        $vale1=Vale::where("folio",$vale_1)->where("serie",$serie_1)->first();
+        $vale2=Vale::where("folio",$vale_2)->where("serie",$serie_2)->first();
+         $auxVale= clone $vale1;
+        if($vale1 && $vale2){
+              
+               $vale1->id_vale=$vale2->id_vale;
+               $vale1->folio=$vale2->folio;
+               $vale1->serie=$vale2->serie;
+               ///////
+               $vale2->id_vale=0;
+               $vale2->folio=$auxVale->folio;
+               $vale2->serie=$auxVale->serie;
+             $vale2->save();
+             $vale1->save();
+             $vale2->id_vale=$auxVale->id_vale;
+            $vale2->save();
+              return $vale1.'---------------'.$vale2;
+                Session::flash('message','Vales invertidos correctamente');
+                Session::flash('class','success');
+        }else{
+           
+            Session::flash('message','Algún vale no se encuentra en la base de datos');
+                Session::flash('class','danger');
+        }
+        return redirect('mostrarInvertirVales');
+    }
 }
+

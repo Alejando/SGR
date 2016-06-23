@@ -92,6 +92,8 @@ Route::group(['middleware' => 'super_y_admin'], function () {
 	Route::post('modificarVale', 'ValesController@modificarVale');
 	Route::get('cambiarVales', 'ValesController@cambiarVales');
 	Route::post('actualizarVales', 'ValesController@actualizarVales');
+	Route::get('mostrarInvertirVales','ValesController@mostrarInvertirVales');
+	Route::post('invertirVales','ValesController@invertirVales');
 
    	Route::get('crearPromocion', 'PromocionsController@crearPromocion');
 	Route::post('guardarPromocion', 'PromocionsController@guardarPromocion');

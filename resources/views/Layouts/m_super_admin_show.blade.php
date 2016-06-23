@@ -64,6 +64,11 @@
 							<span class="glyphicon glyphicon-share-alt"></span> Consultar Vales
 						</a>
 					</li>
+					<li>
+						<a class="" href="../mostrarInvertirVales">
+							<span class="glyphicon glyphicon-share-alt"></span> Invertir Vales
+						</a>
+					</li>
 				</ul>
 			</li>
 
