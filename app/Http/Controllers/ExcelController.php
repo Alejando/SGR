@@ -112,52 +112,68 @@ class ExcelController extends Controller
         if($fecha==""){
             $fecha=Carbon::today();
         }
-        $resultado = array();
-        $SaldoTotalConComision=0;
+         $SaldoTotalConComision=0;
         $SaldoTotalSinComision=0;
-        $distribuidores=Distribuidor::all();
-        for($j=sizeof($distribuidores)-1; $j >=0; $j--) { 
-            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
-            $saldoTotal=0;
-          if (count($vales)==0) {
-                unset($distribuidores[$j]);
+         $pagos=Pago::where('estado',0)->orderBy('id_pago', 'asc')->get();
+        // $distribuidores=Distribuidor::all();
+        // for($j=sizeof($distribuidores)-1; $j >=0; $j--) { 
+        //     $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
+        //     $saldoTotal=0;
+        //   if (count($vales)==0) {
+        //         unset($distribuidores[$j]);
 
-            }else{
-                for ($i=0; $i <sizeof($vales); $i++) { 
+        //     }else{
+        //         for ($i=0; $i <sizeof($vales); $i++) { 
                 
-                 $importe=$vales[$i]->cantidad;
-                 $saldoAnterior=$vales[$i]->deuda_actual;
-                 $pagosRealizados=$vales[$i]->pagos_realizados+1;
-                 $numeroPagos=$vales[$i]->numero_pagos;
-                 $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-                 $saldoTotal+=$abono;
+        //          $importe=$vales[$i]->cantidad;
+        //          $saldoAnterior=$vales[$i]->deuda_actual;
+        //          $pagosRealizados=$vales[$i]->pagos_realizados+1;
+        //          $numeroPagos=$vales[$i]->numero_pagos;
+        //          $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+        //          $saldoTotal+=$abono;
                 
-                }
+        //         }
 
-                if($saldoTotal>0){
-                    $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
-                    $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
-                    $saldoComision=$saldoTotal-$saldoDistribuidor;
-                    $SaldoTotalSinComision+=$saldoTotal;
-                    $SaldoTotalConComision+=$saldoComision;
-                    $distribuidores[$j]->id_comision =$saldoTotal;
-                    $distribuidores[$j]->telefono=$comision; 
-                    $distribuidores[$j]->celular =$saldoComision;
-                }
-            }
+        //         if($saldoTotal>0){
+        //             $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
+        //             $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
+        //             $saldoComision=$saldoTotal-$saldoDistribuidor;
+        //             $SaldoTotalSinComision+=$saldoTotal;
+        //             $SaldoTotalConComision+=$saldoComision;
+        //             $distribuidores[$j]->id_comision =$saldoTotal;
+        //             $distribuidores[$j]->telefono=$comision; 
+        //             $distribuidores[$j]->celular =$saldoComision;
+        //         }
+        //     }
             
-        }
-       $datas=$distribuidores;
-        $fechaHoy = Carbon::now();
+        // }
+       foreach ($pagos as $key => $pago) {
+
+               // $pago->nombre=$pago->distribuidor->nombre;
+                $pago->pagoComision=$pago->cantidad -(intval(($pago->cantidad*$pago->comision)/100));
+                $SaldoTotalSinComision+=$pago->cantidad;
+                $SaldoTotalConComision+=$pago->pagoComision;
+           }
+        if(count($pagos)>0){
+       $fechaHoy = Carbon::now();
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
         $fechaLimite=$this->CalcularFechaLimite($fecha);
         $periodo=$this->calcularPeriodo($fecha);
 
-        Excel::create('Reporte_Pago', function($excel) use ($datas, $fechaHoy, $fechaEntrega, $fechaLimite, $periodo, $SaldoTotalSinComision, $SaldoTotalConComision) {
-            $excel->sheet('Reporte_Pago', function($sheet) use ($datas, $fechaHoy, $fechaEntrega, $fechaLimite, $periodo, $SaldoTotalSinComision, $SaldoTotalConComision) {
-                $sheet->loadView('reportes.reporte_6_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("fechaEntrega", $fechaEntrega)->with("fechaLimite", $fechaLimite)->with("periodo", $periodo)->with("SaldoTotalSinComision", $SaldoTotalSinComision)->with("SaldoTotalConComision", $SaldoTotalConComision);
+        Excel::create('Reporte_Pago', function($excel) use ($pagos, $fechaHoy, $fechaEntrega, $fechaLimite, $periodo, $SaldoTotalSinComision, $SaldoTotalConComision) {
+            $excel->sheet('Reporte_Pago', function($sheet) use ($pagos, $fechaHoy, $fechaEntrega, $fechaLimite, $periodo, $SaldoTotalSinComision, $SaldoTotalConComision) {
+                $sheet->loadView('reportes.reporte_6_excel')->with("pagos", $pagos)->with("fechaHoy", $fechaHoy)->with("fechaEntrega", $fechaEntrega)->with("fechaLimite", $fechaLimite)->with("periodo", $periodo)->with("SaldoTotalSinComision", $SaldoTotalSinComision)->with("SaldoTotalConComision", $SaldoTotalConComision);
             });
         })->export('xls');
+         }else{
+            
+           $view =  \View::make('reportes/nodisponible')->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->stream('noDisponible.pdf');
+        }
+      
+        
 
     }
 
@@ -336,8 +352,10 @@ class ExcelController extends Controller
         $pagos= Pago::where('estado','<',2)->get();
         $saldoTotal=0;  
         $saldoTotalAbono=0;
+         $saldoTotalComision=0;
         for ($i=0; $i <sizeof($pagos); $i++) 
         {
+            $saldoTotalComision+=$pagos[$i]->cantidad -(intval(($pagos[$i]->cantidad*$pagos[$i]->comision)/100));
             $saldoTotal+= $pagos[$i]->cantidad;
             $saldoTotalAbono+= $pagos[$i]->abono;
             $pagos[$i]->cantidad_comision=$this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision).".00";
@@ -360,9 +378,9 @@ class ExcelController extends Controller
           $datas = $pagos;
           $fechaHoy = Carbon::now();
 
-        Excel::create('Reporte_Deudores', function($excel) use ($datas, $fechaHoy, $saldoTotal, $saldoTotalAbono) {
-            $excel->sheet('Reporte_Deudores', function($sheet) use ($datas, $fechaHoy, $saldoTotal, $saldoTotalAbono) {
-                $sheet->loadView('reportes.reporte_7_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("saldoTotal", $saldoTotal)->with("saldoTotalAbono", $saldoTotalAbono);
+        Excel::create('Reporte_Deudores', function($excel) use ($datas, $fechaHoy, $saldoTotal, $saldoTotalAbono,$saldoTotalComision) {
+            $excel->sheet('Reporte_Deudores', function($sheet) use ($datas, $fechaHoy, $saldoTotal, $saldoTotalAbono,$saldoTotalComision) {
+                $sheet->loadView('reportes.reporte_7_excel')->with("datas", $datas)->with("fechaHoy", $fechaHoy)->with("saldoTotal", $saldoTotal)->with("saldoTotalAbono", $saldoTotalAbono)->with("saldoTotalComision",$saldoTotalComision);
             });
         })->export('xls');
 

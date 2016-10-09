@@ -55,15 +55,16 @@
 										<input type="hidden"   value="{{$vale->id_promocion}}" name="id_promocion"/>
 									</div>	
 								</div>
-								
-							</div>
-							<div class="col-md-12">
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Limite de Credito</label>
 										<input type="text" value="{{$vale->cantidad_limite}}" name="limite_vale" class="form-control" >
 									</div>	
 								</div>
+								
+							</div>
+							<div class="col-md-12">
+								
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Nombre del cliente</label>
@@ -85,6 +86,12 @@
 										<input type="text"  id="nombreCuenta"  name="nombre_cuenta" class="form-control" >
 									</div>	
 								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>Numero de pagos</label>
+										<input type="number" id="numeroPagos" value="{{$vale->numero_pagos}}" name="numero_pagos" class="form-control" required >
+									</div>	
+								</div>
 							</div>	
 							<div class="col-md-12">
 								
@@ -96,10 +103,11 @@
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Numero de pagos</label>
-										<input type="number" id="numeroPagos" value="{{$vale->numero_pagos}}" name="numero_pagos" class="form-control" required >
+										<label>Pagos actuales</label>
+										<input type="number"  value="{{$vale->pagos_realizados}}" name="pagos_realizados" class="form-control" required >
 									</div>	
 								</div>
+								
 								<div class="col-md-2">
 									<div class="form-group">
 										<label>Folio venta </label>

@@ -218,7 +218,8 @@ class ValesController extends Controller
                         if($fechaTermino=="0"){
                             $vendedor=$request->input('vendedor');
                             if($vendedor=="0"){
-                                $vales = Vale::where('id_distribuidor',$distribuidor)->where('estatus',1)->get(); //consulta con distribuidor
+
+                                $vales = Vale::where('id_distribuidor',$distribuidor)->where('estatus','>',1)->get(); //consulta con distribuidor
                             }else{
                                 $vales = Vale::where('estatus',1)->where('id_cuenta',$vendedor)->where('id_distribuidor',$distribuidor)->get();
                             }
@@ -238,9 +239,9 @@ class ValesController extends Controller
                             $vendedor=$request->input('vendedor');
                             if($vendedor=="0"){
                                //buscar vales con fecha inicio y distribuidor
-                                $vales = Vale::where('estatus',1)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','>=',$fechaInicio)->get();
+                                $vales = Vale::where('estatus','>',0)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','>=',$fechaInicio)->get();
                             }else{
-                                $vales = Vale::where('estatus',1)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','>=',$fechaInicio)->where('id_cuenta',$vendedor)->get(); //buscar vales con fecha inicio y distribuidor vendedor
+                                $vales = Vale::where('estatus','>',0)->where('id_distribuidor',$distribuidor)->where('fecha_inicio_pago','>=',$fechaInicio)->where('id_cuenta',$vendedor)->get(); //buscar vales con fecha inicio y distribuidor vendedor
 
                             }   
                                     
@@ -289,7 +290,12 @@ class ValesController extends Controller
              }
              if($vales[$i]->estatus==3){
                 $vales[$i]->estatus='<p  style="background-color: brown;">Pagado</p>';
-                $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin">No disponible</a>'; 
+                if($vales[$i]->fecha_venta>=date("Y-m-d", strtotime("-3 month"))){
+                    $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin" href="editarVale/'. $vales[$i]->id_vale.'">Actualizar</a>';
+                }
+                else{
+                    $vales[$i]->id_vale='<a type="button" class="btn btn-primary margin">No disponible</a>';
+                }
              }
              else{
                
@@ -425,8 +431,19 @@ class ValesController extends Controller
         $vale =Vale::find($id);
         return $vale;
     }
+     public function calcularPago($cantidad,$tPagos,$nPago){
+        $pagos=$cantidad/$tPagos;
+        $pago=round($pagos);  
+        $pagoFinal=$cantidad-($pago*($tPagos-1));  
 
-    
+        if($nPago>=$tPagos){
+            return $pagoFinal;
+        }
+        else{
+            return $pago;
+        }
+    }
+   
     public function modificarVale(Request $request){
         
         $vale = Vale::find($request->input('id_vale'));
@@ -442,12 +459,18 @@ class ValesController extends Controller
         $idDistribuidor = $request->input('id_distribuidor');
         $cantidad = $request->input('cantidad');
         $numeroPagos = $request->input('numero_pagos');
+        $pagosRealizados =$request->input('pagos_realizados');
         $folioVenta = $request->input('folio_venta');
         $estatus = $request->input('estatus');
         $motivoCancelacion = $request->input('motivo_cancelacion');
        
-        $vale->folio=$folio;
+       if($pagosRealizados==$numeroPagos){
+        $deudaActual=0;
+       }else{
+        $deudaActual=$cantidad-(($this->calcularPago($cantidad,$numeroPagos,$pagosRealizados))*$pagosRealizados);
+       }
 
+        $vale->folio=$folio;
         $vale->serie=$serie;
         $vale->fecha_venta=$fechaVenta;
         $vale->fecha_inicio_pago=$fechaPago;
@@ -456,8 +479,9 @@ class ValesController extends Controller
         $vale->id_cuenta=$idCuenta;
         $vale->id_distribuidor=$idDistribuidor;
         $vale->cantidad=$cantidad;
-        $vale->deuda_actual=$cantidad;
+        $vale->deuda_actual=$deudaActual;
         $vale->numero_pagos=$numeroPagos;
+        $vale->pagos_realizados=$pagosRealizados;
         $vale->folio_venta=$folioVenta;
         $vale->estatus=$estatus;
         $vale->cantidad_limite=$limiteVale;
@@ -500,37 +524,44 @@ class ValesController extends Controller
             
         }   
     }
-    public function invertirVales(Request $request){
-        $vale_1=$request->input('vale_1');
-        $vale_2=$request->input('vale_2');
-        $serie_1=$request->input('serie_1');
-        $serie_2=$request->input('serie_2');
+        public function invertirVales(Request $request){
+            $vale_1=$request->input('vale_1');
+            $vale_2=$request->input('vale_2');
+            $serie_1=$request->input('serie_1');
+            $serie_2=$request->input('serie_2');
 
-        $vale1=Vale::where("folio",$vale_1)->where("serie",$serie_1)->first();
-        $vale2=Vale::where("folio",$vale_2)->where("serie",$serie_2)->first();
-         $auxVale= clone $vale1;
-        if($vale1 && $vale2){
-              
-               $vale1->id_vale=$vale2->id_vale;
-               $vale1->folio=$vale2->folio;
-               $vale1->serie=$vale2->serie;
-               ///////
-               $vale2->id_vale=0;
-               $vale2->folio=$auxVale->folio;
-               $vale2->serie=$auxVale->serie;
-             $vale2->save();
-             $vale1->save();
-             $vale2->id_vale=$auxVale->id_vale;
-            $vale2->save();
-              return $vale1.'---------------'.$vale2;
-                Session::flash('message','Vales invertidos correctamente');
-                Session::flash('class','success');
-        }else{
-           
-            Session::flash('message','Algún vale no se encuentra en la base de datos');
-                Session::flash('class','danger');
+            $vale1=Vale::where("folio",$vale_1)->where("serie",$serie_1)->first();
+            $vale2=Vale::where("folio",$vale_2)->where("serie",$serie_2)->first();
+             $auxVale= clone $vale1;
+            if($vale1 && $vale2){
+                  
+                   $vale1->id_vale=$vale2->id_vale;
+                   $vale1->folio=$vale2->folio;
+                   $vale1->serie=$vale2->serie;
+                   $vale1->id_distribuidor=$vale2->id_distribuidor;
+                   $vale1->cantidad_limite=$vale2->cantidad_limite;
+                   $vale1->fecha_creacion=$vale2->fecha_creacion;
+                   ///////
+                   $vale2->id_vale=0;
+                   $vale2->folio=$auxVale->folio;
+                   $vale2->serie=$auxVale->serie;
+                   $vale2->id_distribuidor=$auxVale->id_distribuidor;
+                   $vale2->cantidad_limite=$auxVale->cantidad_limite;
+                   $vale2->fecha_creacion=$auxVale->fecha_creacion;
+
+                 $vale2->save();
+                 $vale1->save();
+                 $vale2->id_vale=$auxVale->id_vale;
+                $vale2->save();
+                  //return $vale1.'---------------'.$vale2;
+                    Session::flash('message','Vales invertidos correctamente');
+                    Session::flash('class','success');
+            }else{
+               
+                Session::flash('message','Algún vale no se encuentra en la base de datos');
+                    Session::flash('class','danger');
+            }
+            return redirect('mostrarInvertirVales');
         }
-        return redirect('mostrarInvertirVales');
-    }
 }
 

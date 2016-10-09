@@ -10,6 +10,7 @@ use Session;
 use App\Movimiento;
 use Carbon\Carbon;
 use App\Vale;
+use App\Pago;
 use App\Comision;
 use App\Cliente;
 use Maatwebsite\Excel\Facades\Excel;
@@ -352,35 +353,37 @@ class DistribuidorsController extends Controller
             $fecha=Carbon::today();
         }
 
-        $distribuidores=Distribuidor::all();
-
-        $resultado = array();
-        $distribuidores=Distribuidor::all();
-        for($j=0; $j < sizeof($distribuidores); $j++) { 
-            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
-            $saldoTotal=0;
-            for ($i=0; $i <sizeof($vales); $i++) { 
+        $pagos=Pago::where('estado',0)->orderBy('id_pago', 'asc')->get();
+        // $distribuidores=Distribuidor::orderBy('id_distribuidor', 'asc')->get();
+        // for($j=0; $j < sizeof($distribuidores); $j++) { 
+        //     $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
+        //     $saldoTotal=0;
+        //     for ($i=0; $i <sizeof($vales); $i++) { 
                 
-                 $importe=$vales[$i]->cantidad;
-                 $saldoAnterior=$vales[$i]->deuda_actual;
-                 $pagosRealizados=$vales[$i]->pagos_realizados+1;
-                 $numeroPagos=$vales[$i]->numero_pagos;
-                 $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-                 $saldoTotal+=$abono;
+        //          $importe=$vales[$i]->cantidad;
+        //          $saldoAnterior=$vales[$i]->deuda_actual;
+        //          $pagosRealizados=$vales[$i]->pagos_realizados+1;
+        //          $numeroPagos=$vales[$i]->numero_pagos;
+        //          $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+        //          $saldoTotal+=$abono;
                 
-            }
-            if($saldoTotal>0){
-                $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
-                $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
-                $saldoComision=$saldoTotal-$saldoDistribuidor;
+        //     }
+        //     if($saldoTotal>0){
+        //         $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
+        //         $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
+        //         $saldoComision=$saldoTotal-$saldoDistribuidor;
             
-                $resultado[] = [ 'nombre' => $distribuidores[$j]->nombre, 'pagoSinComision' => $saldoTotal,'comision'=>$comision+"%",'pagoConComision'=>$saldoComision];
-            }
+        //         $resultado[] = [ 'nombre' => $distribuidores[$j]->nombre, 'pagoSinComision' => $saldoTotal,'comision'=>$comision+"%",'pagoConComision'=>$saldoComision];
+        //     }
             
-        }
+        // }
+            foreach ($pagos as $key => $pago) {
 
-
-        return $resultado;
+               $pago->nombre=$pago->distribuidor->nombre;
+               $pago->pagoComision=$pago->cantidad -(intval(($pago->cantidad*$pago->comision)/100));
+           }
+        return $pagos;
+        // return $resultado;
         
     }
      public function calcularComision($total,$id){

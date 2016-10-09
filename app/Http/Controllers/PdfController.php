@@ -776,49 +776,55 @@ class PdfController extends Controller
         if($fecha==""){
             $fecha=Carbon::today();
         }
-        $resultado = array();
         $SaldoTotalConComision=0;
         $SaldoTotalSinComision=0;
-        $distribuidores=Distribuidor::all();
-        for($j=sizeof($distribuidores)-1; $j >=0; $j--) { 
-            $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
-            $saldoTotal=0;
-          if (count($vales)==0) {
-                unset($distribuidores[$j]);
+         $pagos=Pago::where('estado',0)->orderBy('id_pago', 'asc')->get();
+        // $distribuidores=Distribuidor::all();
+        // for($j=sizeof($distribuidores)-1; $j >=0; $j--) { 
+        //     $vales=Vale::where('id_distribuidor',$distribuidores[$j]->id_distribuidor)->where('deuda_actual','>',0)->where('estatus',1)->where('fecha_inicio_pago','<=',$this->calcularFechaCorte($fecha))->get();
+        //     $saldoTotal=0;
+        //   if (count($vales)==0) {
+        //         unset($distribuidores[$j]);
 
-            }else{
-                for ($i=0; $i <sizeof($vales); $i++) { 
+        //     }else{
+        //         for ($i=0; $i <sizeof($vales); $i++) { 
                 
-                 $importe=$vales[$i]->cantidad;
-                 $saldoAnterior=$vales[$i]->deuda_actual;
-                 $pagosRealizados=$vales[$i]->pagos_realizados+1;
-                 $numeroPagos=$vales[$i]->numero_pagos;
-                 $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
-                 $saldoTotal+=$abono;
+        //          $importe=$vales[$i]->cantidad;
+        //          $saldoAnterior=$vales[$i]->deuda_actual;
+        //          $pagosRealizados=$vales[$i]->pagos_realizados+1;
+        //          $numeroPagos=$vales[$i]->numero_pagos;
+        //          $abono=$this->calcularPago($importe,$numeroPagos,$pagosRealizados);
+        //          $saldoTotal+=$abono;
                 
-                }
+        //         }
 
-                if($saldoTotal>0){
-                    $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
-                    $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
-                    $saldoComision=$saldoTotal-$saldoDistribuidor;
-                    $SaldoTotalSinComision+=$saldoTotal;
-                    $SaldoTotalConComision+=$saldoComision;
-                    $distribuidores[$j]->id_comision =$saldoTotal;
-                    $distribuidores[$j]->telefono=$comision; 
-                    $distribuidores[$j]->celular =$saldoComision;
-                }
-            }
+        //         if($saldoTotal>0){
+        //             $comision=$this->calcularComision($saldoTotal,$distribuidores[$j]->id_distribuidor);
+        //             $saldoDistribuidor=intval(($saldoTotal*$comision)/100);  
+        //             $saldoComision=$saldoTotal-$saldoDistribuidor;
+        //             $SaldoTotalSinComision+=$saldoTotal;
+        //             $SaldoTotalConComision+=$saldoComision;
+        //             $distribuidores[$j]->id_comision =$saldoTotal;
+        //             $distribuidores[$j]->telefono=$comision; 
+        //             $distribuidores[$j]->celular =$saldoComision;
+        //         }
+        //     }
             
-        }
-         $datas=$distribuidores;
-        if(sizeof($distribuidores)>0){
+        // }
+       foreach ($pagos as $key => $pago) {
+
+               // $pago->nombre=$pago->distribuidor->nombre;
+                $pago->pagoComision=$pago->cantidad -(intval(($pago->cantidad*$pago->comision)/100));
+                $SaldoTotalSinComision+=$pago->cantidad;
+                $SaldoTotalConComision+=$pago->pagoComision;
+           }
+        if(count($pagos)>0){
         $fechaHoy = Carbon::now();
         $fechaEntrega=$this->CalcularFechaEntrega($fecha);
         $fechaLimite=$this->CalcularFechaLimite($fecha);
         $periodo=$this->calcularPeriodo($fecha);
 
-        $view =  \View::make('reportes/reporte_6', compact('datas', 'fechaHoy', 'fechaEntrega','fechaLimite','periodo','SaldoTotalSinComision','SaldoTotalConComision'))->render();
+        $view =  \View::make('reportes/reporte_6', compact('pagos', 'fechaHoy', 'fechaEntrega','fechaLimite','periodo','SaldoTotalSinComision','SaldoTotalConComision'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_6.pdf');
@@ -878,8 +884,10 @@ class PdfController extends Controller
         $pagos= Pago::where('estado','<',2)->get();
         $saldoTotal=0;  
         $saldoTotalAbono=0;
+        $saldoTotalComision=0;
         for ($i=0; $i <sizeof($pagos); $i++) 
         {
+            $saldoTotalComision+=$pagos[$i]->cantidad -(intval(($pagos[$i]->cantidad*$pagos[$i]->comision)/100));
             $saldoTotal+= $pagos[$i]->cantidad;
             $saldoTotalAbono+= $pagos[$i]->abono;
             $pagos[$i]->cantidad_comision='$'.(($this->pagoComision($pagos[$i]->cantidad,$pagos[$i]->comision))-$pagos[$i]->abono).".00";
@@ -902,7 +910,7 @@ class PdfController extends Controller
           $datas = $pagos;
           $fechaHoy = Carbon::now();
         
-       $view =  \View::make('reportes/reporte_7', compact('datas','saldoTotal','saldoTotalAbono','fechaHoy'))->render();
+       $view =  \View::make('reportes/reporte_7', compact('datas','saldoTotal','saldoTotalAbono','fechaHoy','saldoTotalComision'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('reporte_7.pdf');

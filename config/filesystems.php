@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => public_path('archivos'),
+            'root'   => public_path('').'/img',
         ],
 
         'ftp' => [

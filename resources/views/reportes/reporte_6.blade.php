@@ -43,12 +43,12 @@
         </thead>
         <tbody>
 
-         @foreach ($datas as $data)
+         @foreach ($pagos as $pago)
           <tr>
-            <td>{{$data->nombre}}</td>
-            <td>{{$data->id_comision}}</td>
-            <td>{{$data->telefono}}</td>
-            <td>{{$data->celular}}</td>
+            <td>{{$pago->distribuidor->nombre}}</td>
+            <td>${{$pago->cantidad}}.00</td>
+            <td>{{$pago->comision}}%</td>
+            <td>${{$pago->pagoComision}}.00</td>
           </tr>
 
            @endforeach

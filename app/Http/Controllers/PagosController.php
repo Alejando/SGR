@@ -132,23 +132,35 @@ class PagosController extends Controller
     public function liquidarPago(Request $request){
         $id=$request->input('id');
         $pago=Pago::find($id);
+        if($pago->estado==2){
+             Session::flash('message','Error al liquidar pago');
+            Session::flash('class','danger');
+        }
+        else{
         $pago->estado=2;    // estados de los pagos
         $pago->abono=0;    // 0=esperando pago, 1=pago desfasado  2=liquidado 3= abonado a otro pago
         $id_distribuidor=$pago->id_distribuidor;
-        if($pago->save()){
+        if($pago->save() ){
             $distribuidor=Distribuidor::find($id_distribuidor);
             $distribuidor->estatus=0;
             $distribuidor->saldo_actual-=$pago->cantidad;
-            $distribuidor->save();
-            $this->aumentarPagos($id_distribuidor,$pago->fecha_creacion);
+            if($distribuidor->save()){
+                 $this->aumentarPagos($id_distribuidor,$pago->fecha_creacion);
             Session::flash('message','Pago registrado correctamente');
             Session::flash('class','success');
+            }else{
+                 Session::flash('message','Error al actualizar saldo del distribuidor');
+            Session::flash('class','danger');
+            }
+           
         }
         else{
             Session::flash('message','Error al liquidar pago');
             Session::flash('class','danger');
         }
-       return "pago realizado";
+        }
+       
+      // return "pago realizado";
     }
     public function aumentarPagos($id,$fecha){
 
@@ -187,6 +199,7 @@ class PagosController extends Controller
            
         }
     }
+    
 
 
     public function aumentarVariosPagos($vales,$pagos){
@@ -467,25 +480,32 @@ class PagosController extends Controller
        $fechaHoy=Carbon::today();
         // 10 nomviembre- 24 Novimebre-> 04 Diciembre
         // 25 novimebre-09 Diciembre -> 18 Diciembre
-        if($comision!=0){
-            if($fechaHoy==$fechaLimiteUno){
-            $comision=$comision-2;
-          
-        }else{
-            if($fechaHoy==$fechaLimiteDos){
-                $comision=$comision-2;
-                
-            }else{
-                if($fechaHoy>$fechaLimiteDos){
-                    $comision=0;
-                  
-                }
+
+
+       if ($fechaHoy>$fechaLimite ) {
+            if($comision<=0){
+                $comision=0;
+              return $comision;
+            
             }
-        }
-        }
-       
-        
-        return $comision;
+            else{
+              if($fechaHoy==$fechaLimiteUno){
+                $comision=$comision-2;
+                return $comision;
+                }
+                elseif ($fechaHoy==$fechaLimiteDos) {
+                    $comision=$comision-2;
+                    return $comision;
+                }
+                elseif ($fechaHoy>$fechaLimiteDos){
+                    $comision=0;
+                    return $comision;
+                }  
+            }
+          
+       }else{
+            return $comision;
+       }
         
     }
 
@@ -540,7 +560,7 @@ class PagosController extends Controller
          for ($i=0; $i <sizeof($pagos); $i++) 
         { 
             $fechaActualizacion=Carbon::parse($pagos[$i]->updated_at);
-            if($fechaHoy>$fechaActualizacion){
+           if($fechaHoy>$fechaActualizacion){
                 $pagos[$i]->comision=$this->calcularComisionActual($pagos[$i]->fecha_creacion,$pagos[$i]->comision);
                 $pagos[$i]->estado=$this->nuevoEstado($pagos[$i]->fecha_creacion,$pagos[$i]->id_distribuidor);
                 $pagos[$i]->save();

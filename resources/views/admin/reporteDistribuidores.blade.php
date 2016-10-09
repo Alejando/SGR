@@ -38,9 +38,9 @@
 					    <thead>
 					    	<tr>
 						        <th data-field="nombre" data-sortable="true">Distribuidora</th>
-						        <th data-field="pagoSinComision" data-halign="center"data-sortable="true">Pago sin Comisión</th>
+						        <th data-field="cantidad" data-halign="center"data-sortable="true">Pago sin Comisión</th>
 						        <th data-field="comision" data-halign="center"  data-sortable="false">Comisión (%) </th>
-						        <th data-field="pagoConComision" data-halign="center" data-sortable="true">Pago con Comisión</th>
+						        <th data-field="pagoComision" data-halign="center" data-sortable="true">Pago con Comisión</th>
 					   		 </tr>
 					    </thead>
 					</table>

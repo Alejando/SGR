@@ -23,8 +23,7 @@
   </table>
   <br>
   <table>
-    <thead id="encabezado">
-      <tr>
+    <tr id="encabezado" >
         <th id="cliente" >Cliente</th>
         <th>Vale</th>
         <th>Folio Venta</th>
@@ -35,11 +34,24 @@
         <th>Abono</th>
         <th>Saldo Actual</th>
       </tr>
-    </thead>
+    
     <tbody>
-     @foreach ($datas as $data)
+     @foreach ($datas as $key=> $data)
+       @if($key==65)
+        <tr id="encabezado" >
+          <td id="cliente" >Cliente</td>
+          <td>Vale</td>
+          <td>Folio Venta</td>
+          <td>Fecha Venta</td>
+          <td>Pagos</td>
+          <td>Importe</td>
+          <td>Saldo Anterior</td>
+          <td>Abono</td>
+          <td>Saldo Actual</td>
+      </tr>
+      @endif
       <tr>
-        <td>{{$data->id_cliente}}</td>
+        <td>{{$key}}{{$data->id_cliente}}</td>
         <td>{{$data->folio}}</td>
         <td>{{$data->folio_venta}}</td>
         <td>{{$data->fecha_inicio_pago}}</td>
@@ -65,7 +77,7 @@
       <tr>
         <td></td>
         <td colspan="2"></td>
-        <td colspan="4"class="resaltar"><b>Saldo total ${{$saldoTotal}}, Comision {{$comision}}% Total a pagar</b></td>
+        <td colspan="4" class="resaltar"><b>Saldo total ${{$saldoTotal}}, Comision {{$comision}}% Total a pagar</b></td>
         <td class="resaltar"><b>${{$saldoComision}}.00</b></td>
         <td></td>
       </tr>

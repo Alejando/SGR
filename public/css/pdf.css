@@ -1,11 +1,11 @@
 table {
     border-collapse: collapse;
-    font-size: 8px;
+    font-size: 10px;
     font-family: sans-serif;
     width: 100%;
 }
 
-table thead tr th {
+table tr th {
     border: 1px solid black;
     text-align: center;
 }

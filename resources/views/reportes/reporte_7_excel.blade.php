@@ -40,9 +40,9 @@
          @foreach ($datas as $data)
           <tr>
             <td>{{$data->id_distribuidor}}</td>
-            <td>{{$data->cantidad}}</td>
-            <td>{{$data->abono}}</td>
-            <td>{{$data->cantidad_comision}}</td>
+            <td>${{$data->cantidad}}</td>
+            <td>${{$data->abono}}</td>
+            <td>${{$data->cantidad_comision}}</td>
             <td>{{$data->fecha_creacion}}</td>
             <td>{{$data->fecha_limite}}</td>
             <td>{{$data->comision}}</td>
@@ -54,9 +54,9 @@
         <tfoot>
           <tr>
             <td><b>Total</b></td>
-            <td>{{$saldoTotal}}.00</td>
-            <td>{{$saldoTotalAbono}}.00</td>
-            <td></td>
+            <td>${{$saldoTotal}}.00</td>
+            <td>${{$saldoTotalAbono}}.00</td>
+            <td>${{$saldoTotalComision}}.00</td>
             <td></td>
             <td></td>
             <td></td>

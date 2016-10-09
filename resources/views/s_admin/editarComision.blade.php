@@ -30,7 +30,7 @@
 								</div>
 								<div class="form-group">
 									<label>Porcentaje</label>
-									<input type="number"  value="{{ $comision->porcentaje }}" name="porcentaje" class="form-control" required>
+									<input type="number"  value="{{ $comision->porcentaje }}" step="any" name="porcentaje" class="form-control" required>
 								</div>			
 						</div>
 							

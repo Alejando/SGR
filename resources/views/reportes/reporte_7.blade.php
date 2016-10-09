@@ -68,7 +68,7 @@
             <td>Total</td>
             <td>${{$saldoTotal}}.00</td>
             <td>${{$saldoTotalAbono}}.00</td>
-            <td></td>
+            <td>${{$saldoTotalComision}}.00</td>
             <td></td>
             <td></td>
             <td></td>
